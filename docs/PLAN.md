@@ -11,8 +11,9 @@ SARIF/JUnit/HTML — the automation US federal/508 teams do not have today.
 
 **Architecture:** A literal fork of `SSAgov/ANDI` (Apache-2.0). Our code wraps the untouched
 `andi/` tree: Playwright loads the target page, request-routing serves every ANDI asset from
-the local fork (hermetic — zero network), ANDI runs, we extract findings from ANDI's internal
-JS objects (DOM fallback), aggregate across modules in fresh page contexts, and render to
+the local fork (hermetic — zero network), ANDI runs, we extract findings from the DOM
+(internal JS objects proved unreliable — see Phase 0), aggregate across modules in fresh page
+contexts via `AndiModule.launchModule`, and render to
 multiple formats with a CI exit code. axe-core is an optional `--with-axe` second layer.
 
 **Tech Stack:** Node ≥18 (CommonJS `.cjs`), Playwright `1.55.0` (cached Chromium 1187),
@@ -44,8 +45,8 @@ src/
   cli.cjs                      # MODIFY — arg parsing, output dispatch, exit code
   scanner.cjs                  # MODIFY — orchestrates one scan (route → inject → run → extract)
   vendor-route.cjs             # CREATE — hermetic request routing (serve andi/ locally)
-  extract.cjs                  # CREATE — hybrid extraction → Finding[] (internal objects + DOM)
-  modules.cjs                  # CREATE — module registry + launch-into-module
+  extract.cjs                  # CREATE — DOM-primary extraction → Finding[] (internals unreliable)
+  modules.cjs                  # CREATE — per-module scanning via AndiModule.launchModule
   aggregate.cjs                # CREATE — merge findings across modules/engines, de-dup
   engines/
     axe.cjs                    # CREATE — optional @axe-core/playwright adapter
@@ -325,35 +326,39 @@ async function waitModuleStable(page, timeout = 15000) {
 - [ ] Steps: write failing test (a scan completes with **no** fixed sleeps and returns 2
       alerts) → run FAIL → implement → run PASS → commit `feat: deterministic ANDI ready signals`.
 
-## Task 1.3 — `extract.cjs`: hybrid extraction → `Finding[]`
+## Task 1.3 — `extract.cjs`: DOM-primary extraction → `Finding[]`
 
 **Files:** Create `src/extract.cjs` (move/refactor `extractFindings` out of `scanner.cjs`);
 Test `test/extract.test.cjs`.
 
 **Interfaces — Produces:** `extractFindings()` (runs in-page via `page.evaluate`) returning
-`Finding[]` in the shape defined in `docs/ARCHITECTURE.md`. Prefer `window.andiAlerter`
-(`.dangers/.warnings/.cautions`) → map each to a `Finding`; if `andiAlerter` is absent or
-empty, fall back to the existing DOM scrape of `#ANDI508-alerts-list`. Each finding carries
-`engine:'andi'`, the current `module`, `severity`, `rule` (alert label), `message`, and
-`element` (`tag`, `html`, `andiIndex` from `data-andi508-index`, `selector` best-effort).
+`Finding[]` in the shape defined in `docs/ARCHITECTURE.md`. **Read the DOM (grounded by
+`spikes/05`): `window.andiAlerter` is a transient buffer ANDI empties after analysis, and
+`testPageData.pageAlerts` is empty — do NOT rely on them.** Take per-element offenders from
+`.ANDI508-element-{danger,warning,caution}` (exclude `#ANDI508` UI), grouped messages from
+`#ANDI508-alerts-list` (`.ANDI508-alertGroup-*`), and the page total from
+`testPageData.numberOfAccessibilityAlertsFound` only. Each finding carries `engine:'andi'`,
+the current `module`, `severity`, `rule` (alert label), `message`, and `element`
+(`tag`, `html`, `andiIndex` from `data-andi508-index`, `selector` best-effort).
 
 - [ ] Steps: write failing test asserting 2 `danger` findings for `focusable.html`, each with
       `engine:'andi'`, `module:'focusable'`, non-empty `element.html` → FAIL → implement
-      internal-objects path + DOM fallback → PASS → commit `feat: hybrid ANDI extraction`.
+      the DOM-primary extraction → PASS → commit `feat: DOM-primary ANDI extraction`.
 
-## Task 1.4 — `modules.cjs`: launch-into-module, fresh context per module
+## Task 1.4 — `modules.cjs`: per-module scanning via `launchModule`, fresh context per module
 
 **Files:** Create `src/modules.cjs`; Modify `src/scanner.cjs`; Test `test/modules.test.cjs`.
 
 **Interfaces — Consumes:** `installVendorRoutes`, `waitAndiReady`, `waitModuleStable`,
 `extractFindings`. **Produces:** `MODULES` (the `{f:'focusable',…}` registry) and
 `scanModule(browser, url, moduleKey, opts) → Promise<Finding[]>` — opens a **fresh page**,
-routes, injects, launches/selects the module, waits stable, extracts, closes.
+routes, injects, launches the module, waits stable, extracts, closes.
 
-- [ ] **Investigation step (record findings in a comment):** read `andi/andi.js` to determine
-      whether ANDI can be **launched directly into** a module (a pre-set setting/hash) before
-      auto-launch. If yes, set it before injection (cleanest). If no, click
-      `#ANDI508-moduleMenu-button-<key>` after ready, then `waitModuleStable`.
+- [ ] **Grounded mechanism (`spikes/04`):** drive modules with
+      `page.evaluate((m) => window.AndiModule.launchModule(m), key)` after `waitAndiReady` —
+      proven to work hermetically across `f/c/t/g/l`. (`var host_url` is hardcoded, so routing,
+      not variable override, keeps it offline.) Use one fresh page per module; do NOT use the
+      menu-button click (the original flaky path).
 - [ ] Steps: write failing tests — `scanModule(.., 'c')` on `contrast.html` returns the
       low-contrast finding; `scanModule(.., 't')` on `tables.html` returns the headerless-table
       finding → FAIL → implement → PASS → commit `feat: reliable per-module scanning`.

@@ -1,10 +1,13 @@
 # Architecture & Decision Record
 
-> **Proven (2026-06-20):** ANDI v29.2.2 runs fully headless and yields scrapable 508
-> alerts. `node src/cli.cjs --url file://…/examples/fixture.html` returns 2 danger alerts,
-> exit code 1.
-> **Designed, pending validation (this plan):** hermetic (offline) execution, reliable
-> multi-module aggregation, SARIF/JUnit/HTML, optional axe layer. See `docs/PLAN.md`.
+> **Proven (2026-06-20 spikes):** ANDI v29.2.2 runs fully headless; the CLI returns 2 danger
+> alerts / exit 1 on the fixture. **Hermetic execution is proven** — routing every ANDI asset
+> from a local `andi/` clone yields a scan with **zero external requests** and identical
+> findings (`spikes/04`, `spikes/05`). `AndiModule.launchModule(letter)` drives modules
+> programmatically. **Extraction is DOM-primary** (corrected from an earlier assumption — see
+> Decision 4).
+> **Designed, pending build:** multi-module aggregation, SARIF/JUnit/HTML, optional axe layer,
+> sitemap. See `docs/PLAN.md`.
 
 ## The problem
 
@@ -67,24 +70,38 @@ Net result: identical output on every run, air-gapped CI included. This is the s
 principle as a hermetic build — control the dependency at the boundary, don't trust the
 internet at test time.
 
-## Decision 4 — Extraction: internal objects first, DOM fallback
+## Decision 4 — Extraction: DOM-primary (grounded by spike, 2026-06-20)
 
-ANDI exposes its results both as DOM (`#ANDI508-alerts-list`) and as live JS objects
-(`window.andiAlerter.{dangers,warnings,cautions}`, `window.testPageData`). We **prefer the
-internal objects** (they are how ANDI itself stores results and survive module switches
-that break DOM scraping) and fall back to DOM scraping when they are absent. Both normalize
-to one `Finding` shape (below).
+> **Corrected.** An earlier draft preferred ANDI's internal JS objects. A spike (`spikes/05`)
+> disproved that — see below. The DOM is authoritative.
 
-## Decision 5 — Multi-module: one fresh page context per module
+ANDI exposes results as DOM (`#ANDI508-alerts-list` groups + `.ANDI508-element-*` flagged
+nodes) and as live JS objects (`window.andiAlerter`, `window.testPageData`). The spike proved
+the **internal objects are unreliable**: `andiAlerter.{dangers,warnings,cautions}` is a
+transient build buffer ANDI empties after analysis (it read `0/0/0` for the focusable and
+contrast modules even in fresh contexts with a 1.2s settle), and `testPageData.pageAlerts`
+is empty. The **DOM is authoritative and consistent**:
 
-ANDI is element-by-element and module-by-module by design; switching modules **in place**
-is the source of today's flakiness (the alerts list does not reliably repopulate on a fixed
-delay). Instead, each requested module in `{f,g,l,t,s,c,h,i}` runs in its **own fresh page**
-(route → inject → launch into that module → wait on a deterministic completion signal →
-extract → close), then results are aggregated. This trades a few seconds for deterministic
-state isolation — the right trade for a gate. (Investigation task: whether ANDI can be
-_launched directly into_ a module via a pre-set setting, avoiding the post-launch switch
-entirely; fallback is select-then-wait-for-reanalysis.)
+- grouped alert messages ← `#ANDI508-alerts-list` (`.ANDI508-alertGroup-*`)
+- per-element offenders ← `.ANDI508-element-{danger,warning,caution}` (exclude `#ANDI508` UI);
+  consistent counts every run (f:2, c:4, t:3, g:3 on the planted fixture)
+- page total ← `testPageData.numberOfAccessibilityAlertsFound` (counts alert _types/occurrences_,
+  distinct from the per-element count — report both, don't conflate)
+
+This validates the existing `src/scanner.cjs` DOM approach. All sources normalize to one
+`Finding` shape (below).
+
+## Decision 5 — Multi-module: fresh page context per module, driven by `launchModule`
+
+ANDI is module-by-module by design and switching **in place** is unreliable (the original
+flakiness). A spike (`spikes/04`) proved `andi.js` exposes `AndiModule.launchModule(letter)`
+(≈ line 132; `var host_url` is hardcoded at line 11 — which is _why_ routing, not variable
+override, is the hermetic mechanism). Each requested module in `{f,g,l,t,s,c,h,i}` runs in
+its **own fresh page** (route → inject → `launchModule(letter)` → wait for the alerts list +
+total to stabilize across 3 polls + a settle → extract from the DOM → close), then results
+aggregate. Fresh-context isolation produced consistent per-module DOM counts (f:2, c:4, t:3,
+g:3 on the planted fixture) where in-place internal-array reads did not. A few seconds per
+module is the right trade for a deterministic gate.
 
 ## Decision 6 — Optional axe-core layer (`--with-axe`), off by default
 
@@ -136,18 +153,18 @@ Severity mapping for axe: `critical→danger`, `serious→warning`, `moderate→
 
 ## Key DOM / JS reference (ANDI v29)
 
-| What                        | Where                                                                                                                                                                             |
-| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ready signal                | `window.andiVersionNumber` set AND `#ANDI508` present AND `window.testPageData.numberOfAccessibilityAlertsFound` defined                                                          |
-| Page summary                | `#ANDI508-pageAnalysis` (fallback `#ANDI508-additionalPageResults`)                                                                                                               |
-| Alerts list (DOM fallback)  | `#ANDI508-alerts-list`                                                                                                                                                            |
-| Alert group                 | `.ANDI508-alertGroup-container` (+ `ANDI508-display-<severity>`)                                                                                                                  |
-| Group items                 | `.ANDI508-alertGroup-list > li`                                                                                                                                                   |
-| Flagged page nodes          | `.ANDI508-element-danger` / `-warning` / `-caution` (exclude `#ANDI508` UI)                                                                                                       |
-| Severity arrays (preferred) | `window.andiAlerter.{dangers,warnings,cautions}`                                                                                                                                  |
-| Total count                 | `window.testPageData.numberOfAccessibilityAlertsFound`                                                                                                                            |
-| Module buttons              | `#ANDI508-moduleMenu-button-{f,g,l,t,s,c,h,i}`                                                                                                                                    |
-| Module files (in `andi/`)   | `fandi.js` (focusable), `landi.js` (links), `tandi.js` (tables), `sandi.js` (structures), `gandi.js` (graphics), `handi.js` (hidden), `candi.js` (contrast), `iandi.js` (iframes) |
+| What                                                     | Where                                                                                                                                                                             |
+| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Ready signal                                             | `window.andiVersionNumber` set AND `#ANDI508` present AND `window.testPageData.numberOfAccessibilityAlertsFound` defined                                                          |
+| Page summary                                             | `#ANDI508-pageAnalysis` (fallback `#ANDI508-additionalPageResults`)                                                                                                               |
+| Alerts list (DOM, PRIMARY)                               | `#ANDI508-alerts-list`                                                                                                                                                            |
+| Alert group                                              | `.ANDI508-alertGroup-container` (+ `ANDI508-display-<severity>`)                                                                                                                  |
+| Group items                                              | `.ANDI508-alertGroup-list > li`                                                                                                                                                   |
+| Flagged page nodes                                       | `.ANDI508-element-danger` / `-warning` / `-caution` (exclude `#ANDI508` UI)                                                                                                       |
+| Severity arrays (UNRELIABLE — transient, see Decision 4) | `window.andiAlerter.{dangers,warnings,cautions}` (emptied after analysis; do not use)                                                                                             |
+| Total count                                              | `window.testPageData.numberOfAccessibilityAlertsFound`                                                                                                                            |
+| Module buttons                                           | `#ANDI508-moduleMenu-button-{f,g,l,t,s,c,h,i}`                                                                                                                                    |
+| Module files (in `andi/`)                                | `fandi.js` (focusable), `landi.js` (links), `tandi.js` (tables), `sandi.js` (structures), `gandi.js` (graphics), `handi.js` (hidden), `candi.js` (contrast), `iandi.js` (iframes) |
 
 ## Non-goals
 
