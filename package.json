@@ -1,0 +1,31 @@
+{
+  "name": "andi-cli",
+  "version": "0.1.0",
+  "description": "Headless CLI + CI wrapper for the SSA ANDI (Accessible Name & Description Inspector) Section 508 accessibility tool.",
+  "keywords": [
+    "accessibility",
+    "section-508",
+    "andi",
+    "wcag",
+    "a11y",
+    "playwright",
+    "ci"
+  ],
+  "license": "MIT",
+  "author": "Arun Sanna",
+  "type": "commonjs",
+  "bin": {
+    "andi-scan": "src/cli.cjs"
+  },
+  "main": "src/scanner.cjs",
+  "scripts": {
+    "scan": "node src/cli.cjs",
+    "test:fixture": "node src/cli.cjs --url file://$PWD/examples/fixture.html"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "playwright": "1.55.0"
+  }
+}

@@ -1,0 +1,7 @@
+node_modules/
+results/
+*.log
+.DS_Store
+# scan outputs
+*.andi.json
+*.andi.html
