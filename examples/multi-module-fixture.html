@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ANDI multi-module fixture</title></head>
+<body>
+  <h1>Multi-module fixture</h1>
+
+  <!-- focusable (f): controls with no accessible name -> danger -->
+  <button></button>
+  <a href="/account"></a>
+
+  <!-- contrast (c): very low contrast text -->
+  <p style="color:#cccccc; background-color:#dddddd;">Low contrast paragraph that the ANDI contrast module should flag.</p>
+  <button style="color:#bbbbbb; background-color:#c8c8c8;">faint</button>
+
+  <!-- tables (t): data table with no header cells / caption -->
+  <table border="1">
+    <tr><td>Name</td><td>Age</td></tr>
+    <tr><td>Alice</td><td>30</td></tr>
+  </table>
+
+  <!-- graphics (g): image with no alt -->
+  <img src="/missing.png" width="40" height="40">
+</body>
+</html>
