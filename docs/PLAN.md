@@ -87,6 +87,27 @@ spikes/04-hermetic-vendor.cjs  spikes/05-extraction-source.cjs              # EX
 
 # Phase 0 — De-risk & fork setup
 
+### Phase Contract
+
+**Entry**
+
+- **Intent & expectations:** prove the compliance-grade premise is real before building — a fork that runs ANDI fully offline with identical output. "Good" = we _show_ hermeticity + parity, not assert them.
+- **Goal & success metric:** baseline = "no fork; hermeticity unproven; MIT scaffold" → target = "fork established (`andi/` present, Apache-2.0); `spikes/04` prints `HERMETIC + PARITY OK`, exit 0".
+- **Eval design (test-first):** `node spikes/04-hermetic-vendor.cjs` → 0 blocked external (excl. fixture img) AND alerts=2; `grep andiVersionNumber andi/andi.js`=29.2.2; `git merge upstream/master` dry-run conflict-free.
+- **Scope:** in = fork, LICENSE/NOTICE, jQuery pin, in-repo hermetic proof. out = any `src/` feature work.
+- **Grounding gate:** hermetic + `launchModule` + DOM-primary already proven (`spikes/04`,`05`). Remaining: re-confirm against the in-repo `andi/` post-fork. STOP if the in-repo spike regresses.
+- **Readiness:** GitHub fork done (user action) → `andi/` present; Playwright 1.55 installed (✓).
+- **Risks & mitigations:** SSA repo unavailable → cached clone; fork licensing → Apache-2.0 verified (owner: Arun).
+- **Sizing & owner:** ~0.5 d · Arun · **reversibility: the fork/rename is irreversible → approval-gated.**
+
+**Exit**
+
+- **Run the evals:** V1 (hermetic), V2 (parity), V11 (version) green.
+- **BASSPC self-review** (`self-review` skill) on the spike + skeleton — esp. A (assumptions), P (cleanup).
+- **Definition of Done:** spike green · LICENSE/NOTICE committed · `package.json` test script · board updated · evidence attached.
+- **Goal achieved? + path:** yes → Phase 1. no → revise routing/vendoring (iterate); if hermeticity proves impossible → escalate (reconsider the offline claim).
+- **Improvement + learnings → memory:** record any new ANDI-load surprise vs. the network probe.
+
 ## Task 0.1 — Establish the fork and repo skeleton
 
 **Files:** `LICENSE` (→ Apache-2.0), `NOTICE`, `andi/` (from upstream), `package.json`,
@@ -130,6 +151,27 @@ the now-present `andi/` and pins jQuery.
 ---
 
 # Phase 1 — Compliance-grade core
+
+### Phase Contract
+
+**Entry**
+
+- **Intent & expectations:** turn the v0.1 focusable-only scraper into a reliable multi-module gate. "Good" = deterministic findings across all modules, hermetic, with a trustworthy exit code.
+- **Goal & success metric:** baseline = "1 module, flaky on switch, live ssa.gov dep, 0 tests" → target = "8 modules, **5/5 deterministic runs, 0 external requests**, exit-code matrix green, 9 fixtures pass, per-element DOM-count basis".
+- **Eval design (test-first):** V1 (hermetic), V3 (per-module count/severity/element), V4 (exit-code matrix), V5 (5× determinism), V13 (CSP fixture); each impl is TDD (failing test first).
+- **Scope:** in = vendor-route, ready signals, extraction, modules, aggregate, CLI, fixtures, wcag-map. out = reporters beyond text/json, sitemap, axe, Action.
+- **Grounding gate (still-assumed → spike first):** (a) `bypassCSP:true` lets injection succeed on a real CSP page; (b) modules `s/h/i` launch and produce findings. STOP if either fails.
+- **Readiness:** Phase 0 green (`andi/`, jQuery vendored, `test/` scaffold, `npm test` wired).
+- **Risks & mitigations:** `s/h/i` quirks (spike first); analysis-complete signal flaky (stability-poll + settle, hardened in 1.2); CSP edge cases (V13) — owner Arun.
+- **Sizing & owner:** ~3–4 d · Arun.
+
+**Exit**
+
+- **Run the evals:** V1, V3, V4, V5, V13 green.
+- **BASSPC self-review** — esp. B (bloat across the 6 new `src/` modules — shared helpers, not copies), S (scope), C (CLI I/O modes).
+- **Definition of Done:** `npm test` green · README usage updated · committed · board (AC-001/002) updated · test-output evidence attached.
+- **Goal achieved? + path:** yes → Phase 2. no → flaky module → iterate the signal; un-fixable module → document as known-limitation (**descope**, don't block); regression in hermeticity → rollback.
+- **Improvement + learnings → memory:** modules 1→8, flaky→deterministic, networked→hermetic, tests 0→~15.
 
 ## Task 1.1 — `vendor-route.cjs`: hermetic routing (reusable)
 
@@ -322,6 +364,27 @@ module.exports = { mapAlert, TABLE };
 
 # Phase 2 — Reporting & CI
 
+### Phase Contract
+
+**Entry**
+
+- **Intent & expectations:** make the gate a real CI product — findings land where developers act (inline PR, dashboards, shareable report). "Good" = SARIF renders inline on a real PR.
+- **Goal & success metric:** baseline = "text/json + exit code" → target = "SARIF 2.1.0 (schema-valid) + JUnit (parses) + HTML + sitemap aggregation + GitHub Action uploading SARIF + green self-test workflow".
+- **Eval design (test-first):** V6 (SARIF schema), V7 (JUnit parse), V9 (sitemap), V10 (self-test dogfood), V14 (strict-offline); MV2 (real-PR inline annotation).
+- **Scope:** in = 5 reporters + sitemap + Action + Docker + CI snippets. out = axe, launch docs.
+- **Grounding gate:** spike SARIF ingestion on a throwaway repo (does GitHub render _our_ SARIF inline?) **before** wiring the Action — MV2 is the load-bearing assumption here.
+- **Readiness:** Phase 1 green (`Finding[]` + aggregate + exit contract stable).
+- **Risks & mitigations:** SARIF schema drift (vendor schema + ajv); WCAG-mapping coverage gaps (best-effort, documented) — owner Arun.
+- **Sizing & owner:** ~5–7 d (long poles: SARIF, sitemap) · Arun.
+
+**Exit**
+
+- **Run the evals:** V6, V7, V9, V10, V14 + MV2.
+- **BASSPC self-review** — esp. B across 5 reporters (shared helpers, not 5 copies) and the Harness add-on for the Action.
+- **Definition of Done:** tests green · `docs/ci` + `output-schema` written · committed · board (AC-003) · evidence.
+- **Goal achieved? + path:** yes → Phase 3. no → ship the formats that pass; a failing format → **descope** to a later release (don't block CI value).
+- **Improvement + learnings → memory:** formats 2→5; manual report → CI-native.
+
 ## Task 2.1 — JSON reporter + schema
 
 **Files:** `src/report/json.cjs`, `docs/output-schema.md`, `test/report-json.test.cjs`.
@@ -498,6 +561,27 @@ artifact. Commit `docs: GitLab and Jenkins CI snippets`.
 
 # Phase 3 — Optional axe-core layer (`--with-axe`)
 
+### Phase Contract
+
+**Entry**
+
+- **Intent & expectations:** offer axe as an OPT-IN second layer without diluting the ANDI identity. "Good" = `--with-axe` adds labeled findings; default behavior is byte-for-byte unchanged.
+- **Goal & success metric:** baseline = "ANDI-only" → target = "`--with-axe` merges engine-labeled axe findings, de-duped, on a clean DOM, default off".
+- **Eval design (test-first):** V8 (axe layer: labeled, clean DOM, cross-engine kept) + a unit test for the WCAG transform (412→4.1.2, 1411→1.4.11).
+- **Scope:** in = axe adapter + merge + flag. out = anything that changes the default path.
+- **Grounding gate:** spike that `@axe-core/playwright` runs on a clean page under `bypassCSP` before wiring merge.
+- **Readiness:** Phase 1 aggregate + Phase 2 reporters present (engine label flows through).
+- **Risks & mitigations:** axe DOM-pollution if run on ANDI's page (run on its own clean page); de-dup fragility (the `sig()` rule) — owner Arun.
+- **Sizing & owner:** ~1.5 d · Arun.
+
+**Exit**
+
+- **Run the evals:** V8 + the WCAG-transform test.
+- **BASSPC self-review** — esp. S (scope: default path must be untouched), A (assumptions about axe tag formats).
+- **Definition of Done:** tests green · help/docs updated · committed · board (AC-004) · evidence.
+- **Goal achieved? + path:** yes → Phase 4. no → keep axe behind the flag as experimental (**descope**), never block launch.
+- **Improvement + learnings → memory:** engines 1→2 (opt-in).
+
 ## Task 3.1 — axe adapter on a clean page
 
 **Files:** Create `src/engines/axe.cjs`; Test `test/axe.test.cjs`. **Produces:**
@@ -571,6 +655,27 @@ plumbs through; every reporter shows the `engine` label + `alsoFoundBy`. Commit 
 ---
 
 # Phase 4 — Launch
+
+### Phase Contract
+
+**Entry**
+
+- **Intent & expectations:** ship a credible, honest public v1 the federal/508 audience trusts. "Good" = provenance clear, coverage boundary honest, upstream-sync provable.
+- **Goal & success metric:** baseline = "private, no launch docs" → target = "README/CONTRIBUTING/SECURITY + provenance + sync runbook + selector-contract test + `v1.0.0` tag (publish approval-gated)".
+- **Eval design (test-first):** V11 (version), V15 (selector-contract), V12 (cross-platform CI); MV1 (live `.gov` Trusted-Tester parity).
+- **Scope:** in = docs, sync runbook, version/selector tests, release workflow. out = new features.
+- **Grounding gate:** no new mechanism to ground — but **run MV1 before publishing**.
+- **Readiness:** Phases 1–3 green; npm name free (confirmed); Action validated (Phase 2).
+- **Risks & mitigations:** ANDI trademark on naming (descriptive use; fallback name ready); SSA selector drift (V15) — owner Arun.
+- **Sizing & owner:** ~1.5 d · Arun · **reversibility: publish is irreversible → approval-gated (Task 4.3).**
+
+**Exit**
+
+- **Run the evals:** V11, V12, V15 + MV1.
+- **BASSPC self-review** on the docs — esp. A (over-claims), S (sycophancy: keep the honest coverage banner, don't oversell).
+- **Definition of Done:** docs complete · tests green · tagged · **published only after explicit Arun approval** · board (AC-005) · evidence.
+- **Goal achieved? + path:** yes → v1.0 shipped. no → hold launch, fix, re-eval (**never publish on red**).
+- **Improvement + learnings → memory:** private → public OSS; capture the launch retro.
 
 ## Task 4.1 — README, CONTRIBUTING, SECURITY, provenance
 
