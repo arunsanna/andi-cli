@@ -83,12 +83,24 @@ nodes) and as live JS objects. The spike proved the **internal objects are unrel
 - grouped alert messages ← `#ANDI508-alerts-list` (`.ANDI508-alertGroup-*`)
 - per-element offenders ← `.ANDI508-element-{danger,warning,caution}` (exclude `#ANDI508` UI)
 
-**Count semantics (resolved — this is what tests assert):** the **per-element DOM count is
-authoritative** for `Finding[]` and all test assertions (consistent every run: f:2, c:4,
-t:3, g:3 on the planted fixture). `testPageData.numberOfAccessibilityAlertsFound` counts
-ANDI _alert types/occurrences_ (grouped) and differs from the element count (e.g. contrast
-total=3 vs 4 elements); it is surfaced as a separate informational `andiAlertTotal` field,
-**never** as the assertion basis. This validates the existing `src/scanner.cjs` DOM approach.
+**Count semantics (AMENDED 2026-06-21 — Phase 1 grounding, `spikes/06`):** ANDI surfaces
+findings two ways, split by module — (a) the grouped **alerts list** `#ANDI508-alerts-list`
+(renders "_{Category}: ({n}) {message}_") — present for **all 8 modules**; (b) per-element
+highlights `.ANDI508-element-{severity}` — present **only for `f/c/t/g/l`**. Grounding proved
+`s/h/i` emit **zero** per-element flags; their findings live solely in the alerts list (live
+captures: `i` → "Iframe has no accessible name or [title]"; `h` → "Content injected via
+::before/::after"; `s` → "[role=heading] used without [aria-level]"). `s` also defaults to its
+`headings` sub-mode (lists/landmarks off) and is largely an outline-builder.
+
+Therefore extraction is **alerts-list-primary, per-element-enriched**: emit one `Finding` per
+alerts-list occurrence (severity + message from the group), and **attach** the specific
+offender `element` when a matching `.ANDI508-element-*` highlight exists (`f/c/t/g/l`), else
+`element: null` (page-level alerts: `s/h/i`). The **assertion basis is the per-module
+alerts-list count** (= `testPageData.numberOfAccessibilityAlertsFound`, surfaced as
+`andiAlertTotal`); per-element highlights are **enrichment, not the basis**. (An earlier draft
+made per-element the sole basis — correct for `f/c/t/g/l`, but it silently zeroes out `s/h/i`.)
+The element-vs-alert-total divergence for `f/c/t/g/l` (e.g. contrast: 3 alerts vs 4 elements)
+is preserved as enrichment detail. This refines the existing `src/scanner.cjs` DOM approach.
 
 ## Decision 5 — Multi-module: fresh page context per module, driven by `launchModule`
 
@@ -161,7 +173,7 @@ every `git merge upstream`.
   message:  string,
   wcag:     string[] | null,   // from src/wcag-map.cjs (ANDI) or axe tags; null if unmapped
   element:  { tag: string, html: string, selector: string | null,
-              andiIndex: number | null },
+              andiIndex: number | null } | null,   // null for page-level alerts (s/h/i)
 }
 ```
 
@@ -170,16 +182,16 @@ Severity mapping for axe: `critical→danger`, `serious→warning`, `moderate→
 
 ## Key DOM / JS reference (ANDI v29)
 
-| What                                      | Where                                                                                                                        |
-| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Ready signal                              | `window.andiVersionNumber` set AND `#ANDI508` present AND `window.testPageData.numberOfAccessibilityAlertsFound` is a number |
-| Drive a module (PREFERRED)                | `AndiModule.launchModule('<letter>')` — programmatic; do not menu-click                                                      |
-| Alerts list (DOM, PRIMARY)                | `#ANDI508-alerts-list` (`.ANDI508-alertGroup-*`)                                                                             |
-| Flagged page nodes (ASSERTION BASIS)      | `.ANDI508-element-{danger,warning,caution}` (exclude `#ANDI508` UI)                                                          |
-| ANDI page total (informational only)      | `testPageData.numberOfAccessibilityAlertsFound`                                                                              |
-| Severity arrays (UNRELIABLE — do not use) | `window.andiAlerter.{dangers,warnings,cautions}` — transient buffer emptied after analysis (`spikes/05`)                     |
-| CSP bypass                                | `browser.newContext({ bypassCSP: true })` — required for protected `.gov` targets                                            |
-| Module files (in `andi/`)                 | `fandi`(f) `landi`(l) `tandi`(t) `sandi`(s) `gandi`(g) `handi`(h) `candi`(c) `iandi`(i)                                      |
+| What                                                                  | Where                                                                                                                        |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Ready signal                                                          | `window.andiVersionNumber` set AND `#ANDI508` present AND `window.testPageData.numberOfAccessibilityAlertsFound` is a number |
+| Drive a module (PREFERRED)                                            | `AndiModule.launchModule('<letter>')` — programmatic; do not menu-click                                                      |
+| Alerts list (PRIMARY + ASSERTION BASIS — all 8 modules)               | `#ANDI508-alerts-list` (`li` groups, "_{Category}: ({n}) {message}_")                                                        |
+| Flagged page nodes (ENRICHMENT — `f/c/t/g/l` only; `s/h/i` emit none) | `.ANDI508-element-{danger,warning,caution}` (exclude `#ANDI508` UI)                                                          |
+| ANDI per-module alert count (= basis, surfaced as `andiAlertTotal`)   | `testPageData.numberOfAccessibilityAlertsFound`                                                                              |
+| Severity arrays (UNRELIABLE — do not use)                             | `window.andiAlerter.{dangers,warnings,cautions}` — transient buffer emptied after analysis (`spikes/05`)                     |
+| CSP bypass                                                            | `browser.newContext({ bypassCSP: true })` — required for protected `.gov` targets                                            |
+| Module files (in `andi/`)                                             | `fandi`(f) `landi`(l) `tandi`(t) `sandi`(s) `gandi`(g) `handi`(h) `candi`(c) `iandi`(i)                                      |
 
 ## Non-goals
 

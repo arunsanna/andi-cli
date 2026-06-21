@@ -50,9 +50,11 @@ _Every task implicitly includes these. Verbatim, non-negotiable._
 - **Hermetic + CSP:** every scan context is `browser.newContext({ bypassCSP: true })` (so
   CSP-protected `.gov` targets can't block injection); routing aborts+records all externals;
   `--strict-offline` fails the run if any external was attempted.
-- **Count basis:** test assertions use the **per-element DOM count** (`.ANDI508-element-*`).
-  `testPageData.numberOfAccessibilityAlertsFound` is surfaced as informational `andiAlertTotal`
-  only — never the assertion basis (Decision 4).
+- **Count basis (AMENDED — Phase 1 grounding, `spikes/06`):** assertions use the **per-module
+  alerts-list count** (`#ANDI508-alerts-list` = `testPageData.numberOfAccessibilityAlertsFound`,
+  surfaced as `andiAlertTotal`) — the only signal that exists for `s/h/i`. Per-element flags
+  (`.ANDI508-element-*`, `f/c/t/g/l` only) **enrich** a finding's `element`; not the basis
+  (Decision 4).
 - **Honesty banner** on every human-facing report: _"Automated checks cover a subset of
   Section 508; ANDI surfaces items for human Trusted-Tester judgment."_
 - **Verify every change:** `npm test` green AND `npm run test:fixture` exit code as expected.
@@ -157,10 +159,10 @@ the now-present `andi/` and pins jQuery.
 **Entry**
 
 - **Intent & expectations:** turn the v0.1 focusable-only scraper into a reliable multi-module gate. "Good" = deterministic findings across all modules, hermetic, with a trustworthy exit code.
-- **Goal & success metric:** baseline = "1 module, flaky on switch, live ssa.gov dep, 0 tests" → target = "8 modules, **5/5 deterministic runs, 0 external requests**, exit-code matrix green, 9 fixtures pass, per-element DOM-count basis".
+- **Goal & success metric:** baseline = "1 module, flaky on switch, live ssa.gov dep, 0 tests" → target = "8 modules, **5/5 deterministic runs, 0 external requests**, exit-code matrix green, 9 fixtures pass, alerts-list-count basis (per-element enrichment for f/c/t/g/l)".
 - **Eval design (test-first):** V1 (hermetic), V3 (per-module count/severity/element), V4 (exit-code matrix), V5 (5× determinism), V13 (CSP fixture); each impl is TDD (failing test first).
 - **Scope:** in = vendor-route, ready signals, extraction, modules, aggregate, CLI, fixtures, wcag-map. out = reporters beyond text/json, sitemap, axe, Action.
-- **Grounding gate (still-assumed → spike first):** (a) `bypassCSP:true` lets injection succeed on a real CSP page; (b) modules `s/h/i` launch and produce findings. STOP if either fails.
+- **Grounding gate — RESOLVED 2026-06-21 (`spikes/06`):** (a) `bypassCSP:true` injection on a real CSP-header page — **PROVEN** (no-bypass refused; bypass → findings, 0 external); (b) `s/h/i` launch + produce findings — **PROVEN but alerts-list-only** (zero per-element flags; `s` defaults to its headings sub-mode). Extraction amended to alerts-list-primary (Decision 4, Task 1.3).
 - **Readiness:** Phase 0 green (`andi/`, jQuery vendored, `test/` scaffold, `npm test` wired).
 - **Risks & mitigations:** `s/h/i` quirks (spike first); analysis-complete signal flaky (stability-poll + settle, hardened in 1.2); CSP edge cases (V13) — owner Arun.
 - **Sizing & owner:** ~3–4 d · Arun.
@@ -248,12 +250,15 @@ polls until the alerts list + total are stable across 3 × 250ms polls (see `spi
 **Files:** Create `src/extract.cjs`; Test `test/extract.test.cjs`.
 **Produces:** `extractFindings()` (in-page via `page.evaluate`) → `Finding[]`. **Read the DOM
 (grounded by `spikes/05`): `window.andiAlerter` is a transient buffer ANDI empties; do NOT
-use it.** Per-element offenders ← `.ANDI508-element-{danger,warning,caution}` (exclude
-`#ANDI508`); grouped message text ← nearest `.ANDI508-alertGroup-*`; `andiAlertTotal` ←
-`testPageData.numberOfAccessibilityAlertsFound` (informational). **The per-element count is
-the assertion basis.** Each finding: `engine:'andi'`, current `module`, `severity` (from the
-element's `-danger/-warning/-caution` class), `rule`+`wcag` (via `mapAlert`, Task 1.8),
-`message`, `element` (`tag`, `html`, `andiIndex`, `selector` best-effort).
+use it.** **Alerts-list-primary (grounded by `spikes/06`):** iterate `#ANDI508-alerts-list`
+groups (each "_{Category}: ({n}) {message}_") → one `Finding` per occurrence; `severity` from
+the alert group's category/class; `message` from the group text; `andiAlertTotal` ←
+`testPageData.numberOfAccessibilityAlertsFound`. **Enrich:** when a matching
+`.ANDI508-element-{danger,warning,caution}` highlight exists (`f/c/t/g/l` only), attach it as
+`element` (`tag`, `html`, `andiIndex`, `selector` best-effort); otherwise `element: null`
+(page-level alerts — `s/h/i`). **The per-module alerts-list count is the assertion basis**
+(per-element is enrichment). Each finding: `engine:'andi'`, current `module`, `severity`,
+`rule`+`wcag` (via `mapAlert`, Task 1.8), `message`, `element|null`.
 
 - [ ] Steps: failing test (2 `danger` findings for `focusable.html`, each with `engine:'andi'`,
       `module:'focusable'`, non-empty `element.html`) → FAIL → implement → PASS → commit
@@ -304,11 +309,18 @@ threshold / 2 error). Move the human report to `report/text.cjs` + honesty banne
 ## Task 1.7 — Per-module + CSP fixtures + integration suite (closes AC-002)
 
 **Files:** Create `test/fixtures/{focusable,contrast,tables,structures,graphics,links,hidden,iframes,csp}.html`,
-`test/scan.integration.test.cjs`. Each module fixture has one planted, documented violation.
-`csp.html` adds `<meta http-equiv="Content-Security-Policy" content="script-src 'self'">` plus
-a planted violation — proves `bypassCSP` lets injection succeed where CSP would otherwise block.
+`test/scan.integration.test.cjs`. Each fixture has one planted, documented violation. **For
+`f/c/t/g/l`** assert severity + offender `element`. **For `s/h/i` (grounded `spikes/06` — no
+per-element flags)** assert the **alerts-list message + count** with `element: null`:
+`structures` → `<div role="heading">` w/o `aria-level` (caution; `s` default mode = headings);
+`hidden` → CSS `::before` content injection (warning); `iframes` → untitled `<iframe>` ("Iframe
+has no accessible name or [title]" → danger, maps `iframe-no-title`). `csp.html` adds a
+restrictive CSP (`spikes/06` proved bypass via a CSP **response header**; a `<meta
+http-equiv="Content-Security-Policy" content="script-src 'self'">` fixture exercises the same
+inline-injection block) plus a planted violation — proves `bypassCSP` lets injection succeed
+where CSP would otherwise block.
 
-- [ ] Steps: build the 9 fixtures → integration test asserts per-module count/severity/element + exit code under `--fail-on danger`, and that the CSP fixture still yields findings →
+- [ ] Steps: build the 9 fixtures → integration test asserts per-module alerts-list count + severity (+ `element` for `f/c/t/g/l`, `element:null` for `s/h/i`) + exit code under `--fail-on danger`, and that the CSP fixture still yields findings →
       `npm test` green → commit `test: per-module + CSP fixtures + integration suite`.
 
 ## Task 1.8 — `wcag-map.cjs`: ANDI alert → WCAG (best-effort)
@@ -710,23 +722,23 @@ Short post framing the gap, the federal audience, and the honest coverage bounda
 
 Each layer is automated unless marked manual. The gate is green only when all pass.
 
-| #   | Layer                      | Proves                                  | How                                                                                         |
-| --- | -------------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------- |
-| V1  | **Hermetic network**       | Zero egress                             | `test/vendor-route.test.cjs`: `externalAttempts` (excl. fixture img) empty                  |
-| V2  | **Vendor parity**          | Vendoring didn't change output          | Scan `fixture.html` vendored vs. live; identical alert set                                  |
-| V3  | **Per-module correctness** | Each module flags its violation         | `scan.integration.test.cjs` over 8 fixtures: **per-element DOM count** + severity + element |
-| V4  | **Exit-code matrix**       | Gate contract holds                     | `test/cli.test.cjs`: each `--fail-on` × fixture → 0/1/2 (table below)                       |
-| V5  | **Determinism**            | No flaky multi-module                   | Module `c`,`t` scans 5× in CI; identical findings                                           |
-| V6  | **SARIF validity**         | GitHub code scanning ingests it         | `report-sarif.test.cjs`: validate against vendored SARIF 2.1.0 schema (ajv)                 |
-| V7  | **JUnit validity**         | CI dashboards parse it                  | Parse XML; failure count = findings ≥ threshold                                             |
-| V8  | **axe layer**              | Merges, labels, clean DOM               | `--with-axe`: axe findings labeled; cross-engine collisions kept                            |
-| V9  | **Sitemap aggregation**    | Multi-page rolls up + worst exit        | 2-page fixture sitemap → both present, exit = worst                                         |
-| V10 | **CI self-test (dogfood)** | The Action gates real builds            | `selftest.yml`: clean → green; violation + `--fail-on danger` → red                         |
-| V11 | **Version tracking**       | Releases track ANDI                     | `version.test.cjs` matches `andi/andi.js`                                                   |
-| V12 | **Cross-platform**         | Works on the real CI target             | `selftest.yml` on `ubuntu-latest` headless; macOS dev smoke                                 |
-| V13 | **CSP injection**          | Protected `.gov` targets still scan     | `csp.html` (restrictive CSP meta) yields findings under `bypassCSP`                         |
-| V14 | **`--strict-offline`**     | The offline flag actually fails loudly  | `test/strict-offline.test.cjs`: a route to a non-vendored asset → non-zero exit             |
-| V15 | **Selector contract**      | Upstream merges can't silently break us | `selectors.contract.test.cjs`: load-bearing selectors + `launchModule` present after load   |
+| #   | Layer                      | Proves                                  | How                                                                                                                                                |
+| --- | -------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| V1  | **Hermetic network**       | Zero egress                             | `test/vendor-route.test.cjs`: `externalAttempts` (excl. fixture img) empty                                                                         |
+| V2  | **Vendor parity**          | Vendoring didn't change output          | Scan `fixture.html` vendored vs. live; identical alert set                                                                                         |
+| V3  | **Per-module correctness** | Each module flags its violation         | `scan.integration.test.cjs` over 8 fixtures: **per-module alerts-list count** + severity (+ `element` for `f/c/t/g/l`; `element:null` for `s/h/i`) |
+| V4  | **Exit-code matrix**       | Gate contract holds                     | `test/cli.test.cjs`: each `--fail-on` × fixture → 0/1/2 (table below)                                                                              |
+| V5  | **Determinism**            | No flaky multi-module                   | Module `c`,`t` scans 5× in CI; identical findings                                                                                                  |
+| V6  | **SARIF validity**         | GitHub code scanning ingests it         | `report-sarif.test.cjs`: validate against vendored SARIF 2.1.0 schema (ajv)                                                                        |
+| V7  | **JUnit validity**         | CI dashboards parse it                  | Parse XML; failure count = findings ≥ threshold                                                                                                    |
+| V8  | **axe layer**              | Merges, labels, clean DOM               | `--with-axe`: axe findings labeled; cross-engine collisions kept                                                                                   |
+| V9  | **Sitemap aggregation**    | Multi-page rolls up + worst exit        | 2-page fixture sitemap → both present, exit = worst                                                                                                |
+| V10 | **CI self-test (dogfood)** | The Action gates real builds            | `selftest.yml`: clean → green; violation + `--fail-on danger` → red                                                                                |
+| V11 | **Version tracking**       | Releases track ANDI                     | `version.test.cjs` matches `andi/andi.js`                                                                                                          |
+| V12 | **Cross-platform**         | Works on the real CI target             | `selftest.yml` on `ubuntu-latest` headless; macOS dev smoke                                                                                        |
+| V13 | **CSP injection**          | Protected `.gov` targets still scan     | `csp.html` (restrictive CSP meta) yields findings under `bypassCSP`                                                                                |
+| V14 | **`--strict-offline`**     | The offline flag actually fails loudly  | `test/strict-offline.test.cjs`: a route to a non-vendored asset → non-zero exit                                                                    |
+| V15 | **Selector contract**      | Upstream merges can't silently break us | `selectors.contract.test.cjs`: load-bearing selectors + `launchModule` present after load                                                          |
 
 ### Exit-code matrix (V4)
 
