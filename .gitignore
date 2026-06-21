@@ -5,3 +5,6 @@ results/
 # scan outputs
 *.andi.json
 *.andi.html
+
+# from upstream ANDI
+*.bak
