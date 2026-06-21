@@ -11,7 +11,7 @@
     "playwright",
     "ci"
   ],
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "Arun Sanna",
   "type": "commonjs",
   "bin": {
@@ -20,6 +20,7 @@
   "main": "src/scanner.cjs",
   "scripts": {
     "scan": "node src/cli.cjs",
+    "test": "node --test test/",
     "test:fixture": "node src/cli.cjs --url file://$PWD/examples/fixture.html"
   },
   "engines": {
@@ -27,5 +28,8 @@
   },
   "dependencies": {
     "playwright": "1.55.0"
+  },
+  "optionalDependencies": {
+    "@axe-core/playwright": "^4.10.0"
   }
 }

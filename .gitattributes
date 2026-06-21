@@ -15,3 +15,6 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# andi-cli: vendored upstream ANDI tree (never modified)
+andi/** linguist-vendored

@@ -1,0 +1,9 @@
+andi-cli bundles the SSA ANDI tool (directory andi/), unmodified.
+
+ANDI — Accessible Name & Description Inspector
+Copyright: U.S. Social Security Administration
+Source: https://github.com/SSAgov/ANDI
+License: Apache License, Version 2.0 (see LICENSE).
+
+The wrapper code (src/, test/, .github/, docs/, examples/, spikes/) is also
+licensed under the Apache License, Version 2.0.
