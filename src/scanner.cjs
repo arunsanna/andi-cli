@@ -3,17 +3,17 @@
  * andi-cli scanner — run the SSA ANDI accessibility tool headlessly and return
  * structured Section 508 findings.
  *
- * Strategy (validated by spikes/01-feasibility.cjs + spikes/02-internals-probe.cjs):
- *   1. Load the target URL in headless Chromium.
- *   2. Inject the official andi.js source — ANDI auto-launches and builds its UI.
- *   3. Read the page-level summary (#ANDI508-additionalPageResults) + window.testPageData.
- *   4. Step ANDI's focusable-element list, harvesting per-element alerts with severity.
- *
- * ANDI is element-by-element by design, so we drive its element iteration rather
- * than expecting a single page report (unlike axe-core's one-shot axe.run()).
+ * Strategy (validated by spikes/01-feasibility.cjs + spikes/02-internals-probe.cjs
+ * + spikes/04-hermetic-vendor.cjs):
+ *   1. Load the target URL in headless Chromium with bypassCSP:true.
+ *   2. Install vendor routes (local andi/ + jquery) so no network calls reach ssa.gov.
+ *   3. Inject jQuery then local andi/andi.js via addScriptTag.
+ *   4. Wait for deterministic ready signal (waitAndiReady) + stable results (waitModuleStable).
+ *   5. Read the page-level summary + flagged elements.
  */
 
-const DEFAULT_ANDI_SRC = 'https://www.ssa.gov/accessibility/andi/andi.js';
+const path = require('path');
+const { installVendorRoutes, ANDI_DIR, JQUERY } = require('./vendor-route.cjs');
 
 /** Resolve playwright without forcing a specific install layout. */
 function resolvePlaywright() {
@@ -26,6 +26,59 @@ function resolvePlaywright() {
   throw new Error(
     'Could not load Playwright. Run `npm install` in andi-cli, or set ' +
     'ANDI_PLAYWRIGHT_PATH to a playwright install.\nTried:\n  ' + tried.join('\n  ')
+  );
+}
+
+/**
+ * Resolves when ANDI has fully initialized:
+ *   - window.andiVersionNumber is set
+ *   - #ANDI508 element exists in the DOM
+ *   - testPageData.numberOfAccessibilityAlertsFound is a number
+ *
+ * Uses page.waitForFunction — no fixed sleeps.
+ *
+ * @param {import('playwright').Page} page
+ * @param {number} [timeout=30000]
+ * @returns {Promise<void>}
+ */
+async function waitAndiReady(page, timeout = 30000) {
+  await page.waitForFunction(
+    () => !!window.andiVersionNumber &&
+          !!document.getElementById('ANDI508') &&
+          !!window.testPageData &&
+          typeof window.testPageData.numberOfAccessibilityAlertsFound === 'number',
+    { timeout }
+  );
+}
+
+/**
+ * Resolves when ANDI's results have stabilized — the combined signature
+ * of (#ANDI508-alerts-list innerHTML length) + ':' + testPageData.numberOfAccessibilityAlertsFound
+ * is unchanged across 3 consecutive polls at 250ms intervals.
+ *
+ * Pattern proven by spikes/04-hermetic-vendor.cjs (moduleStable function).
+ * Uses page.waitForFunction — no fixed sleeps.
+ *
+ * @param {import('playwright').Page} page
+ * @param {number} [timeout=12000]
+ * @returns {Promise<void>}
+ */
+async function waitModuleStable(page, timeout = 12000) {
+  await page.waitForFunction(
+    () => {
+      const l = document.getElementById('ANDI508-alerts-list');
+      const sig = (l ? l.innerHTML.length : 0) + ':' +
+        (window.testPageData && window.testPageData.numberOfAccessibilityAlertsFound);
+      window.__andiStable = window.__andiStable || { v: null, n: 0 };
+      if (window.__andiStable.v === sig) {
+        window.__andiStable.n++;
+      } else {
+        window.__andiStable.v = sig;
+        window.__andiStable.n = 0;
+      }
+      return window.__andiStable.n >= 3;
+    },
+    { timeout, polling: 250 }
   );
 }
 
@@ -102,39 +155,43 @@ const ANDI_MODULES = { f: 'focusable', g: 'graphics/images', l: 'links/buttons',
 
 /**
  * Scan a single URL with ANDI.
+ * Context is created with bypassCSP:true and vendor routes intercept all
+ * ssa.gov ANDI requests to local files — no live network dependency.
+ *
  * @param {string} url
- * @param {{andiSrc?:string, timeoutMs?:number, headless?:boolean, screenshot?:string}} [opts]
- * @returns {Promise<object>} structured findings
+ * @param {{timeoutMs?:number, headless?:boolean, screenshot?:string, module?:string}} [opts]
+ * @returns {Promise<object>} structured findings including externalAttempts
  */
 async function scan(url, opts = {}) {
-  const andiSrc = opts.andiSrc || DEFAULT_ANDI_SRC;
   const timeoutMs = opts.timeoutMs || 30000;
   const { chromium } = resolvePlaywright();
 
   const browser = await chromium.launch({ headless: opts.headless !== false });
   const startedAt = new Date().toISOString();
-  const failedRequests = [];
   try {
-    const page = await (await browser.newContext()).newPage();
-    page.on('response', (r) => { if (r.status() >= 400) failedRequests.push(`${r.status()} ${r.url()}`); });
+    const ctx = await browser.newContext({ bypassCSP: true });
+    const page = await ctx.newPage();
+
+    const { externalAttempts } = await installVendorRoutes(page);
 
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
-    await page.addScriptTag({ url: andiSrc });
-    await page.waitForFunction(
-      () => !!window.andiVersionNumber && !!document.getElementById('ANDI508'),
-      { timeout: timeoutMs }
-    );
-    await page.waitForTimeout(1200);
+    await page.addScriptTag({ path: JQUERY });
+    await page.addScriptTag({ path: path.join(ANDI_DIR, 'andi.js') });
+
+    await waitAndiReady(page, timeoutMs);
 
     // Optionally switch ANDI module (default is focusable elements).
     const mod = opts.module || 'f';
     if (mod !== 'f' && ANDI_MODULES[mod]) {
       await page.evaluate((mm) => {
+        // Reset stability tracker before switching modules
+        window.__andiStable = null;
         const b = document.getElementById('ANDI508-moduleMenu-button-' + mm);
         if (b) b.click();
       }, mod);
-      await page.waitForTimeout(1500);
     }
+
+    await waitModuleStable(page, 12000);
 
     const findings = await page.evaluate(extractFindings);
     if (opts.screenshot) await page.screenshot({ path: opts.screenshot, fullPage: true });
@@ -142,14 +199,13 @@ async function scan(url, opts = {}) {
     return {
       url,
       scannedAt: startedAt,
-      andiSource: andiSrc,
       module: ANDI_MODULES[mod] || mod,
       ...findings,
-      failedRequests: failedRequests.slice(0, 25),
+      externalAttempts,
     };
   } finally {
     await browser.close();
   }
 }
 
-module.exports = { scan, DEFAULT_ANDI_SRC, ANDI_MODULES };
+module.exports = { scan, waitAndiReady, waitModuleStable, ANDI_MODULES };
