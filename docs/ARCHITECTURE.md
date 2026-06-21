@@ -4,10 +4,10 @@
 > alerts / exit 1 on the fixture. **Hermetic execution is proven** — routing every ANDI asset
 > from a local `andi/` clone yields a scan with **zero external requests** and identical
 > findings (`spikes/04`, `spikes/05`). `AndiModule.launchModule(letter)` drives modules
-> programmatically. **Extraction is DOM-primary** (corrected from an earlier assumption — see
+> programmatically. **Extraction is DOM-primary** (internal objects proved unreliable —
 > Decision 4).
-> **Designed, pending build:** multi-module aggregation, SARIF/JUnit/HTML, optional axe layer,
-> sitemap. See `docs/PLAN.md`.
+> **Designed, pending build:** CSP bypass for protected targets, multi-module aggregation,
+> ANDI→WCAG mapping, SARIF/JUnit/HTML, optional axe layer, sitemap. See `docs/PLAN.md`.
 
 ## The problem
 
@@ -31,8 +31,8 @@ SSA's updates.
 ## Decision 2 — Repo model: a literal fork of `SSAgov/ANDI`
 
 ANDI's source is public at **`github.com/SSAgov/ANDI`** under the **Apache License 2.0**
-(registered with GSA code.gov as open source). We make `arunsanna/andi-cli` a **literal
-GitHub fork** of it. This buys three things:
+(verified by reading `LICENSE.md`; registered with GSA code.gov as open source). We make
+`arunsanna/andi-cli` a **literal GitHub fork**. This buys three things:
 
 1. **Provenance** — GitHub's "forked from SSAgov/ANDI" badge is a trust signal the federal
    audience values; this _is_ ANDI, not a reimplementation.
@@ -40,82 +40,75 @@ GitHub fork** of it. This buys three things:
    changes; we cut a new `andi-cli` release that provably tracks the new ANDI version.
 3. **Contribute back** — improvements to ANDI itself go upstream as PRs from the fork.
 
-**License:** the fork is **Apache-2.0** for the whole repo (inherited). Our CLI code is
-added under Apache-2.0 too (MIT-compatible, but a single license keeps the fork clean).
+**License:** the fork is **Apache-2.0** for the whole repo. **Hard rule — never modify
+`andi/`.** All our code lives in `src/`, `test/`, `.github/`, `docs/`. The upstream tree
+stays byte-for-byte so `git merge upstream` is conflict-free. Because ANDI's DOM selectors
+are version-coupled, an upstream merge can silently break extraction even when the version
+test passes — so a **selector-contract test** (Decision 9) guards every sync, not just a
+version-string check.
 
-**Hard rule — never modify `andi/`.** All our code lives in separate top-level dirs
-(`src/`, `test/`, `.github/`, `docs/`). The upstream ANDI tree (`andi/andi.js`, the module
-files, CSS, icons) stays **byte-for-byte upstream** so `git merge upstream` is always
-conflict-free. "Wrap, don't fork the _code_" holds even though we "fork the _repo_."
+## Decision 3 — Hermetic (offline) execution via request routing + CSP bypass
 
-## Decision 3 — Hermetic (offline) execution via request routing
+A network probe (2026-06-20) showed a single focusable scan makes **18 requests — 15 to
+`ssa.gov`** (`andi.js`, `andi.css`, `fandi.js`, 11 icons) plus **1 to googleapis** (jQuery).
+That live dependency is unacceptable for a compliance gate. Because the fork **already
+contains every one of those files** (`andi/`), we make scans hermetic at the network
+boundary:
 
-A network probe (`spikes/`, 2026-06-20) showed a single focusable scan makes **18 requests
-— 15 to `ssa.gov`** (`andi.js`, `andi.css`, `fandi.js` (the focusable module!), and 11
-icon PNGs) plus **1 to `ajax.googleapis.com`** (jQuery 3.7.1). That live dependency is
-unacceptable for a compliance gate: a build must not fail because `ssa.gov` is down,
-rate-limiting (`curl` already gets `403` from its CDN), or silently changed.
+- `page.route('**/*', …)` serves every ANDI asset and the pinned jQuery from local files.
+- Any un-routed external request is **blocked and recorded**; `--strict-offline` fails the
+  run if that list is non-empty.
 
-Because the fork **already contains every one of those files** (`andi/`), we make scans
-hermetic by intercepting at the network boundary:
-
-- `page.route('**/accessibility/andi/**', …)` fulfils every ANDI asset from the local
-  `andi/` tree.
-- jQuery is pinned (`src/vendor/jquery-3.7.1.min.js`) and pre-injected so ANDI skips its
-  googleapis fetch.
-- Any un-routed external request is **blocked and recorded** — a scan that tries to reach
-  the network fails loudly rather than silently degrading.
-
-Net result: identical output on every run, air-gapped CI included. This is the same
-principle as a hermetic build — control the dependency at the boundary, don't trust the
-internet at test time.
+**CSP bypass (load-bearing for the target audience).** ANDI is injected with `addScriptTag`,
+which a target page's `Content-Security-Policy` — common on federal `.gov` — would block,
+along with the (routed) ANDI module/CSS fetches. The browser **context is created with
+`bypassCSP: true`**, which disables CSP enforcement for the automated scan so injection and
+the locally-routed assets always load. Net: the page can neither block our injection (CSP
+off) nor reach the network (routes abort externals). `bypassCSP` is a Playwright
+testing-time context flag; it does not alter what real users experience and is the correct
+tool for an automated scanner. (A target that defends against automation in other ways —
+e.g. requiring auth — is a documented non-goal.)
 
 ## Decision 4 — Extraction: DOM-primary (grounded by spike, 2026-06-20)
 
-> **Corrected.** An earlier draft preferred ANDI's internal JS objects. A spike (`spikes/05`)
-> disproved that — see below. The DOM is authoritative.
+> **Corrected.** An earlier draft preferred ANDI's internal JS objects. `spikes/05`
+> disproved that.
 
 ANDI exposes results as DOM (`#ANDI508-alerts-list` groups + `.ANDI508-element-*` flagged
-nodes) and as live JS objects (`window.andiAlerter`, `window.testPageData`). The spike proved
-the **internal objects are unreliable**: `andiAlerter.{dangers,warnings,cautions}` is a
-transient build buffer ANDI empties after analysis (it read `0/0/0` for the focusable and
-contrast modules even in fresh contexts with a 1.2s settle), and `testPageData.pageAlerts`
-is empty. The **DOM is authoritative and consistent**:
+nodes) and as live JS objects. The spike proved the **internal objects are unreliable**:
+`andiAlerter.{dangers,warnings,cautions}` is a transient buffer ANDI empties after analysis
+(read `0/0/0` for the focusable and contrast modules even after a 1.2s settle), and
+`testPageData.pageAlerts` is empty. The **DOM is authoritative**:
 
 - grouped alert messages ← `#ANDI508-alerts-list` (`.ANDI508-alertGroup-*`)
-- per-element offenders ← `.ANDI508-element-{danger,warning,caution}` (exclude `#ANDI508` UI);
-  consistent counts every run (f:2, c:4, t:3, g:3 on the planted fixture)
-- page total ← `testPageData.numberOfAccessibilityAlertsFound` (counts alert _types/occurrences_,
-  distinct from the per-element count — report both, don't conflate)
+- per-element offenders ← `.ANDI508-element-{danger,warning,caution}` (exclude `#ANDI508` UI)
 
-This validates the existing `src/scanner.cjs` DOM approach. All sources normalize to one
-`Finding` shape (below).
+**Count semantics (resolved — this is what tests assert):** the **per-element DOM count is
+authoritative** for `Finding[]` and all test assertions (consistent every run: f:2, c:4,
+t:3, g:3 on the planted fixture). `testPageData.numberOfAccessibilityAlertsFound` counts
+ANDI _alert types/occurrences_ (grouped) and differs from the element count (e.g. contrast
+total=3 vs 4 elements); it is surfaced as a separate informational `andiAlertTotal` field,
+**never** as the assertion basis. This validates the existing `src/scanner.cjs` DOM approach.
 
 ## Decision 5 — Multi-module: fresh page context per module, driven by `launchModule`
 
 ANDI is module-by-module by design and switching **in place** is unreliable (the original
-flakiness). A spike (`spikes/04`) proved `andi.js` exposes `AndiModule.launchModule(letter)`
-(≈ line 132; `var host_url` is hardcoded at line 11 — which is _why_ routing, not variable
-override, is the hermetic mechanism). Each requested module in `{f,g,l,t,s,c,h,i}` runs in
-its **own fresh page** (route → inject → `launchModule(letter)` → wait for the alerts list +
-total to stabilize across 3 polls + a settle → extract from the DOM → close), then results
-aggregate. Fresh-context isolation produced consistent per-module DOM counts (f:2, c:4, t:3,
-g:3 on the planted fixture) where in-place internal-array reads did not. A few seconds per
-module is the right trade for a deterministic gate.
+flakiness). `spikes/04` proved `andi.js` exposes `AndiModule.launchModule(letter)` (≈ line
+132; `var host_url` is hardcoded at line 11 — which is _why_ routing, not variable override,
+is the hermetic mechanism). Each requested module in `{f,g,l,t,s,c,h,i}` runs in its **own
+fresh page** (route → inject → `launchModule(letter)` → wait for the alerts list + total to
+stabilize across 3 polls + a settle → extract from the DOM → close), then results aggregate.
+Fresh-context isolation produced consistent per-module counts where in-place reads did not.
 
 ## Decision 6 — Optional axe-core layer (`--with-axe`), off by default
 
 axe-core is the dominant generic engine but a _different category_ (automated pass/fail vs.
 ANDI's Trusted-Tester aid). To keep the tool's identity sharp ("the ANDI gate"), axe is an
 **opt-in second layer**, never the default. With `--with-axe`, `@axe-core/playwright` runs
-on a **clean page load** (no ANDI UI to pollute its DOM), and results merge into the same
-report **labeled by engine** (`engine: 'andi' | 'axe'`), de-duped on element+rule. axe adds
-fast breadth; ANDI provides the federal alignment.
+on a **clean page load** (no ANDI UI to pollute its DOM), and results merge **labeled by
+engine** (`engine: 'andi' | 'axe'`). axe adds breadth; ANDI provides the federal alignment.
 
 ## Decision 7 — Output formats built for CI adoption
-
-Research showed SARIF and JUnit are the formats that drive CI adoption and are
-_underserved_ in OSS a11y (axe needs a stale third-party SARIF converter). We ship:
 
 | Format          | Flag               | Purpose                                      |
 | --------------- | ------------------ | -------------------------------------------- |
@@ -126,13 +119,37 @@ _underserved_ in OSS a11y (axe needs a stale third-party SARIF converter). We sh
 | **HTML**        | `--html <file>`    | Shareable report for VPAT/ACR authors        |
 
 Every human-facing report carries an **honesty banner**: _"Automated checks cover a subset
-of Section 508; ANDI surfaces items for human Trusted-Tester judgment."_ This is a
-credibility feature — it is why reviewers trust the tool instead of over-relying on a green
-check.
+of Section 508; ANDI surfaces items for human Trusted-Tester judgment."_
+
+## Decision 8 — ANDI→WCAG mapping: explicit, best-effort, honest about coverage
+
+SARIF and VPAT/ACR consumers want a WCAG success-criterion per finding, but ANDI's DOM
+emits human alert _text_, not criterion IDs. We maintain an explicit map
+(`src/wcag-map.cjs`) keyed by a normalized ANDI alert signature → `{ ruleId, wcag[],
+helpUri }`. It is **partial by design**: mapped alerts carry their WCAG tags; unmapped
+alerts get `wcag: null` and a generic ANDI help URL, and the docs state coverage honestly
+(no false precision). Seed entries (extend as modules land):
+
+| ANDI alert (normalized)           | ruleId               | WCAG         |
+| --------------------------------- | -------------------- | ------------ |
+| no accessible name (control)      | `no-accessible-name` | 4.1.2        |
+| image no alt / no accessible name | `image-no-name`      | 1.1.1        |
+| low contrast                      | `low-contrast`       | 1.4.3        |
+| table missing headers             | `table-no-headers`   | 1.3.1        |
+| skipped/empty heading             | `heading-structure`  | 1.3.1, 2.4.6 |
+| iframe no title                   | `iframe-no-title`    | 4.1.2, 2.4.1 |
+| duplicate id                      | `duplicate-id`       | 4.1.1        |
+
+## Decision 9 — Selector-contract test guards every upstream sync
+
+Because the fork tracks upstream ANDI, a future SSA release could rename a load-bearing
+selector and silently zero out findings while the version test still passes. A
+`test/selectors.contract.test.cjs` asserts, after loading `andi/andi.js` headless, that
+`#ANDI508`, `#ANDI508-alerts-list`, the `.ANDI508-element-*` mechanism, the ready signal
+shape, and `AndiModule.launchModule` are all present. It runs in CI and is mandatory after
+every `git merge upstream`.
 
 ## The unified `Finding` shape
-
-All engines/modules/reporters speak one shape:
 
 ```js
 {
@@ -140,40 +157,39 @@ All engines/modules/reporters speak one shape:
   module:   'focusable' | 'graphics' | 'links' | 'tables' | 'structures'
             | 'contrast' | 'hidden' | 'iframes' | null,   // null for axe
   severity: 'danger' | 'warning' | 'caution' | 'info',
-  rule:     string,        // ANDI alert label, or axe rule id (e.g. 'image-alt')
+  rule:     string,        // ANDI ruleId from wcag-map, or axe rule id (e.g. 'image-alt')
   message:  string,
-  wcag:     string[] | null,   // axe provides; ANDI mapped where known
+  wcag:     string[] | null,   // from src/wcag-map.cjs (ANDI) or axe tags; null if unmapped
   element:  { tag: string, html: string, selector: string | null,
               andiIndex: number | null },
 }
 ```
 
 Severity mapping for axe: `critical→danger`, `serious→warning`, `moderate→caution`,
-`minor→info`. SARIF level mapping: `danger→error`, `warning→warning`, `caution/info→note`.
+`minor→info`. SARIF level: `danger→error`, `warning→warning`, `caution/info→note`.
 
 ## Key DOM / JS reference (ANDI v29)
 
-| What                                                     | Where                                                                                                                                                                             |
-| -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Ready signal                                             | `window.andiVersionNumber` set AND `#ANDI508` present AND `window.testPageData.numberOfAccessibilityAlertsFound` defined                                                          |
-| Page summary                                             | `#ANDI508-pageAnalysis` (fallback `#ANDI508-additionalPageResults`)                                                                                                               |
-| Alerts list (DOM, PRIMARY)                               | `#ANDI508-alerts-list`                                                                                                                                                            |
-| Alert group                                              | `.ANDI508-alertGroup-container` (+ `ANDI508-display-<severity>`)                                                                                                                  |
-| Group items                                              | `.ANDI508-alertGroup-list > li`                                                                                                                                                   |
-| Flagged page nodes                                       | `.ANDI508-element-danger` / `-warning` / `-caution` (exclude `#ANDI508` UI)                                                                                                       |
-| Severity arrays (UNRELIABLE — transient, see Decision 4) | `window.andiAlerter.{dangers,warnings,cautions}` (emptied after analysis; do not use)                                                                                             |
-| Total count                                              | `window.testPageData.numberOfAccessibilityAlertsFound`                                                                                                                            |
-| Module buttons                                           | `#ANDI508-moduleMenu-button-{f,g,l,t,s,c,h,i}`                                                                                                                                    |
-| Module files (in `andi/`)                                | `fandi.js` (focusable), `landi.js` (links), `tandi.js` (tables), `sandi.js` (structures), `gandi.js` (graphics), `handi.js` (hidden), `candi.js` (contrast), `iandi.js` (iframes) |
+| What                                      | Where                                                                                                                        |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Ready signal                              | `window.andiVersionNumber` set AND `#ANDI508` present AND `window.testPageData.numberOfAccessibilityAlertsFound` is a number |
+| Drive a module (PREFERRED)                | `AndiModule.launchModule('<letter>')` — programmatic; do not menu-click                                                      |
+| Alerts list (DOM, PRIMARY)                | `#ANDI508-alerts-list` (`.ANDI508-alertGroup-*`)                                                                             |
+| Flagged page nodes (ASSERTION BASIS)      | `.ANDI508-element-{danger,warning,caution}` (exclude `#ANDI508` UI)                                                          |
+| ANDI page total (informational only)      | `testPageData.numberOfAccessibilityAlertsFound`                                                                              |
+| Severity arrays (UNRELIABLE — do not use) | `window.andiAlerter.{dangers,warnings,cautions}` — transient buffer emptied after analysis (`spikes/05`)                     |
+| CSP bypass                                | `browser.newContext({ bypassCSP: true })` — required for protected `.gov` targets                                            |
+| Module files (in `andi/`)                 | `fandi`(f) `landi`(l) `tandi`(t) `sandi`(s) `gandi`(g) `handi`(h) `candi`(c) `iandi`(i)                                      |
 
 ## Non-goals
 
 - Reimplementing ANDI's checks (defeats Trusted-Tester alignment).
 - Beating axe-core at generic a11y (we are the ANDI gate; axe is an optional layer).
 - Authenticated / SPA-session crawling in v1 (industry-wide gap; a future lever).
+- Targets that defend against automation beyond CSP (e.g. bot-walls) — out of scope.
 
 ## Provenance
 
 - Research thread: `docs/research-thread.md` + research-lab note.
-- Licensing: ANDI = Apache-2.0, `github.com/SSAgov/ANDI` (verified 2026-06-20).
-- Feasibility & network spikes: `spikes/` + `docs/spike-headless-proof.png`.
+- Licensing: ANDI = Apache-2.0, `github.com/SSAgov/ANDI` (read `LICENSE.md`, 2026-06-20).
+- Feasibility / hermetic / extraction spikes: `spikes/01`–`05` + `docs/spike-headless-proof.png`.
