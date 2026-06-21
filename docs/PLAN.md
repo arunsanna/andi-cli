@@ -253,9 +253,11 @@ Test `test/cli.test.cjs`. `--module` accepts a key or `all` (default `f`). `scan
 modules via `scanModule`, aggregates, returns aggregate + metadata. `cli.cjs` dispatches to
 reporters and exits per `--fail-on` on the **aggregate worst severity** (0 clean / 1 ≥
 threshold / 2 error). Move the human report to `report/text.cjs` + honesty banner.
+**Implement `--strict-offline`:** add it to the arg parser; after the scan, if any context's
+`externalAttempts` is non-empty, print the offending URLs and exit `2` (overrides a clean gate).
 
-- [ ] Steps: failing tests for the exit-code matrix (Validation V4) → FAIL → implement → PASS →
-      commit `feat: multi-module CLI + exit-code contract`.
+- [ ] Steps: failing tests for the exit-code matrix (Validation V4) **and `--strict-offline`
+      (V14)** → FAIL → implement → PASS → commit `feat: multi-module CLI + exit codes + strict-offline`.
 
 ## Task 1.7 — Per-module + CSP fixtures + integration suite (closes AC-002)
 
@@ -532,8 +534,11 @@ async function runAxe(browser, url, opts = {}) {
         rule: v.id,
         message: v.help,
         wcag: v.tags
-          .filter((t) => /^wcag\d{3,}$/.test(t))
-          .map((t) => t.replace(/^wcag/, "").split("").join(".")),
+          .filter((t) => /^wcag\d{3,4}$/.test(t)) // criterion codes only (wcag412, wcag1411); skip level tags (wcag2a)
+          .map((t) => {
+            const d = t.replace(/^wcag/, "");
+            return [d[0], d[1], d.slice(2)].join("."); // 412→4.1.2, 1411→1.4.11
+          }),
         element: {
           tag: (n.html.match(/^<(\w+)/) || [])[1] || "",
           html: n.html,
@@ -634,7 +639,8 @@ Each layer is automated unless marked manual. The gate is green only when all pa
   appears in the manual ANDI run for the same module, and counts match within the
   alert-type-vs-element distinction (Decision 4). Record any divergence as a bug.
 - **MV2 — PR annotations:** upload SARIF from a real PR. **Acceptance:** each finding renders
-  inline on the changed file (or the repo's Security tab) with its rule id + WCAG tag.
+  **inline on the changed file in the PR diff** (Security-tab-only does not satisfy this gate —
+  inline annotation is the advertised feature) with its rule id + WCAG tag.
 
 ---
 
