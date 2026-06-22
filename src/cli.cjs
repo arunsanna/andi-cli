@@ -152,9 +152,14 @@ if (require.main === module) (async () => {
   // Determine mode: multi-URL (--urls or --sitemap) vs single (--url).
   const isMulti = !!(opts.urlsFile || opts.sitemap);
 
-  if (opts.help || (!opts.url && !isMulti)) {
+  if (opts.help) {
     process.stdout.write(HELP);
-    process.exit(opts.url || isMulti ? 0 : 2);
+    process.exit(0);
+  }
+
+  if (!opts.url && !isMulti) {
+    process.stdout.write(HELP);
+    process.exit(2);
   }
 
   const scannedAt = new Date().toISOString();

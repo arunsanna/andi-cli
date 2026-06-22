@@ -234,6 +234,34 @@ test('exit 0 or 1: --module all on fixture does not crash (exit 2 is a failure)'
 // --json output: must be valid JSON
 // ---------------------------------------------------------------------------
 
+// ---------------------------------------------------------------------------
+// --help / -h: must exit 0 and print usage text
+// ---------------------------------------------------------------------------
+
+test('exit 0: --help prints usage and exits 0', async () => {
+  const { code, stdout } = await runCli(['--help']);
+  assert.equal(code, 0, '--help must exit 0');
+  assert.ok(stdout.includes('andi-scan'), '--help stdout must contain "andi-scan"');
+  assert.ok(stdout.includes('--url'), '--help stdout must contain --url flag');
+  assert.ok(stdout.includes('--fail-on'), '--help stdout must contain --fail-on flag');
+  assert.ok(stdout.includes('EXIT CODES'), '--help stdout must contain EXIT CODES section');
+});
+
+test('exit 0: -h prints usage and exits 0', async () => {
+  const { code, stdout } = await runCli(['-h']);
+  assert.equal(code, 0, '-h must exit 0');
+  assert.ok(stdout.includes('andi-scan'), '-h stdout must contain "andi-scan"');
+});
+
+test('exit 2: no args exits 2 (usage error, not help path)', async () => {
+  const { code } = await runCli([]);
+  assert.equal(code, 2, 'no-args should exit 2 as a usage error');
+});
+
+// ---------------------------------------------------------------------------
+// --json output: must be valid JSON
+// ---------------------------------------------------------------------------
+
 test('--json output is valid JSON with expected shape', async () => {
   const { code, stdout } = await runCli(['--url', FIXTURE_URL, '--json', '--fail-on', 'none']);
   assert.equal(code, 0, '--json + --fail-on none should exit 0');
