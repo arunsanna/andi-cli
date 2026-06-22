@@ -38,10 +38,13 @@ const MODULE_NAMES = {
 };
 
 /**
- * In-page extraction function.  Serializable — runs via page.evaluate().
+ * In-page extraction function.  Serialized into the browser context by
+ * page.evaluate() — MUST NOT reference any outer (Node.js) scope.
+ * Any accidental closure reference to e.g. mapAlert or MODULE_NAMES would
+ * silently be `undefined` inside the page.  Keep this function self-contained.
  *
  * @param {string|null} moduleName  Canonical module name (e.g. 'focusable').
- * @returns {Array<{severity,message,andiRelatedIndex}>}
+ * @returns {Array<{severity,message,andiRelatedIndex,element,moduleName}>}
  */
 /* istanbul ignore next — runs in browser context */
 function _extractInPage(moduleName) {
@@ -50,6 +53,18 @@ function _extractInPage(moduleName) {
     /danger/i.test(cls) ? 'danger' : /warning/i.test(cls) ? 'warning' : /caution/i.test(cls) ? 'caution' : 'info';
 
   // Use the LAST #ANDI508-alerts-container to handle launchModule() re-renders.
+  //
+  // WHY: AndiModule.launchModule() triggers ANDI's updateAlertList() on the
+  // programmatic path, which does NOT call softReset() first.  Instead it
+  // appends a fresh <div id="ANDI508-alerts-container"> inside
+  // #ANDI508-alerts-list rather than replacing the existing one, producing a
+  // duplicate id.  The LAST container holds the current module's alerts; all
+  // earlier ones are stale output from previous module runs.
+  //
+  // VERSION COUPLING: this selector is version-coupled to ANDI v29.  If SSA
+  // renames ANDI508-alerts-container the selector-contract test (Task 4.2)
+  // will catch it on every upstream sync.  Do NOT simplify to getElementById —
+  // that would silently return only the first (stale) container.
   const list = document.getElementById('ANDI508-alerts-list');
   if (!list) return [];
   const allContainers = list.querySelectorAll('#ANDI508-alerts-container');
@@ -69,9 +84,15 @@ function _extractInPage(moduleName) {
       if (idx !== null) {
         const idxNum = parseInt(idx, 10);
         if (!elementByIndex[idxNum]) {
+          // NON-AUTHORITATIVE enrichment snippet — may be truncated at 300 chars.
+          // Downstream SARIF/HTML reporters must treat this as display-only; do
+          // not parse or validate it as complete markup.
+          const rawHtml = el.outerHTML.replace(/\s+/g, ' ');
+          const html =
+            rawHtml.length > 300 ? rawHtml.slice(0, 300) + '…' : rawHtml;
           elementByIndex[idxNum] = {
             tag: el.tagName.toLowerCase(),
-            html: el.outerHTML.replace(/\s+/g, ' ').slice(0, 300),
+            html,
             selector: null, // best-effort; set below if possible
             andiIndex: idxNum,
           };
