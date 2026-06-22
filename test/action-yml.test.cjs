@@ -90,3 +90,20 @@ test('action.yml: has a setup-node step (actions/setup-node)', () => {
   );
   assert.ok(setupStep, 'action must have a step that uses actions/setup-node');
 });
+
+// ---------------------------------------------------------------------------
+// 6. upload-sarif step has if: always() guard
+// ---------------------------------------------------------------------------
+test('action.yml: upload-sarif step has if: always() guard', () => {
+  if (!action) action = safeLoad(fs.readFileSync(ACTION_YML, 'utf8'));
+  const steps = (action.runs && action.runs.steps) || [];
+  const uploadStep = steps.find(
+    (s) => s.uses && s.uses.includes('upload-sarif')
+  );
+  assert.ok(uploadStep, 'action must have an upload-sarif step');
+  assert.equal(
+    uploadStep.if,
+    'always()',
+    'upload-sarif step must have "if: always()" so it runs even when the scan gate fails'
+  );
+});

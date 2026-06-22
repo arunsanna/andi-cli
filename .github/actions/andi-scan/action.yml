@@ -94,10 +94,10 @@ runs:
 
         ARGS+=(--module "${{ inputs.modules }}")
         ARGS+=(--fail-on "${{ inputs.fail-on }}")
-        ARGS+=(--sarif "${{ inputs.sarif }}")
+        ARGS+=(--sarif "${{ github.workspace }}/${{ inputs.sarif }}")
 
         if [ -n "${{ inputs.html }}" ]; then
-          ARGS+=(--html "${{ inputs.html }}")
+          ARGS+=(--html "${{ github.workspace }}/${{ inputs.html }}")
         fi
 
         if [ "${{ inputs.with-axe }}" = "true" ]; then
@@ -129,6 +129,10 @@ runs:
       shell: bash
       run: |
         CODE="${{ steps.andi-scan.outputs.exit-code }}"
+        if [ -z "$CODE" ]; then
+          echo "andi-scan exit-code is unset — scan never ran, failing job"
+          exit 1
+        fi
         if [ "$CODE" = "1" ] || [ "$CODE" = "2" ]; then
           echo "andi-scan exited with code $CODE — failing job"
           exit "$CODE"
