@@ -22,6 +22,8 @@ const { scan } = require('./scanner.cjs');
 const { parseSitemap, readUrlsFile, scanUrls } = require('./sitemap.cjs');
 const { toText } = require('./report/text.cjs');
 const { toJson } = require('./report/json.cjs');
+const { toSarif } = require('./report/sarif.cjs');
+const { toHtml } = require('./report/html.cjs');
 
 const HELP = `andi-scan — headless SSA ANDI Section 508 scanner
 
@@ -38,6 +40,8 @@ OPTIONS:
   --concurrency <n>    Number of pages to scan in parallel (default 1).
   --json               Print full results as JSON to stdout.
   --out <file>         Write JSON results to <file>.
+  --sarif <file>       Write SARIF 2.1.0 results to <file> (for GitHub code scanning).
+  --html <file>        Write self-contained HTML report to <file>.
   --module <key|all>   ANDI module(s): f=focusable (default), g=graphics,
                        l=links, t=tables, s=structures, c=contrast,
                        h=hidden, i=iframes, all=run all modules.
@@ -45,6 +49,7 @@ OPTIONS:
                        danger|warning|caution|none. Default: danger.
   --strict-offline     Exit 2 if any external network requests were attempted
                        during the scan (enforces hermetic operation).
+  --with-axe           Also run axe-core engine alongside ANDI (Phase 3).
   --timeout <ms>       Per-step timeout in ms (default 30000).
   --quiet              Suppress the human-readable report (use with --json/--out).
   -h, --help           Show this help.
@@ -70,11 +75,14 @@ function parseArgs(argv) {
       case '--concurrency': o.concurrency = parseInt(next(), 10) || 1; break;
       case '--json': o.json = true; break;
       case '--out': o.out = next(); break;
+      case '--sarif': o.sarif = next(); break;
+      case '--html': o.html = next(); break;
       case '--module': o.module = next(); break;
       case '--fail-on': o.failOn = next(); break;
       case '--timeout': o.timeout = parseInt(next(), 10); break;
       case '--quiet': o.quiet = true; break;
       case '--strict-offline': o.strictOffline = true; break;
+      case '--with-axe': o.withAxe = true; break;
       case '-h': case '--help': o.help = true; break;
       default:
         if (!a.startsWith('-') && !o.url) o.url = a;
@@ -215,6 +223,12 @@ if (require.main === module) (async () => {
       const jsonReport = toJson(multiResult, scannedAt);
       fs.writeFileSync(opts.out, JSON.stringify(jsonReport, null, 2));
     }
+    if (opts.sarif) {
+      fs.writeFileSync(opts.sarif, JSON.stringify(toSarif(multiResult), null, 2));
+    }
+    if (opts.html) {
+      fs.writeFileSync(opts.html, toHtml({ ...multiResult, scannedAt }));
+    }
     if (opts.json) {
       const jsonReport = toJson(multiResult, scannedAt);
       process.stdout.write(JSON.stringify(jsonReport, null, 2) + '\n');
@@ -255,6 +269,12 @@ if (require.main === module) (async () => {
   if (opts.out) {
     const jsonReport = toJson(result, scannedAt);
     fs.writeFileSync(opts.out, JSON.stringify(jsonReport, null, 2));
+  }
+  if (opts.sarif) {
+    fs.writeFileSync(opts.sarif, JSON.stringify(toSarif(result), null, 2));
+  }
+  if (opts.html) {
+    fs.writeFileSync(opts.html, toHtml({ ...result, scannedAt }));
   }
   if (opts.json) {
     const jsonReport = toJson(result, scannedAt);

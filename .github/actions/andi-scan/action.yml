@@ -1,0 +1,135 @@
+name: ANDI 508 Scan
+description: >
+  Run the SSA ANDI headless Section 508 scanner against one or more URLs,
+  write SARIF and/or HTML reports, and upload SARIF to GitHub code scanning
+  for inline PR annotations.
+
+inputs:
+  url:
+    description: Single URL to scan (http/https/file). Required unless urls is given.
+    required: false
+    default: ''
+  urls:
+    description: Newline-separated file of URLs to scan (# = comment).
+    required: false
+    default: ''
+  modules:
+    description: >
+      ANDI module(s) to run: f=focusable, g=graphics, l=links, t=tables,
+      s=structures, c=contrast, h=hidden, i=iframes, all=run all modules.
+    required: false
+    default: 'f'
+  fail-on:
+    description: Exit 1 when worst severity >= this level (danger|warning|caution|none).
+    required: false
+    default: 'danger'
+  with-axe:
+    description: Also run axe-core engine alongside ANDI (Phase 3 — currently a no-op).
+    required: false
+    default: 'false'
+  sarif:
+    description: Path for the SARIF 2.1.0 output file (uploaded to GitHub code scanning).
+    required: false
+    default: 'andi-results.sarif'
+  html:
+    description: Path for the self-contained HTML report file (optional).
+    required: false
+    default: ''
+  strict-offline:
+    description: Exit 2 if any external network requests were detected during the scan.
+    required: false
+    default: 'false'
+
+outputs:
+  sarif-file:
+    description: Path to the SARIF output file written by the scan.
+    value: ${{ inputs.sarif }}
+
+runs:
+  using: composite
+  steps:
+    # ------------------------------------------------------------------
+    # 1. Set up Node 20
+    # ------------------------------------------------------------------
+    - name: Set up Node 20
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    # ------------------------------------------------------------------
+    # 2. Install npm dependencies (production + dev)
+    # ------------------------------------------------------------------
+    - name: Install dependencies
+      shell: bash
+      run: npm ci --include=dev
+      working-directory: ${{ github.action_path }}/../../..
+
+    # ------------------------------------------------------------------
+    # 3. Install Chromium (pinned to match playwright@1.55.0 / build 1187)
+    # ------------------------------------------------------------------
+    - name: Install Chromium for Playwright
+      shell: bash
+      run: npx playwright install --with-deps chromium
+      working-directory: ${{ github.action_path }}/../../..
+
+    # ------------------------------------------------------------------
+    # 4. Run ANDI scan
+    #    - Capture the exit code so we can upload SARIF even on gate failure
+    #    - Flags are built conditionally to avoid passing empty strings
+    # ------------------------------------------------------------------
+    - name: Run ANDI scan
+      id: andi-scan
+      shell: bash
+      run: |
+        set +e
+        ARGS=()
+
+        if [ -n "${{ inputs.url }}" ]; then
+          ARGS+=(--url "${{ inputs.url }}")
+        fi
+
+        if [ -n "${{ inputs.urls }}" ]; then
+          ARGS+=(--urls "${{ inputs.urls }}")
+        fi
+
+        ARGS+=(--module "${{ inputs.modules }}")
+        ARGS+=(--fail-on "${{ inputs.fail-on }}")
+        ARGS+=(--sarif "${{ inputs.sarif }}")
+
+        if [ -n "${{ inputs.html }}" ]; then
+          ARGS+=(--html "${{ inputs.html }}")
+        fi
+
+        if [ "${{ inputs.with-axe }}" = "true" ]; then
+          ARGS+=(--with-axe)
+        fi
+
+        if [ "${{ inputs.strict-offline }}" = "true" ]; then
+          ARGS+=(--strict-offline)
+        fi
+
+        node "${{ github.action_path }}/../../../src/cli.cjs" "${ARGS[@]}"
+        echo "exit-code=$?" >> "$GITHUB_OUTPUT"
+      working-directory: ${{ github.action_path }}/../../..
+
+    # ------------------------------------------------------------------
+    # 5. Upload SARIF to GitHub code scanning (always — even on gate fail)
+    # ------------------------------------------------------------------
+    - name: Upload SARIF to GitHub code scanning
+      if: always()
+      uses: github/codeql-action/upload-sarif@v3
+      with:
+        sarif_file: ${{ inputs.sarif }}
+
+    # ------------------------------------------------------------------
+    # 6. Propagate the scan exit code (fail the job if gate triggered)
+    # ------------------------------------------------------------------
+    - name: Propagate scan exit code
+      if: always()
+      shell: bash
+      run: |
+        CODE="${{ steps.andi-scan.outputs.exit-code }}"
+        if [ "$CODE" = "1" ] || [ "$CODE" = "2" ]; then
+          echo "andi-scan exited with code $CODE — failing job"
+          exit "$CODE"
+        fi
