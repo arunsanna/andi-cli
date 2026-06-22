@@ -243,3 +243,41 @@ test('integration exit-code: structures + --module s --fail-on danger → exit 0
   ]);
   assert.equal(code, 0, 'structures caution/warning fixture should exit 0 with --fail-on danger');
 });
+
+// ---------------------------------------------------------------------------
+// Clean fixture: test/fixtures/clean.html — zero danger findings across all modules
+// This grounds the workflow step-6 expectation (selftest.yml dogfood check).
+// ---------------------------------------------------------------------------
+
+test('integration: clean fixture + --module all → zero danger findings', async () => {
+  // Empirically verified 2026-06-22: clean.html produces 0 danger findings
+  // across all modules. The only finding is contrast/caution (manual-check
+  // advisory about images), which does not trigger --fail-on danger.
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const modules = ['f', 'g', 'l', 't', 'c', 's', 'h', 'i'];
+    const allFindings = [];
+    for (const mod of modules) {
+      const { findings } = await scanModule(browser, FIX('clean'), mod);
+      allFindings.push(...findings);
+    }
+    const dangers = allFindings.filter((f) => f.severity === 'danger');
+    assert.strictEqual(
+      dangers.length,
+      0,
+      `clean fixture: expected 0 danger findings across all modules, got: ${JSON.stringify(dangers.map((f) => ({ m: f.module, r: f.rule, msg: f.message })))}`
+    );
+  } finally {
+    await browser.close();
+  }
+});
+
+test('integration exit-code: clean fixture + --module all --fail-on danger → exit 0', async () => {
+  // Grounds workflow selftest.yml step-6: scanning clean.html must exit 0.
+  const { code } = await runCli([
+    '--url', FIX('clean'),
+    '--module', 'all',
+    '--fail-on', 'danger',
+  ]);
+  assert.equal(code, 0, 'clean fixture should exit 0 with --module all --fail-on danger');
+});
