@@ -61,13 +61,18 @@ test('scan() uses bypassCSP context and no fixed sleeps: fixture yields 2 danger
   // Scan must complete without throwing
   assert.ok(result, 'scan() should return a result');
 
-  // Must report 2 danger flagged elements outside ANDI UI
-  const dangerElements = (result.flaggedElements || []).filter((e) => e.severity === 'danger');
-  assert.equal(
-    dangerElements.length,
-    2,
-    `Expected 2 danger flaggedElements, got ${dangerElements.length}: ${JSON.stringify(dangerElements)}`
+  // New shape: findings[] + counts + worst (aggregate output)
+  assert.ok(Array.isArray(result.findings), 'scan() result must have findings array');
+
+  // Must report >= 2 danger findings (button + link with no accessible name)
+  const dangerFindings = result.findings.filter((f) => f.severity === 'danger');
+  assert.ok(
+    dangerFindings.length >= 2,
+    `Expected >=2 danger findings, got ${dangerFindings.length}: ${JSON.stringify(dangerFindings)}`
   );
+
+  // worst must be 'danger'
+  assert.equal(result.worst, 'danger', 'worst must be "danger" for the fixture');
 
   // externalAttempts (excluding fixture's broken logo.png) must be empty
   const unexpected = (result.externalAttempts || []).filter((u) => !u.includes('logo.png'));

@@ -17,7 +17,7 @@
  */
 
 const { installVendorRoutes } = require('./vendor-route.cjs');
-const { injectAndi, waitAndiReady, waitModuleStable } = require('./scanner.cjs');
+const { injectAndi, waitAndiReady, waitModuleStable } = require('./andi-helpers.cjs');
 const { extractFindings } = require('./extract.cjs');
 
 /**
@@ -42,14 +42,17 @@ const MODULES = {
  * One fresh context per call (Decision 5) — avoids the stale-container
  * append bug and guarantees determinism across repeated runs.
  *
+ * Returns { findings, externalAttempts } so callers can collect network
+ * attempts across multi-module runs (used by --strict-offline).
+ *
  * @param {import('playwright').Browser} browser  Already-launched browser.
  * @param {string} url                            Target URL (file:// or http).
  * @param {string} key                            Module letter (f/g/l/t/s/c/h/i).
  * @param {{timeoutMs?: number}} [opts]
- * @returns {Promise<Array<import('./types').Finding>>}
+ * @returns {Promise<{ findings: Array<import('./types').Finding>, externalAttempts: string[] }>}
  */
 async function scanModule(browser, url, key, opts = {}) {
-  const timeoutMs = opts.timeoutMs || 30000;
+  const timeoutMs = opts.timeoutMs ?? 30000;
 
   // Fresh isolated context — CSP bypass for script injection.
   const ctx = await browser.newContext({ bypassCSP: true });
@@ -57,7 +60,7 @@ async function scanModule(browser, url, key, opts = {}) {
     const page = await ctx.newPage();
 
     // 1. Vendor routes: serve andi/ + jquery locally, block everything else.
-    await installVendorRoutes(page);
+    const { externalAttempts } = await installVendorRoutes(page);
 
     // 2. Load the target URL.
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
@@ -78,10 +81,15 @@ async function scanModule(browser, url, key, opts = {}) {
     }, key);
 
     // 6. Wait for the module's alerts to stabilize.
-    await waitModuleStable(page, 12000);
+    //    Honor opts.timeoutMs for the stability wait too (carry-forward: do not
+    //    hard-code while timeoutMs is honored elsewhere).
+    const stableTimeout = Math.min(timeoutMs, 12000);
+    await waitModuleStable(page, stableTimeout);
 
     // 7. Extract findings (alerts-list-primary strategy from extract.cjs).
-    return await extractFindings(page, key);
+    const findings = await extractFindings(page, key);
+
+    return { findings, externalAttempts };
   } finally {
     // Always close context to release resources; browser stays open.
     await ctx.close();

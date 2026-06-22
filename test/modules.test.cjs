@@ -42,7 +42,7 @@ test('MODULES registry contains required keys', () => {
 test('scanModule contrast: >=1 finding, all module=contrast, message mentions contrast', async () => {
   const browser = await chromium.launch({ headless: true });
   try {
-    const findings = await scanModule(browser, MULTI_URL, 'c');
+    const { findings } = await scanModule(browser, MULTI_URL, 'c');
 
     assert.ok(
       findings.length >= 1,
@@ -70,7 +70,7 @@ test('scanModule contrast: >=1 finding, all module=contrast, message mentions co
 test('scanModule tables: >=1 finding, all module=tables, message mentions table/header', async () => {
   const browser = await chromium.launch({ headless: true });
   try {
-    const findings = await scanModule(browser, MULTI_URL, 't');
+    const { findings } = await scanModule(browser, MULTI_URL, 't');
 
     assert.ok(
       findings.length >= 1,
@@ -100,7 +100,7 @@ test('scanModule determinism: contrast count identical across 3 consecutive call
   try {
     const runs = [];
     for (let i = 0; i < 3; i++) {
-      const findings = await scanModule(browser, MULTI_URL, 'c');
+      const { findings } = await scanModule(browser, MULTI_URL, 'c');
       runs.push(findings.length);
     }
     assert.equal(runs[0], runs[1],
