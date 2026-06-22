@@ -20,7 +20,7 @@
   "main": "src/scanner.cjs",
   "scripts": {
     "scan": "node src/cli.cjs",
-    "test": "node --test 'test/*.cjs'",
+    "test": "node --test test/*.cjs",
     "test:fixture": "node src/cli.cjs --url file://$PWD/examples/fixture.html"
   },
   "engines": {
