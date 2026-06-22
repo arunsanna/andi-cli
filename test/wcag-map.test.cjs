@@ -37,3 +37,13 @@ test("TABLE is exported and is an array", () => {
   assert.ok(Array.isArray(TABLE));
   assert.ok(TABLE.length > 0);
 });
+
+test("mapAlert returns iframe-no-title for iframe with no accessible name or title", () => {
+  const result = mapAlert("Iframe has no accessible name or [title].");
+  assert.deepEqual(result, { ruleId: "iframe-no-title", wcag: ["4.1.2", "2.4.1"] });
+});
+
+test("mapAlert returns no-accessible-name for generic element (button) with no accessible name", () => {
+  const result = mapAlert("Button has no accessible name.");
+  assert.deepEqual(result, { ruleId: "no-accessible-name", wcag: ["4.1.2"] });
+});

@@ -1,14 +1,21 @@
 "use strict";
+// Specific rules MUST come before the generic no-accessible-name row so they
+// are not shadowed. The first matching row wins (linear scan).
 const TABLE = [
-  {
-    re: /no accessible name|innertext, or \[title\]/,
-    ruleId: "no-accessible-name",
-    wcag: ["4.1.2"],
-  },
   {
     re: /image .*(no alt|no accessible name)/,
     ruleId: "image-no-name",
     wcag: ["1.1.1"],
+  },
+  {
+    re: /iframe.*title|title.*iframe/,
+    ruleId: "iframe-no-title",
+    wcag: ["4.1.2", "2.4.1"],
+  },
+  {
+    re: /no accessible name|innertext, or \[title\]/,
+    ruleId: "no-accessible-name",
+    wcag: ["4.1.2"],
   },
   { re: /contrast/, ruleId: "low-contrast", wcag: ["1.4.3"] },
   {
@@ -17,11 +24,6 @@ const TABLE = [
     wcag: ["1.3.1"],
   },
   { re: /heading/, ruleId: "heading-structure", wcag: ["1.3.1", "2.4.6"] },
-  {
-    re: /iframe.*title|title.*iframe/,
-    ruleId: "iframe-no-title",
-    wcag: ["4.1.2", "2.4.1"],
-  },
   { re: /duplicate id/, ruleId: "duplicate-id", wcag: ["4.1.1"] },
 ];
 function mapAlert(message) {
