@@ -15,6 +15,19 @@
 const path = require('path');
 const { installVendorRoutes, ANDI_DIR, JQUERY } = require('./vendor-route.cjs');
 
+/**
+ * Inject jQuery then andi.js into a page that already has vendor routes
+ * installed.  Both scripts are served from the local filesystem so no
+ * network calls are made.
+ *
+ * @param {import('playwright').Page} page
+ * @returns {Promise<void>}
+ */
+async function injectAndi(page) {
+  await page.addScriptTag({ path: JQUERY });
+  await page.addScriptTag({ path: path.join(ANDI_DIR, 'andi.js') });
+}
+
 /** Resolve playwright without forcing a specific install layout. */
 function resolvePlaywright() {
   const tried = [];
@@ -175,8 +188,7 @@ async function scan(url, opts = {}) {
     const { externalAttempts } = await installVendorRoutes(page);
 
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
-    await page.addScriptTag({ path: JQUERY });
-    await page.addScriptTag({ path: path.join(ANDI_DIR, 'andi.js') });
+    await injectAndi(page);
 
     await waitAndiReady(page, timeoutMs);
 
@@ -208,4 +220,4 @@ async function scan(url, opts = {}) {
   }
 }
 
-module.exports = { scan, waitAndiReady, waitModuleStable, ANDI_MODULES };
+module.exports = { scan, waitAndiReady, waitModuleStable, injectAndi, ANDI_MODULES };
