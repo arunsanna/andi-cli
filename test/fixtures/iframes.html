@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Iframes module fixture</title>
+</head>
+<body>
+  <h1>Iframes fixture</h1>
+  <!-- PLANTED VIOLATION: <iframe> with no title attribute and no accessible name.
+       ANDI iframes module: message "Iframe has no accessible name or [title]", element:null.
+       Grounded by spikes/06: s/h/i produce alerts-list findings only, no per-element highlights. -->
+  <iframe src="about:blank"></iframe>
+</body>
+</html>

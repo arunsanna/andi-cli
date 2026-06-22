@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Structures module fixture</title>
+</head>
+<body>
+  <h1>Structures fixture</h1>
+  <!-- PLANTED VIOLATION: div with role="heading" but no aria-level attribute.
+       ANDI structures module (headings sub-mode): severity=caution, element:null.
+       Grounded by spikes/06: s/h/i produce alerts-list findings only, no per-element highlights. -->
+  <div role="heading">Section title without aria-level</div>
+</body>
+</html>

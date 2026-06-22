@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Hidden module fixture</title>
+  <!-- PLANTED VIOLATION: CSS ::before pseudo-element injects visible content.
+       ANDI hidden module: severity=warning, element:null.
+       Grounded by spikes/06: "CSS Content Alerts: Content injected via ::before/::after"
+       s/h/i produce alerts-list findings only, no per-element highlights. -->
+  <style>
+    .inj::before { content: "injected pseudo content"; }
+  </style>
+</head>
+<body>
+  <h1>Hidden fixture</h1>
+  <span class="inj"></span>
+</body>
+</html>
