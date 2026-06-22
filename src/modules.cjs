@@ -89,7 +89,11 @@ async function scanModule(browser, url, key, opts = {}) {
     // 7. Extract findings (alerts-list-primary strategy from extract.cjs).
     const findings = await extractFindings(page, key);
 
-    return { findings, externalAttempts };
+    // 8. Read the ANDI version from window — set by andi.js on init, stable
+    //    after waitAndiReady. Returned so scan() can surface it on the result.
+    const andiVersion = await page.evaluate(() => window.andiVersionNumber || null);
+
+    return { findings, externalAttempts, andiVersion };
   } finally {
     // Always close context to release resources; browser stays open.
     await ctx.close();

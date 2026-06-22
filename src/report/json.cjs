@@ -14,12 +14,15 @@ const PKG_VERSION = require('../../package.json').version;
  *
  * @param {object} result    Return value of scan().
  * @param {string} [scannedAt]  ISO timestamp; defaults to result.scannedAt.
- * @returns {object}  { tool, version, scannedAt, urls, findings, counts, worst, andiAlertTotal }
+ * @returns {object}  { tool, version, andiVersion, scannedAt, urls, findings, counts, worst, andiAlertTotal }
+ *   version     — andi-cli npm package version (semver).
+ *   andiVersion — ANDI release version read from window.andiVersionNumber (e.g. "29.2.2").
  */
 function toJson(result, scannedAt) {
   return {
     tool: 'andi-cli',
     version: PKG_VERSION,
+    andiVersion: result.andiVersion ?? null,
     scannedAt: scannedAt ?? result.scannedAt ?? null,
     urls: [result.url],
     findings: result.findings || [],

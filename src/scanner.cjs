@@ -50,7 +50,9 @@ function resolveModuleKeys(modulesOpt) {
  *                  optional dep @axe-core/playwright to be installed.
  *
  * Returns:
- *   { url, scannedAt, version, findings, counts, worst, andiAlertTotal, externalAttempts }
+ *   { url, scannedAt, version, andiVersion, findings, counts, worst, andiAlertTotal, externalAttempts }
+ *   version     — null (populated by CLI layer from package.json)
+ *   andiVersion — ANDI release version string from window.andiVersionNumber (e.g. "29.2.2")
  *
  * @param {string} url
  * @param {{
@@ -75,11 +77,15 @@ async function scan(url, opts = {}) {
   try {
     const allFindingArrays = [];
     const allExternalAttempts = [];
+    let andiVersion = null;
 
     for (const key of moduleKeys) {
-      const { findings, externalAttempts } = await scanModule(browser, url, key, { timeoutMs });
+      const { findings, externalAttempts, andiVersion: ver } = await scanModule(browser, url, key, { timeoutMs });
       allFindingArrays.push(findings);
       if (externalAttempts.length) allExternalAttempts.push(...externalAttempts);
+      // Capture version from first module that returns it; all modules see the
+      // same andi.js so the value is stable across modules.
+      if (!andiVersion && ver) andiVersion = ver;
     }
 
     // Optional axe pass — only when caller opts in.
@@ -97,7 +103,8 @@ async function scan(url, opts = {}) {
     return {
       url,
       scannedAt,
-      version: null,       // informational; populated in future by ANDI version probe
+      version: null,       // informational; andi-cli npm version (populated by CLI layer)
+      andiVersion,         // ANDI release version read from window.andiVersionNumber
       findings,
       counts,
       worst,
