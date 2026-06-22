@@ -7,8 +7,9 @@
  *   1. Launch headless Chromium.
  *   2. For each requested module: call scanModule() (fresh context, bypassCSP:true,
  *      vendor routes, inject, wait, extract).
- *   3. Aggregate per-module Finding[] arrays → { findings, counts, worst }.
- *   4. Return the merged result + metadata.
+ *   3. When opts.withAxe is true: also call runAxe() once on the same browser.
+ *   4. Aggregate per-module Finding[] arrays (+ optional axe array) → { findings, counts, worst }.
+ *   5. Return the merged result + metadata.
  *
  * Exported:
  *   scan(url, opts)        — primary public API
@@ -44,6 +45,9 @@ function resolveModuleKeys(modulesOpt) {
  * opts.modules  — 'all', a single key string (e.g. 'f'), or an array of keys.
  *                  Default: 'f' (focusable). Legacy: opts.module (single key).
  * opts.timeoutMs — per-step timeout in ms (default 30000).
+ * opts.withAxe   — when true, also run axe-core on the URL (reuses same browser;
+ *                  axe opens its own clean bypassCSP context). Requires the
+ *                  optional dep @axe-core/playwright to be installed.
  *
  * Returns:
  *   { url, scannedAt, version, findings, counts, worst, andiAlertTotal, externalAttempts }
@@ -54,6 +58,7 @@ function resolveModuleKeys(modulesOpt) {
  *   module?: string,
  *   timeoutMs?: number,
  *   headless?: boolean,
+ *   withAxe?: boolean,
  * }} [opts]
  * @returns {Promise<object>}
  */
@@ -75,6 +80,16 @@ async function scan(url, opts = {}) {
       const { findings, externalAttempts } = await scanModule(browser, url, key, { timeoutMs });
       allFindingArrays.push(findings);
       if (externalAttempts.length) allExternalAttempts.push(...externalAttempts);
+    }
+
+    // Optional axe pass — only when caller opts in.
+    // Guard: require inside condition so a missing @axe-core/playwright never
+    // affects the default (no-axe) path. If withAxe is set but the dep is
+    // absent, runAxe throws a clear "Install @axe-core/playwright" error.
+    if (opts.withAxe) {
+      const { runAxe } = require('./engines/axe.cjs');
+      const axeFindings = await runAxe(browser, url, { timeoutMs });
+      allFindingArrays.push(axeFindings);
     }
 
     const { findings, counts, worst } = aggregate(allFindingArrays);
