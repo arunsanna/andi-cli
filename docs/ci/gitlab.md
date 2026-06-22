@@ -13,11 +13,13 @@ accessibility:
   variables:
     TARGET_URL: "https://staging.example.com"
   script:
-    - andi-scan --url "$TARGET_URL" --module all --fail-on danger --sarif andi.sarif
+    - andi-scan --url "$TARGET_URL" --module all --fail-on danger --sarif andi.sarif --junit report.xml
   artifacts:
     when: always
     paths:
       - andi.sarif
+    reports:
+      junit: report.xml
     expire_in: 30 days
 ```
 
@@ -36,11 +38,14 @@ accessibility:
       --fail-on danger
       --sarif andi.sarif
       --html andi-report.html
+      --junit report.xml
   artifacts:
     when: always
     paths:
       - andi.sarif
       - andi-report.html
+    reports:
+      junit: report.xml
     expire_in: 30 days
   allow_failure: false # non-zero exit fails the pipeline
 ```
@@ -58,11 +63,13 @@ accessibility:
       https://staging.example.com/login
       https://staging.example.com/dashboard
       EOF
-    - andi-scan --urls urls.txt --module all --fail-on danger --sarif andi.sarif
+    - andi-scan --urls urls.txt --module all --fail-on danger --sarif andi.sarif --junit report.xml
   artifacts:
     when: always
     paths:
       - andi.sarif
+    reports:
+      junit: report.xml
     expire_in: 30 days
 ```
 
@@ -106,6 +113,7 @@ accessibility:
 | `--fail-on <lvl>`  | `danger` | Exit 1 when worst finding severity ≥ level: `danger`\|`warning`\|`caution`\|`none`. |
 | `--sarif <file>`   | _(none)_ | Write SARIF 2.1.0 results to `<file>`.                                              |
 | `--html <file>`    | _(none)_ | Write self-contained HTML report to `<file>`.                                       |
+| `--junit <file>`   | _(none)_ | Write JUnit XML results to `<file>` (for GitLab test reports / CI dashboards).      |
 | `--out <file>`     | _(none)_ | Write full JSON results to `<file>`.                                                |
 | `--strict-offline` | off      | Exit 2 if any external network requests are detected during the scan.               |
 

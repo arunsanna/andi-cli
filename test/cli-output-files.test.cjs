@@ -1,14 +1,15 @@
 'use strict';
 /**
- * test/cli-output-files.test.cjs — tests for --sarif and --html output flags.
- *
- * RED phase: these tests MUST fail before --sarif and --html are wired in cli.cjs.
+ * test/cli-output-files.test.cjs — tests for --sarif, --html, and --junit output flags.
  *
  * Checks:
  *   1. --sarif <file>: writes a SARIF 2.1.0 shaped file (has $schema, version, runs)
  *   2. --html <file>: writes an HTML file containing the mandatory honesty banner
  *   3. Both flags together produce both files in the same scan
  *   4. Exit code is still determined by findings, not by file writing
+ *   5. --junit <file>: writes a well-formed XML file with <testsuites> root
+ *   6. --junit failures count is consistent with --fail-on threshold
+ *   7. --junit does not change exit code or stdout
  */
 
 const { test } = require('node:test');
@@ -17,6 +18,7 @@ const { execFile } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const { XMLParser } = require('fast-xml-parser');
 
 const CLI = path.resolve(__dirname, '..', 'src', 'cli.cjs');
 const REPO = path.resolve(__dirname, '..');
@@ -119,6 +121,84 @@ test('--sarif and --html together both write files in one scan', async () => {
   } finally {
     if (fs.existsSync(sarifOut)) fs.unlinkSync(sarifOut);
     if (fs.existsSync(htmlOut))  fs.unlinkSync(htmlOut);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// 5. --junit writes a well-formed XML file with <testsuites> root
+// ---------------------------------------------------------------------------
+test('--junit writes a well-formed XML file with testsuites root', async () => {
+  const junitOut = path.join(os.tmpdir(), `andi-junit-test-${Date.now()}.xml`);
+  try {
+    const { code } = await runCli([
+      '--url', FIXTURE_URL,
+      '--fail-on', 'none',
+      '--junit', junitOut,
+    ]);
+    assert.equal(code, 0, '--fail-on none should exit 0');
+
+    assert.ok(fs.existsSync(junitOut), `--junit file must be written to ${junitOut}`);
+
+    const xml = fs.readFileSync(junitOut, 'utf8');
+    assert.ok(xml.length > 0, 'JUnit file must not be empty');
+
+    // Must be well-formed XML parseable by fast-xml-parser
+    const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '@_' });
+    let parsed;
+    assert.doesNotThrow(() => { parsed = parser.parse(xml); }, 'JUnit file must be well-formed XML');
+
+    // Must have <testsuites> root element
+    assert.ok(parsed.testsuites !== undefined, 'JUnit XML must have a <testsuites> root element');
+  } finally {
+    if (fs.existsSync(junitOut)) fs.unlinkSync(junitOut);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// 6. --junit failures count is consistent with --fail-on threshold
+// ---------------------------------------------------------------------------
+test('--junit failures=0 with --fail-on none, failures>=0 with --fail-on danger', async () => {
+  const junitNone = path.join(os.tmpdir(), `andi-junit-none-${Date.now()}.xml`);
+  const junitDanger = path.join(os.tmpdir(), `andi-junit-danger-${Date.now()}.xml`);
+  const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: '@_' });
+  try {
+    // --fail-on none: failOnRank=4, nothing is a failure → failures attribute must be 0
+    await runCli(['--url', FIXTURE_URL, '--fail-on', 'none', '--junit', junitNone]);
+    const noneXml = fs.readFileSync(junitNone, 'utf8');
+    const noneParsed = parser.parse(noneXml);
+    const noneFailures = parseInt(noneParsed.testsuites['@_failures'] ?? '0', 10);
+    assert.equal(noneFailures, 0, '--fail-on none must produce failures=0 in JUnit XML');
+
+    // --fail-on danger: fixture has danger findings; failures must be >= 1
+    await runCli(['--url', FIXTURE_URL, '--fail-on', 'danger', '--junit', junitDanger]);
+    const dangerXml = fs.readFileSync(junitDanger, 'utf8');
+    const dangerParsed = parser.parse(dangerXml);
+    const dangerFailures = parseInt(dangerParsed.testsuites['@_failures'] ?? '0', 10);
+    assert.ok(dangerFailures >= 1,
+      `--fail-on danger must produce failures>=1 in JUnit XML (got ${dangerFailures})`);
+  } finally {
+    if (fs.existsSync(junitNone)) fs.unlinkSync(junitNone);
+    if (fs.existsSync(junitDanger)) fs.unlinkSync(junitDanger);
+  }
+});
+
+// ---------------------------------------------------------------------------
+// 7. --junit does not change the exit code or suppress stdout
+// ---------------------------------------------------------------------------
+test('--junit does not change exit code or suppress stdout', async () => {
+  const junitOut = path.join(os.tmpdir(), `andi-junit-exitcode-${Date.now()}.xml`);
+  try {
+    // fixture has danger findings; --fail-on danger should still exit 1
+    const { code, stdout } = await runCli([
+      '--url', FIXTURE_URL,
+      '--fail-on', 'danger',
+      '--junit', junitOut,
+    ]);
+    assert.equal(code, 1, 'Fixture findings must still exit 1 with --fail-on danger when --junit is set');
+    assert.ok(stdout.length > 0, 'stdout (text report) must not be suppressed by --junit');
+    assert.ok(fs.existsSync(junitOut), '--junit file must still be written');
+  } finally {
+    if (fs.existsSync(junitOut)) fs.unlinkSync(junitOut);
   }
 });
 

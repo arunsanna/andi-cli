@@ -24,6 +24,7 @@ const { toText } = require('./report/text.cjs');
 const { toJson } = require('./report/json.cjs');
 const { toSarif } = require('./report/sarif.cjs');
 const { toHtml } = require('./report/html.cjs');
+const { toJunit } = require('./report/junit.cjs');
 
 const HELP = `andi-scan — headless SSA ANDI Section 508 scanner
 
@@ -42,6 +43,7 @@ OPTIONS:
   --out <file>         Write JSON results to <file>.
   --sarif <file>       Write SARIF 2.1.0 results to <file> (for GitHub code scanning).
   --html <file>        Write self-contained HTML report to <file>.
+  --junit <file>       Write JUnit XML results to <file> (for CI test dashboards).
   --module <key|all>   ANDI module(s): f=focusable (default), g=graphics,
                        l=links, t=tables, s=structures, c=contrast,
                        h=hidden, i=iframes, all=run all modules.
@@ -77,6 +79,7 @@ function parseArgs(argv) {
       case '--out': o.out = next(); break;
       case '--sarif': o.sarif = next(); break;
       case '--html': o.html = next(); break;
+      case '--junit': o.junit = next(); break;
       case '--module': o.module = next(); break;
       case '--fail-on': o.failOn = next(); break;
       case '--timeout': o.timeout = parseInt(next(), 10); break;
@@ -119,6 +122,12 @@ function exitCode(worst, failOn) {
  */
 function exitCodeForFindings(result, failOn) {
   return exitCode(result.worst, failOn);
+}
+
+/** Map --fail-on string to the numeric rank used by toJunit. */
+function failOnToRank(failOn) {
+  const map = { danger: 3, warning: 2, caution: 1 };
+  return map[failOn] ?? 4; // 'none' or unknown → 4 (above all severities, nothing is a failure)
 }
 
 module.exports = { exitCode };
@@ -234,6 +243,9 @@ if (require.main === module) (async () => {
     if (opts.html) {
       fs.writeFileSync(opts.html, toHtml({ ...multiResult, scannedAt }));
     }
+    if (opts.junit) {
+      fs.writeFileSync(opts.junit, toJunit(multiResult, failOnToRank(opts.failOn)));
+    }
     if (opts.json) {
       const jsonReport = toJson(multiResult, scannedAt);
       process.stdout.write(JSON.stringify(jsonReport, null, 2) + '\n');
@@ -280,6 +292,9 @@ if (require.main === module) (async () => {
   }
   if (opts.html) {
     fs.writeFileSync(opts.html, toHtml({ ...result, scannedAt }));
+  }
+  if (opts.junit) {
+    fs.writeFileSync(opts.junit, toJunit(result, failOnToRank(opts.failOn)));
   }
   if (opts.json) {
     const jsonReport = toJson(result, scannedAt);

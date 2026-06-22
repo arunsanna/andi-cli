@@ -32,11 +32,13 @@ pipeline {
             --module all \
             --fail-on danger \
             --sarif andi.sarif \
-            --html andi-report.html
+            --html andi-report.html \
+            --junit report.xml
         '''
       }
       post {
         always {
+          junit 'report.xml'
           archiveArtifacts artifacts: 'andi.sarif, andi-report.html',
                            allowEmptyArchive: true
         }
@@ -73,11 +75,13 @@ pipeline {
               --module all \
               --fail-on danger \
               --sarif /workspace/andi.sarif \
-              --html /workspace/andi-report.html
+              --html /workspace/andi-report.html \
+              --junit /workspace/report.xml
         '''
       }
       post {
         always {
+          junit 'report.xml'
           archiveArtifacts artifacts: 'andi.sarif, andi-report.html',
                            allowEmptyArchive: true
         }
@@ -182,6 +186,7 @@ stage('Accessibility') {
 | `--fail-on <lvl>`  | `danger` | Exit 1 when worst finding severity ≥ level: `danger`\|`warning`\|`caution`\|`none`. |
 | `--sarif <file>`   | _(none)_ | Write SARIF 2.1.0 results to `<file>`.                                              |
 | `--html <file>`    | _(none)_ | Write self-contained HTML report to `<file>`.                                       |
+| `--junit <file>`   | _(none)_ | Write JUnit XML results to `<file>` (consumed by `junit 'report.xml'` post step).   |
 | `--out <file>`     | _(none)_ | Write full JSON results to `<file>`.                                                |
 | `--strict-offline` | off      | Exit 2 if any external network requests are detected during the scan.               |
 
