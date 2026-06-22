@@ -25,7 +25,6 @@ OPTIONS:
   --url <url>          Page to scan (http(s):// or file://). Required.
   --json               Print full results as JSON to stdout.
   --out <file>         Write JSON results to <file>.
-  --screenshot <file>  Save a full-page screenshot of the ANDI run.
   --module <key|all>   ANDI module(s): f=focusable (default), g=graphics,
                        l=links, t=tables, s=structures, c=contrast,
                        h=hidden, i=iframes, all=run all modules.
@@ -55,8 +54,6 @@ function parseArgs(argv) {
       case '--url': o.url = next(); break;
       case '--json': o.json = true; break;
       case '--out': o.out = next(); break;
-      case '--screenshot': o.screenshot = next(); break;
-      case '--andi-src': o.andiSrc = next(); break;
       case '--module': o.module = next(); break;
       case '--fail-on': o.failOn = next(); break;
       case '--timeout': o.timeout = parseInt(next(), 10); break;
@@ -75,6 +72,21 @@ function parseArgs(argv) {
 const SEV_RANK = { caution: 1, warning: 2, danger: 3 };
 
 /**
+ * Pure exit-code function for unit testing.
+ *
+ * @param {string|null|undefined} worst  Worst severity seen: 'danger'|'warning'|'caution'|null|undefined
+ * @param {string} failOn                Threshold: 'danger'|'warning'|'caution'|'none'
+ * @returns {0|1}
+ */
+function exitCode(worst, failOn) {
+  if (failOn === 'none') return 0;
+  if (worst === null || worst === undefined) return 0;
+  const worstRank = SEV_RANK[worst] ?? 0;
+  const threshold = SEV_RANK[failOn] ?? SEV_RANK.danger;
+  return worstRank >= threshold ? 1 : 0;
+}
+
+/**
  * Determine the exit code for a completed scan result.
  *
  * @param {object} result   scan() return value.
@@ -82,19 +94,12 @@ const SEV_RANK = { caution: 1, warning: 2, danger: 3 };
  * @returns {0|1}
  */
 function exitCodeForFindings(result, failOn) {
-  if (failOn === 'none') return 0;
-
-  // worst is null when there are no findings — clean page → exit 0.
-  // CRITICAL: compare to null, NOT to the string 'none' (carry-forward fix).
-  if (result.worst === null || result.worst === undefined) return 0;
-
-  const worstRank = SEV_RANK[result.worst] ?? 0;
-  const threshold = SEV_RANK[failOn] ?? SEV_RANK.danger;
-
-  return worstRank >= threshold ? 1 : 0;
+  return exitCode(result.worst, failOn);
 }
 
-(async () => {
+module.exports = { exitCode };
+
+if (require.main === module) (async () => {
   const opts = parseArgs(process.argv.slice(2));
   if (opts.help || !opts.url) {
     process.stdout.write(HELP);
@@ -106,10 +111,8 @@ function exitCodeForFindings(result, failOn) {
   let result;
   try {
     result = await scan(opts.url, {
-      andiSrc: opts.andiSrc,
       modules: opts.module,
       timeoutMs: opts.timeout,
-      screenshot: opts.screenshot,
     });
   } catch (e) {
     process.stderr.write(`andi-scan: scan failed — ${e.message}\n`);

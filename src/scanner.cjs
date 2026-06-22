@@ -54,8 +54,6 @@ function resolveModuleKeys(modulesOpt) {
  *   module?: string,
  *   timeoutMs?: number,
  *   headless?: boolean,
- *   screenshot?: string,
- *   andiSrc?: string,
  * }} [opts]
  * @returns {Promise<object>}
  */
