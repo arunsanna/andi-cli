@@ -43,6 +43,30 @@ npm run test:fixture
 
 Run `node src/cli.cjs --help` for all options.
 
+### npx (no install)
+
+```bash
+npx andi-scan --url https://example.com
+npx andi-scan --help
+```
+
+### Docker
+
+```bash
+# Pull and scan a URL
+docker run --rm ghcr.io/arunsanna/andi-cli --url https://example.com
+
+# Scan a local file (mount the working directory)
+docker run --rm -v "$PWD:/work" ghcr.io/arunsanna/andi-cli \
+  --url file:///work/path/to/page.html --fail-on danger
+
+# Print help
+docker run --rm ghcr.io/arunsanna/andi-cli --help
+```
+
+The Docker image is built on `mcr.microsoft.com/playwright:v1.55.0-noble`, which bundles
+the pinned Chromium build. No additional browser install step is needed.
+
 ### Exit codes
 
 | Code | Meaning                          |

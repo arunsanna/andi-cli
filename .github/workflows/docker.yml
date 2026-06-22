@@ -1,0 +1,27 @@
+name: Docker build
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t andi-cli .
+
+      - name: Smoke test — --help exits 0
+        run: docker run --rm andi-cli --help
+
+      - name: Smoke test — scan fixture exits 0
+        run: |
+          docker run --rm \
+            -v "$PWD:/work" \
+            andi-cli \
+            --url file:///work/examples/fixture.html \
+            --fail-on none

@@ -1,0 +1,9 @@
+.git
+node_modules
+test
+.superpowers
+docs
+spikes
+examples
+*.md
+*.png
