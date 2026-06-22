@@ -121,6 +121,7 @@ async function scanUrls(urls, opts = {}) {
     modules: opts.modules ?? opts.module,
     timeoutMs: opts.timeoutMs,
     headless: opts.headless,
+    withAxe: opts.withAxe,
   };
 
   const errors = [];

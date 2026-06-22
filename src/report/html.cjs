@@ -51,6 +51,15 @@ function renderFinding(f) {
     ? f.wcag.map((t) => `<span class="tag">${esc(t)}</span>`).join(' ')
     : '';
 
+  const engineBadge = f.engine
+    ? `<span class="engine-badge engine-${esc(f.engine)}">${esc(f.engine)}</span>`
+    : '';
+
+  const alsoFoundByBlock =
+    Array.isArray(f.alsoFoundBy) && f.alsoFoundBy.length > 0
+      ? `<div class="also-found-by">also found by: ${f.alsoFoundBy.map(esc).join(', ')}</div>`
+      : '';
+
   let elementBlock;
   if (f.element) {
     elementBlock = `
@@ -67,10 +76,12 @@ function renderFinding(f) {
       <div class="finding">
         <div class="finding-header">
           <span class="sev-badge ${meta.cls}">${meta.label}</span>
+          ${engineBadge}
           <span class="rule">${esc(f.rule)}</span>
           ${wcagTags}
         </div>
         <div class="finding-message">${esc(f.message)}</div>
+        ${alsoFoundByBlock}
         ${elementBlock}
       </div>`;
 }
@@ -189,6 +200,10 @@ function toHtml(result) {
   .element-snippet code { background: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 3px; padding: 0.1rem 0.3rem; font-size: 0.8rem; word-break: break-all; }
   .element-page-level { font-size: 0.82rem; color: #888; font-style: italic; margin-top: 0.3rem; }
   .no-findings { color: #166534; background: #dcfce7; border: 1px solid #86efac; border-radius: 4px; padding: 0.65rem 1rem; }
+  .engine-badge { display: inline-block; padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.75rem; font-weight: 700; font-family: monospace; background: #f3f4f6; border: 1px solid #d1d5db; color: #374151; }
+  .engine-andi { background: #e0f2fe; border-color: #7dd3fc; color: #0369a1; }
+  .engine-axe  { background: #f0fdf4; border-color: #86efac; color: #15803d; }
+  .also-found-by { font-size: 0.8rem; color: #6b7280; margin: 0.2rem 0 0.1rem; font-style: italic; }
   footer { margin-top: 2rem; font-size: 0.78rem; color: #999; border-top: 1px solid #e5e5e5; padding-top: 0.75rem; }
 </style>
 </head>

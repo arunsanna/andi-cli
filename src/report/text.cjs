@@ -59,7 +59,11 @@ function toText(result) {
         if (!bySev[sev]) continue;
         lines.push(`    [${SEV_LABEL[sev] || sev.toUpperCase()}] (${bySev[sev].length})`);
         for (const f of bySev[sev]) {
-          lines.push(`      • ${f.message}`);
+          const engineTag = f.engine ? ` [${f.engine}]` : '';
+          lines.push(`      •${engineTag} ${f.message}`);
+          if (f.alsoFoundBy && f.alsoFoundBy.length > 0) {
+            lines.push(`        also found by: ${f.alsoFoundBy.join(', ')}`);
+          }
           if (f.element) {
             lines.push(`        element: <${f.element.tag}>`);
           }

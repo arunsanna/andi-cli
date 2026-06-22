@@ -51,7 +51,8 @@ OPTIONS:
                        danger|warning|caution|none. Default: danger.
   --strict-offline     Exit 2 if any external network requests were attempted
                        during the scan (enforces hermetic operation).
-  --with-axe           Also run axe-core engine alongside ANDI (Phase 3).
+  --with-axe           Optional second engine; requires the optional @axe-core/playwright dep.
+                       Runs axe-core alongside ANDI and labels each finding by engine.
   --timeout <ms>       Per-step timeout in ms (default 30000).
   --quiet              Suppress the human-readable report (use with --json/--out).
   -h, --help           Show this help.
@@ -210,6 +211,7 @@ if (require.main === module) (async () => {
         modules: opts.module,
         timeoutMs: opts.timeout,
         concurrency: opts.concurrency,
+        withAxe: opts.withAxe,
       });
     } catch (e) {
       process.stderr.write(`andi-scan: multi-URL scan failed — ${e.message}\n`);
@@ -267,6 +269,7 @@ if (require.main === module) (async () => {
     result = await scan(opts.url, {
       modules: opts.module,
       timeoutMs: opts.timeout,
+      withAxe: opts.withAxe,
     });
   } catch (e) {
     process.stderr.write(`andi-scan: scan failed — ${e.message}\n`);

@@ -36,10 +36,12 @@ function toJunit(result, failOnRank = 3) {
       // Fall back to module name when element is absent (same pattern as SARIF reporter fix).
       const tag = f.element ? f.element.tag : (f.module || f.engine || "");
       const html = f.element ? f.element.html : "";
-      const name = esc(`${f.rule}: ${tag}`);
+      const enginePrefix = f.engine ? `[${f.engine}] ` : '';
+      const name = esc(`${enginePrefix}${f.rule}: ${tag}`);
+      const classname = esc(f.engine ? `${f.engine}/${mod}` : mod);
       cases += fail
-        ? `    <testcase name="${name}" classname="${esc(mod)}"><failure message="${esc(f.message)}" type="${esc(f.severity)}">${esc(html)}</failure></testcase>\n`
-        : `    <testcase name="${name}" classname="${esc(mod)}"/>\n`;
+        ? `    <testcase name="${name}" classname="${classname}"><failure message="${esc(f.message)}" type="${esc(f.severity)}">${esc(html)}</failure></testcase>\n`
+        : `    <testcase name="${name}" classname="${classname}"/>\n`;
     }
     body += `  <testsuite name="${esc(url)} [${esc(mod)}]" tests="${fs.length}">\n${cases}  </testsuite>\n`;
   }
