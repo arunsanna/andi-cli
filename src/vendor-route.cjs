@@ -12,12 +12,15 @@ const CT = {
   ".ico": "image/x-icon",
   ".cur": "image/x-icon",
 };
-async function installVendorRoutes(page) {
+async function installVendorRoutes(page, opts = {}) {
+  const strictOffline = opts.strictOffline === true;
   const externalAttempts = [];
   await page.route("**/*", async (route) => {
     const u = route.request().url();
+    // Always pass through local schemes — file:, data:, blob: never leave the machine.
     if (u.startsWith("file:") || u.startsWith("data:") || u.startsWith("blob:"))
       return route.continue();
+    // ANDI's own assets (ssa.gov path) — serve from local andi/ clone.
     const m = u.match(/\/accessibility\/andi\/([^?]+)/);
     if (m) {
       const f = path.join(ANDI_DIR, m[1]);
@@ -30,14 +33,20 @@ async function installVendorRoutes(page) {
       externalAttempts.push("MISSING " + u);
       return route.fulfill({ status: 404, body: "" });
     }
+    // jQuery CDN request — serve from pinned local copy.
     if (/\/jquery[.-]/i.test(u))
       return route.fulfill({
         status: 200,
         contentType: CT[".js"],
         body: fs.readFileSync(JQUERY),
       });
+    // Everything else is the TARGET PAGE and its resources.
+    // Always record the attempt so callers can inspect it.
     externalAttempts.push(u);
-    return route.abort("blockedbyclient");
+    // Default: let the target load normally (live-URL scanning).
+    // strictOffline: block the request (hermetic / fully-offline mode).
+    if (strictOffline) return route.abort("blockedbyclient");
+    return route.continue();
   });
   return { externalAttempts };
 }

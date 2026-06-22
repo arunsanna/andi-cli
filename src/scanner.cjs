@@ -45,6 +45,9 @@ function resolveModuleKeys(modulesOpt) {
  * opts.modules  — 'all', a single key string (e.g. 'f'), or an array of keys.
  *                  Default: 'f' (focusable). Legacy: opts.module (single key).
  * opts.timeoutMs — per-step timeout in ms (default 30000).
+ * opts.strictOffline — when true, block ALL external requests including the target
+ *                      page's own resources (hermetic / fully-offline mode).
+ *                      Default false: the target page loads normally over the network.
  * opts.withAxe   — when true, also run axe-core on the URL (reuses same browser;
  *                  axe opens its own clean bypassCSP context). Requires the
  *                  optional dep @axe-core/playwright to be installed.
@@ -60,6 +63,7 @@ function resolveModuleKeys(modulesOpt) {
  *   module?: string,
  *   timeoutMs?: number,
  *   headless?: boolean,
+ *   strictOffline?: boolean,
  *   withAxe?: boolean,
  * }} [opts]
  * @returns {Promise<object>}
@@ -80,7 +84,7 @@ async function scan(url, opts = {}) {
     let andiVersion = null;
 
     for (const key of moduleKeys) {
-      const { findings, externalAttempts, andiVersion: ver } = await scanModule(browser, url, key, { timeoutMs });
+      const { findings, externalAttempts, andiVersion: ver } = await scanModule(browser, url, key, { timeoutMs, strictOffline: opts.strictOffline });
       allFindingArrays.push(findings);
       if (externalAttempts.length) allExternalAttempts.push(...externalAttempts);
       // Capture version from first module that returns it; all modules see the

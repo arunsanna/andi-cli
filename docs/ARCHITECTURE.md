@@ -47,27 +47,40 @@ are version-coupled, an upstream merge can silently break extraction even when t
 test passes — so a **selector-contract test** (Decision 9) guards every sync, not just a
 version-string check.
 
-## Decision 3 — Hermetic (offline) execution via request routing + CSP bypass
+## Decision 3 — Request routing: ANDI assets are always local; target page loads normally
 
 A network probe (2026-06-20) showed a single focusable scan makes **18 requests — 15 to
 `ssa.gov`** (`andi.js`, `andi.css`, `fandi.js`, 11 icons) plus **1 to googleapis** (jQuery).
 That live dependency is unacceptable for a compliance gate. Because the fork **already
-contains every one of those files** (`andi/`), we make scans hermetic at the network
-boundary:
+contains every one of those files** (`andi/`), we intercept and serve them locally:
 
-- `page.route('**/*', …)` serves every ANDI asset and the pinned jQuery from local files.
-- Any un-routed external request is **blocked and recorded**; `--strict-offline` fails the
-  run if that list is non-empty.
+- `page.route('**/*', …)` in `src/vendor-route.cjs` (`installVendorRoutes`) intercepts every
+  request and applies these rules in order:
+  1. `file:` / `data:` / `blob:` → `route.continue()` (local schemes never leave the machine).
+  2. `/accessibility/andi/*` → served from local `andi/` clone (ANDI's own assets).
+  3. `/jquery[.-]/` → served from pinned `src/vendor/jquery-3.7.1.min.js`.
+  4. **Everything else (the target page and its CSS/JS/images) → `route.continue()` by default.**
+     The attempted URL is recorded in `externalAttempts` so callers can inspect it.
+     With `--strict-offline` / `opts.strictOffline: true` → `route.abort("blockedbyclient")`.
+
+**Hermetic guarantee:** ANDI's own assets (ssa.gov + googleapis) are _always_ served
+locally, removing the live network dependency for the tool itself. The "0 external" guarantee
+applies to ANDI's assets in every scan. The target page loads normally over the network in
+default mode so ANDI scans the real rendered DOM of live URLs.
+
+**`--strict-offline`** is the opt-in flag that _also_ blocks the target page's external
+requests, for fully-offline scans of self-contained or local targets. When this flag is
+set, the CLI exits 2 if any external requests were attempted (the `externalAttempts` list
+is non-empty after the scan).
 
 **CSP bypass (load-bearing for the target audience).** ANDI is injected with `addScriptTag`,
 which a target page's `Content-Security-Policy` — common on federal `.gov` — would block,
 along with the (routed) ANDI module/CSS fetches. The browser **context is created with
 `bypassCSP: true`**, which disables CSP enforcement for the automated scan so injection and
-the locally-routed assets always load. Net: the page can neither block our injection (CSP
-off) nor reach the network (routes abort externals). `bypassCSP` is a Playwright
-testing-time context flag; it does not alter what real users experience and is the correct
-tool for an automated scanner. (A target that defends against automation in other ways —
-e.g. requiring auth — is a documented non-goal.)
+the locally-routed assets always load. `bypassCSP` is a Playwright testing-time context
+flag; it does not alter what real users experience and is the correct tool for an automated
+scanner. (A target that defends against automation in other ways — e.g. requiring auth —
+is a documented non-goal.)
 
 ## Decision 4 — Extraction: DOM-primary (grounded by spike, 2026-06-20)
 

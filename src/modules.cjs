@@ -48,7 +48,7 @@ const MODULES = {
  * @param {import('playwright').Browser} browser  Already-launched browser.
  * @param {string} url                            Target URL (file:// or http).
  * @param {string} key                            Module letter (f/g/l/t/s/c/h/i).
- * @param {{timeoutMs?: number}} [opts]
+ * @param {{timeoutMs?: number, strictOffline?: boolean}} [opts]
  * @returns {Promise<{ findings: Array<import('./types').Finding>, externalAttempts: string[] }>}
  */
 async function scanModule(browser, url, key, opts = {}) {
@@ -59,8 +59,9 @@ async function scanModule(browser, url, key, opts = {}) {
   try {
     const page = await ctx.newPage();
 
-    // 1. Vendor routes: serve andi/ + jquery locally, block everything else.
-    const { externalAttempts } = await installVendorRoutes(page);
+    // 1. Vendor routes: serve andi/ + jquery locally; let target page load normally
+    //    unless strictOffline is set (hermetic / fully-offline mode).
+    const { externalAttempts } = await installVendorRoutes(page, { strictOffline: opts.strictOffline });
 
     // 2. Load the target URL.
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
