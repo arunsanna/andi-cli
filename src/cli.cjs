@@ -201,6 +201,15 @@ if (require.main === module) (async () => {
       }
     }
 
+    // --strict-offline: exit 2 if any external requests were attempted across all pages.
+    if (opts.strictOffline && multiResult.externalAttempts && multiResult.externalAttempts.length > 0) {
+      process.stderr.write('andi-scan: --strict-offline: external network requests detected:\n');
+      for (const { page, attempt } of multiResult.externalAttempts) {
+        process.stderr.write(`  [${page}] ${attempt}\n`);
+      }
+      process.exit(2);
+    }
+
     // Output (reuse same reporters; result shape is compatible)
     if (opts.out) {
       const jsonReport = toJson(multiResult, scannedAt);

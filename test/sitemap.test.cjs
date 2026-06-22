@@ -173,3 +173,90 @@ test('CLI --urls: exits with worst across all pages', async (t) => {
   // Both pages have danger violations → should exit 1
   assert.equal(code, 1, `--urls with danger fixtures should exit 1, got ${code}`);
 });
+
+// ---------------------------------------------------------------------------
+// Test 6: --strict-offline enforced in multi-URL mode
+// ---------------------------------------------------------------------------
+test('scanUrls: externalAttempts aggregated across pages with source page tag', async (t) => {
+  t.timeout = 150000;
+
+  // Build a fixture that references a real external URL so vendor routes
+  // record it in externalAttempts — same technique as single-URL strict-offline test.
+  const strictFile = path.join(os.tmpdir(), 'andi-sitemap-strict-offline-page.html');
+  fs.writeFileSync(strictFile, `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Strict offline multi-URL test</title>
+  <!-- Reference an external resource that vendor routes will block and record -->
+  <link rel="stylesheet" href="https://example.com/some-multi-external.css">
+</head>
+<body>
+  <main>
+    <h1>Strict offline multi test</h1>
+    <button>OK</button>
+    <a href="/page">Link</a>
+  </main>
+</body>
+</html>`);
+  const strictUrl = 'file://' + strictFile;
+
+  // Scan [PAGE_A_URL (clean), strictUrl (has external ref)] via scanUrls.
+  const result = await scanUrls([PAGE_A_URL, strictUrl], { concurrency: 1 });
+
+  // externalAttempts must be present on the result
+  assert.ok(Array.isArray(result.externalAttempts), 'result.externalAttempts must be an array');
+
+  // The strict-offline page must have contributed at least one external attempt
+  assert.ok(
+    result.externalAttempts.length > 0,
+    `expected at least one externalAttempt; got: ${JSON.stringify(result.externalAttempts)}`
+  );
+
+  // Each entry must have {page, attempt} shape with the source page URL
+  for (const entry of result.externalAttempts) {
+    assert.ok(typeof entry.page === 'string' && entry.page.length > 0, `entry.page must be a string: ${JSON.stringify(entry)}`);
+    assert.ok(typeof entry.attempt === 'string' && entry.attempt.length > 0, `entry.attempt must be a string: ${JSON.stringify(entry)}`);
+  }
+
+  // The offending page must be tagged correctly
+  const offending = result.externalAttempts.find((e) => e.page === strictUrl);
+  assert.ok(
+    offending,
+    `expected an externalAttempt tagged with source page ${strictUrl}; got: ${JSON.stringify(result.externalAttempts)}`
+  );
+});
+
+test('CLI --urls: --strict-offline exits 2 when a page references external asset', async (t) => {
+  t.timeout = 150000;
+
+  const strictFile = path.join(os.tmpdir(), 'andi-sitemap-strict-offline-cli-page.html');
+  fs.writeFileSync(strictFile, `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CLI strict offline multi test</title>
+  <link rel="stylesheet" href="https://example.com/some-cli-external.css">
+</head>
+<body>
+  <main>
+    <h1>CLI strict offline</h1>
+    <button>OK</button>
+    <a href="/page">Link</a>
+  </main>
+</body>
+</html>`);
+  const strictUrl = 'file://' + strictFile;
+
+  const urlsFile = path.join(os.tmpdir(), 'andi-sitemap-strict-offline-cli-urls.txt');
+  fs.writeFileSync(urlsFile, [PAGE_A_URL, strictUrl].join('\n'));
+
+  const { code, stderr } = await runCli(['--urls', urlsFile, '--fail-on', 'none', '--strict-offline']);
+  // --strict-offline must exit 2 when any page has external attempts
+  assert.equal(code, 2, `--urls --strict-offline should exit 2 when external attempts detected, got ${code}`);
+  // stderr must mention the offending external URL and source page
+  assert.ok(
+    /example\.com|external|strict.offline/i.test(stderr + ''),
+    `--strict-offline should print offending URL info to stderr; got: ${stderr}`
+  );
+});
