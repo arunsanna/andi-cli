@@ -65,7 +65,7 @@ runs:
       working-directory: ${{ github.action_path }}/../../..
 
     # ------------------------------------------------------------------
-    # 3. Install Chromium (pinned to match playwright@1.55.0 / build 1187)
+    # 3. Install Chromium (pinned to match playwright@1.55.1 / build 1193)
     # ------------------------------------------------------------------
     - name: Install Chromium for Playwright
       shell: bash
@@ -76,35 +76,46 @@ runs:
     # 4. Run ANDI scan
     #    - Capture the exit code so we can upload SARIF even on gate failure
     #    - Flags are built conditionally to avoid passing empty strings
+    #    - Inputs are routed through env vars (not inline ${{ }}) to prevent
+    #      shell-metacharacter injection from caller-supplied values.
     # ------------------------------------------------------------------
     - name: Run ANDI scan
       id: andi-scan
       shell: bash
+      env:
+        INPUT_URL: ${{ inputs.url }}
+        INPUT_URLS: ${{ inputs.urls }}
+        INPUT_MODULES: ${{ inputs.modules }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        INPUT_SARIF: ${{ github.workspace }}/${{ inputs.sarif }}
+        INPUT_HTML: ${{ inputs.html && format('{0}/{1}', github.workspace, inputs.html) || '' }}
+        INPUT_WITH_AXE: ${{ inputs.with-axe }}
+        INPUT_STRICT_OFFLINE: ${{ inputs.strict-offline }}
       run: |
         set +e
         ARGS=()
 
-        if [ -n "${{ inputs.url }}" ]; then
-          ARGS+=(--url "${{ inputs.url }}")
+        if [ -n "$INPUT_URL" ]; then
+          ARGS+=(--url "$INPUT_URL")
         fi
 
-        if [ -n "${{ inputs.urls }}" ]; then
-          ARGS+=(--urls "${{ inputs.urls }}")
+        if [ -n "$INPUT_URLS" ]; then
+          ARGS+=(--urls "$INPUT_URLS")
         fi
 
-        ARGS+=(--module "${{ inputs.modules }}")
-        ARGS+=(--fail-on "${{ inputs.fail-on }}")
-        ARGS+=(--sarif "${{ github.workspace }}/${{ inputs.sarif }}")
+        ARGS+=(--module "$INPUT_MODULES")
+        ARGS+=(--fail-on "$INPUT_FAIL_ON")
+        ARGS+=(--sarif "$INPUT_SARIF")
 
-        if [ -n "${{ inputs.html }}" ]; then
-          ARGS+=(--html "${{ github.workspace }}/${{ inputs.html }}")
+        if [ -n "$INPUT_HTML" ]; then
+          ARGS+=(--html "$INPUT_HTML")
         fi
 
-        if [ "${{ inputs.with-axe }}" = "true" ]; then
+        if [ "$INPUT_WITH_AXE" = "true" ]; then
           ARGS+=(--with-axe)
         fi
 
-        if [ "${{ inputs.strict-offline }}" = "true" ]; then
+        if [ "$INPUT_STRICT_OFFLINE" = "true" ]; then
           ARGS+=(--strict-offline)
         fi
 
