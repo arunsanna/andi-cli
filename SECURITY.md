@@ -30,14 +30,37 @@ Only the latest release on `main` receives security fixes. There are no long-ter
 - The vendored `andi/` directory — that is the upstream SSA ANDI tool. Vulnerabilities in ANDI itself should be reported to the [SSA ANDI project](https://github.com/SSAgov/ANDI).
 - The target pages you choose to scan — the scanner has no control over those.
 
-## Notes on `bypassCSP`
+## Untrusted-page execution model
 
-The scan runner creates each Playwright browser context with `bypassCSP: true`. This is a **testing-time flag** applied to the automated scan's browser context only. It is the correct tool for an automated accessibility scanner because it prevents the target page's Content Security Policy from blocking script injection (which is intentional: we are running an automated test, not browsing as a user).
+andi-cli loads arbitrary URLs in headless Chromium. **Every scanned page is untrusted.** This is fundamental to how an automated accessibility scanner works.
 
-This flag does **not** change what real users experience on the target page. It does not defeat authentication, bot-detection walls, or any protection other than CSP header enforcement within the scan context.
+Specifically:
 
-The scanner is a read-only analysis tool. It does not submit forms, mutate state on the target, or store credentials.
+- Each module scan runs in a **fresh, ephemeral `BrowserContext`** with `bypassCSP: true`. The context is closed as soon as the module scan completes.
+- There is **no `storageState`**, no cookie jar, no shared credentials, and no persistent profile between scans.
+- `bypassCSP: true` is a **testing-time flag** that prevents the target page's CSP headers from blocking ANDI's script injection. It does not affect the Chromium sandbox or disable other browser security mitigations.
+- Chromium is launched with default sandbox settings — no `--no-sandbox` or equivalent flags are passed.
+
+The main residual risk is a **browser exploit via hostile page**: a maliciously crafted scan target could exploit a Chromium vulnerability to escape the browser sandbox. Mitigations:
+
+1. Keep Playwright (and therefore Chromium) up to date.
+2. Run andi-cli in isolated CI environments (containers / VMs), not on privileged developer workstations.
+3. Do not scan URLs from untrusted sources — the operator is responsible for choosing scan targets.
+
+A full threat model is documented in [`docs/security/threat-model.md`](docs/security/threat-model.md).
 
 ## HTML report injection
 
-The HTML reporter (`--html`) includes element snippets extracted from the scanned page. The reporter HTML-escapes untrusted content before embedding it in the report. If you find a way to inject unescaped HTML or JavaScript into the generated report file, please report it as a vulnerability.
+The HTML reporter (`--html`) includes element snippets extracted from the scanned page. The reporter HTML-escapes all untrusted content (messages, element HTML, rule IDs, selectors, URLs, engine names) before embedding. The `esc()` function covers `&`, `<`, `>`, `"`, and `'`, which handles both HTML-content and HTML-attribute contexts. If you find a way to inject unescaped HTML or JavaScript into the generated report file, please report it as a vulnerability.
+
+## SARIF / JUnit output
+
+SARIF output is serialised as JSON (`JSON.stringify`). JUnit XML output uses an `esc()` helper covering `<`, `>`, `&`, `"`, `'`. Neither format embeds untrusted data via raw string concatenation.
+
+## Vendor routing and path traversal
+
+`src/vendor-route.cjs` intercepts Playwright page requests and serves ANDI assets from the local `andi/` tree. The file-path guard uses `f.startsWith(ANDI_DIR + path.sep)` (with the OS path separator) to prevent the sibling-directory prefix bypass (`andi-evil/` would satisfy `startsWith("andi")` without the separator suffix). `path.join` normalises any `..` segments before the guard is evaluated.
+
+## Dependencies
+
+Production dependencies are minimal: only `playwright` is a direct production dependency. Playwright is pinned to a specific patch version. Run `npm audit` to check for known vulnerabilities.
