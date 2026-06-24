@@ -24,7 +24,7 @@ async function installVendorRoutes(page, opts = {}) {
     const m = u.match(/\/accessibility\/andi\/([^?]+)/);
     if (m) {
       const f = path.join(ANDI_DIR, m[1]);
-      if (f.startsWith(ANDI_DIR) && fs.existsSync(f))
+      if (f.startsWith(ANDI_DIR + path.sep) && fs.existsSync(f))
         return route.fulfill({
           status: 200,
           contentType: CT[path.extname(f)] || "application/octet-stream",
