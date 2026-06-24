@@ -34,7 +34,7 @@ Headless CLI + CI wrapper for the U.S. SSA **ANDI** (Accessible Name & Descripti
 - Keep the official `andi.js` **unmodified** — wrap, don't fork. Trusted-Tester alignment is the whole point.
 - DOM/JS selectors for ANDI v29 are documented in `docs/ARCHITECTURE.md`; update that table if SSA changes ANDI.
 - Verify every change with `npm run test:fixture` and confirm exit codes.
-- Playwright is pinned to `1.55.0` to match the cached Chromium build (1187).
+- Playwright is pinned to `1.55.1` (patched: GHSA-7mvr-c777-76hp SSL cert advisory). Both 1.55.0 and 1.55.1 use Chromium build 1193 — the revision is identical.
 
 ## Next actionable work
 

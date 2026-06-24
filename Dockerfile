@@ -1,8 +1,8 @@
 # andi-cli — headless SSA ANDI Section 508 scanner
 #
-# Base image bundles Chromium 1187 (matches Playwright 1.55.0 pin).
+# Base image bundles Chromium 1193 (matches Playwright 1.55.1 pin).
 # No `npx playwright install` needed — browser is already present.
-FROM mcr.microsoft.com/playwright:v1.55.0-noble
+FROM mcr.microsoft.com/playwright:v1.55.1-noble
 
 WORKDIR /app
 
