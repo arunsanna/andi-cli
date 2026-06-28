@@ -15,11 +15,15 @@
   "author": "Arun Sanna",
   "type": "commonjs",
   "bin": {
-    "andi-scan": "src/cli.cjs"
+    "andi-scan": "src/cli.cjs",
+    "andi-parity": "src/parity-cli.cjs",
+    "andi-benchmark": "src/benchmark-cli.cjs"
   },
   "main": "src/scanner.cjs",
   "scripts": {
     "scan": "node src/cli.cjs",
+    "parity": "node src/parity-cli.cjs",
+    "benchmark:browser-cli": "node src/benchmark-cli.cjs",
     "test": "node --test --test-concurrency=2 test/*.cjs",
     "test:fixture": "node src/cli.cjs --url file://$PWD/examples/fixture.html"
   },

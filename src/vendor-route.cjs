@@ -33,13 +33,10 @@ async function installVendorRoutes(page, opts = {}) {
       externalAttempts.push("MISSING " + u);
       return route.fulfill({ status: 404, body: "" });
     }
-    // jQuery CDN request — serve from pinned local copy.
-    if (/\/jquery[.-]/i.test(u))
-      return route.fulfill({
-        status: 200,
-        contentType: CT[".js"],
-        body: fs.readFileSync(JQUERY),
-      });
+    // Do not intercept the target page's own jQuery or framework assets.
+    // injectAndi() loads our pinned jQuery from disk before andi.js, so ANDI
+    // does not need a broad network route for jQuery. A broad /jquery/ route
+    // can mutate real pages and change lANDI results.
     // Everything else is the TARGET PAGE and its resources.
     // Always record the attempt so callers can inspect it.
     externalAttempts.push(u);

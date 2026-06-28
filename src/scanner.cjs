@@ -13,13 +13,23 @@
  *
  * Exported:
  *   scan(url, opts)        — primary public API
+ *   navigateTargetPage     — re-exported for callers that need the helper
+ *   waitTargetPageReady    — re-exported for callers that need the helper
  *   waitAndiReady          — re-exported for callers that need the helper
  *   waitModuleStable       — re-exported for callers that need the helper
  *   injectAndi             — re-exported for callers that need the helper
  *   ANDI_MODULES           — module letter → canonical name registry
  */
 
-const { injectAndi, waitAndiReady, waitModuleStable, resolvePlaywright } = require('./andi-helpers.cjs');
+const {
+  injectAndi,
+  navigateTargetPage,
+  waitTargetPageReady,
+  waitAndiReady,
+  waitActiveModule,
+  waitModuleStable,
+  resolvePlaywright,
+} = require('./andi-helpers.cjs');
 const { aggregate } = require('./aggregate.cjs');
 const { MODULES, scanModule } = require('./modules.cjs');
 
@@ -120,4 +130,13 @@ async function scan(url, opts = {}) {
   }
 }
 
-module.exports = { scan, waitAndiReady, waitModuleStable, injectAndi, ANDI_MODULES };
+module.exports = {
+  scan,
+  navigateTargetPage,
+  waitTargetPageReady,
+  waitAndiReady,
+  waitActiveModule,
+  waitModuleStable,
+  injectAndi,
+  ANDI_MODULES,
+};

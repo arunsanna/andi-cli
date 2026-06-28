@@ -8,8 +8,8 @@
  *   in extract.cjs and gives deterministic, isolated results per module.
  *
  * Call order contract:
- *   installVendorRoutes → goto → injectAndi → waitAndiReady
- *   → AndiModule.launchModule(key) → waitModuleStable → extractFindings
+ *   installVendorRoutes → navigateTargetPage → waitTargetPageReady → injectAndi → waitAndiReady
+ *   → waitActiveModule/launch requested module → waitModuleStable → extractFindings
  *
  * Exported:
  *   MODULES  — {letter: canonicalName} registry
@@ -17,7 +17,14 @@
  */
 
 const { installVendorRoutes } = require('./vendor-route.cjs');
-const { injectAndi, waitAndiReady, waitModuleStable } = require('./andi-helpers.cjs');
+const {
+  injectAndi,
+  navigateTargetPage,
+  waitTargetPageReady,
+  waitAndiReady,
+  waitActiveModule,
+  waitModuleStable,
+} = require('./andi-helpers.cjs');
 const { extractFindings } = require('./extract.cjs');
 
 /**
@@ -64,33 +71,42 @@ async function scanModule(browser, url, key, opts = {}) {
     const { externalAttempts } = await installVendorRoutes(page, { strictOffline: opts.strictOffline });
 
     // 2. Load the target URL.
-    await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
+    await navigateTargetPage(page, url, timeoutMs);
 
-    // 3. Inject jQuery + andi.js (shared helper — single inject path).
+    // 3. Wait for normal browser/bookmarklet launch state before analysis.
+    await waitTargetPageReady(page, timeoutMs);
+
+    // 4. Inject jQuery + andi.js (shared helper — single inject path).
     await injectAndi(page);
 
-    // 4. Wait for ANDI to fully initialize (ready signal).
+    // 5. Wait for ANDI to fully initialize (ready signal).
     await waitAndiReady(page, timeoutMs);
 
-    // 5. Programmatically launch the requested module.
+    // 6. Programmatically launch the requested module.
     //    NEVER menu-click — proven in spikes/04.
-    //    Reset stability tracker before switching so waitModuleStable
-    //    measures the new module's stable state, not the initial one.
-    await page.evaluate((m) => {
-      window.__andiStable = null;
-      window.AndiModule.launchModule(m);
-    }, key);
+    //    ANDI opens in fANDI by default, so do not relaunch focusable.
+    //    For every non-default module, verify the ANDI shell has actually
+    //    switched before waiting on/extracting the alert list.
+    await waitActiveModule(page, 'f', timeoutMs);
+    if (key !== 'f') {
+      await page.evaluate((m) => {
+        window.__andiStable = null;
+        window.AndiModule.launchModule(m);
+      }, key);
+      await waitActiveModule(page, key, timeoutMs);
+    }
 
-    // 6. Wait for the module's alerts to stabilize.
+    // 7. Wait for the module's alerts to stabilize.
     //    Honor opts.timeoutMs for the stability wait too (carry-forward: do not
     //    hard-code while timeoutMs is honored elsewhere).
     const stableTimeout = Math.min(timeoutMs, 12000);
+    await page.evaluate(() => { window.__andiStable = null; });
     await waitModuleStable(page, stableTimeout);
 
-    // 7. Extract findings (alerts-list-primary strategy from extract.cjs).
+    // 8. Extract findings (alerts-list-primary strategy from extract.cjs).
     const findings = await extractFindings(page, key);
 
-    // 8. Read the ANDI version from window — set by andi.js on init, stable
+    // 9. Read the ANDI version from window — set by andi.js on init, stable
     //    after waitAndiReady. Returned so scan() can surface it on the result.
     const andiVersion = await page.evaluate(() => window.andiVersionNumber || null);
 
