@@ -4,15 +4,35 @@ const assert = require('node:assert/strict');
 const path = require('path');
 const { chromium } = require('playwright');
 const { installVendorRoutes, ANDI_DIR, JQUERY } = require('../src/vendor-route.cjs');
-const { scan, waitAndiReady, waitModuleStable } = require('../src/scanner.cjs');
+const {
+  scan,
+  navigateTargetPage,
+  waitTargetPageReady,
+  waitAndiReady,
+  waitActiveModule,
+  waitModuleStable,
+  injectAndi,
+} = require('../src/scanner.cjs');
+const { needsJquery } = require('../src/andi-helpers.cjs');
 
 const REPO = path.resolve(__dirname, '..');
 const FIXTURE_FILE = path.join(REPO, 'examples', 'fixture.html');
 const FIXTURE_URL = 'file://' + FIXTURE_FILE;
 
-test('waitAndiReady and waitModuleStable are exported from scanner.cjs', () => {
+test('navigateTargetPage, waitTargetPageReady, waitAndiReady, waitActiveModule, and waitModuleStable are exported from scanner.cjs', () => {
+  assert.equal(typeof navigateTargetPage, 'function', 'navigateTargetPage should be exported');
+  assert.equal(typeof waitTargetPageReady, 'function', 'waitTargetPageReady should be exported');
   assert.equal(typeof waitAndiReady, 'function', 'waitAndiReady should be exported');
+  assert.equal(typeof waitActiveModule, 'function', 'waitActiveModule should be exported');
   assert.equal(typeof waitModuleStable, 'function', 'waitModuleStable should be exported');
+});
+
+test('needsJquery mirrors ANDI minimum-version behavior', () => {
+  assert.equal(needsJquery(null), true);
+  assert.equal(needsJquery('1.8.3'), true);
+  assert.equal(needsJquery('1.9.0'), true);
+  assert.equal(needsJquery('1.9.1'), false);
+  assert.equal(needsJquery('3.7.1'), false);
 });
 
 test('scan fixture hermetically: 0 external requests (excl logo.png), 2 danger findings, no fixed sleeps', async () => {
@@ -29,6 +49,9 @@ test('scan fixture hermetically: 0 external requests (excl logo.png), 2 danger f
 
     // waitAndiReady must resolve without using waitForTimeout
     await waitAndiReady(page, 30000);
+
+    // waitActiveModule must confirm the default fANDI shell before stability checks.
+    await waitActiveModule(page, 'f', 30000);
 
     // waitModuleStable must resolve without using waitForTimeout
     await waitModuleStable(page, 12000);
@@ -48,6 +71,29 @@ test('scan fixture hermetically: 0 external requests (excl logo.png), 2 danger f
         .length
     );
     assert.equal(dangerCount, 2, `Expected 2 danger elements outside ANDI508 UI, got ${dangerCount}`);
+
+    await ctx.close();
+  } finally {
+    await browser.close();
+  }
+});
+
+test('injectAndi preserves an existing supported page jQuery', async () => {
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const ctx = await browser.newContext({ bypassCSP: true });
+    const page = await ctx.newPage();
+
+    await installVendorRoutes(page);
+    await page.goto(FIXTURE_URL, { waitUntil: 'domcontentloaded' });
+    await page.addScriptTag({ path: JQUERY });
+    await page.evaluate(() => { window.jQuery.__andiCliMarker = 'page-jquery'; });
+
+    await injectAndi(page);
+    await waitAndiReady(page, 30000);
+
+    const marker = await page.evaluate(() => window.jQuery.__andiCliMarker || null);
+    assert.equal(marker, 'page-jquery');
 
     await ctx.close();
   } finally {

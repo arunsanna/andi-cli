@@ -93,6 +93,43 @@ test('scanModule tables: >=1 finding, all module=tables, message mentions table/
 });
 
 // ---------------------------------------------------------------------------
+// scanModule — graphics module must not leak the default focusable alerts
+// ---------------------------------------------------------------------------
+test('scanModule graphics: activates gANDI and does not return focusable alerts', async () => {
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const { findings } = await scanModule(browser, MULTI_URL, 'g');
+
+    assert.ok(
+      findings.length >= 1,
+      `Expected >=1 graphics findings, got ${findings.length}`
+    );
+    for (const f of findings) {
+      assert.equal(f.module, 'graphics',
+        `All findings must have module="graphics", got "${f.module}"`);
+      assert.equal(f.engine, 'andi', 'engine must be "andi"');
+    }
+    const leakedFocusable = findings.filter((f) =>
+      /Button has no accessible name|Link has no accessible name/i.test(f.message)
+    );
+    assert.deepEqual(
+      leakedFocusable,
+      [],
+      `Graphics scan leaked focusable alerts: ${JSON.stringify(leakedFocusable)}`
+    );
+    const hasGraphicsMsg = findings.some(
+      (f) => /alt|image|img|decorative|graphics/i.test(f.message)
+    );
+    assert.ok(
+      hasGraphicsMsg,
+      `Expected at least one graphics/image finding. Got: ${JSON.stringify(findings.map((f) => f.message))}`
+    );
+  } finally {
+    await browser.close();
+  }
+});
+
+// ---------------------------------------------------------------------------
 // DETERMINISM (Decision 5 / eval V5): fresh context per call → stable counts
 // ---------------------------------------------------------------------------
 test('scanModule determinism: contrast count identical across 3 consecutive calls', async () => {

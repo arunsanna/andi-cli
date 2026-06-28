@@ -1,0 +1,6305 @@
+{
+  "tool": "andi-browser-cli-benchmark",
+  "generatedAt": "2026-06-28T15:13:23.972Z",
+  "browserFixture": {
+    "sourcePath": "/Users/jarvis_arunlab/code/andi-cli/results/browser-cli-benchmark/2026-06-28Tfresh-browser-proof/fresh-live-browser-andi-20-pages.json",
+    "collectedAt": "2026-06-28T14:52:41.633Z",
+    "browserSource": "live-ssa-bookmarklet-refreshed",
+    "pageCount": 20
+  },
+  "cli": {
+    "source": "andi-cli",
+    "timeoutMs": 20000,
+    "moduleKeys": [
+      "f",
+      "g",
+      "l",
+      "t",
+      "s",
+      "c",
+      "h",
+      "i"
+    ]
+  },
+  "summary": {
+    "pageCount": 20,
+    "moduleCount": 160,
+    "exactPages": 20,
+    "driftPages": 0,
+    "errorPages": 0,
+    "exactModules": 160,
+    "driftModules": 0,
+    "errorModules": 0,
+    "browserCounts": {
+      "danger": 32,
+      "warning": 450,
+      "caution": 578,
+      "info": 0
+    },
+    "cliCounts": {
+      "danger": 32,
+      "warning": 450,
+      "caution": 578,
+      "info": 0
+    },
+    "delta": {
+      "danger": 0,
+      "warning": 0,
+      "caution": 0,
+      "info": 0
+    },
+    "browserTotal": 1060,
+    "cliTotal": 1060,
+    "totalDelta": 0,
+    "browserSampleCount": 213,
+    "browserSampleMatchCount": 213
+  },
+  "moduleTotals": {
+    "f": {
+      "moduleKey": "f",
+      "module": "focusable",
+      "browserCounts": {
+        "danger": 3,
+        "warning": 83,
+        "caution": 76,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 3,
+        "warning": 83,
+        "caution": 76,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 162,
+      "cliTotal": 162,
+      "totalDelta": 0,
+      "exactPages": 20,
+      "driftPages": 0,
+      "errorPages": 0
+    },
+    "g": {
+      "moduleKey": "g",
+      "module": "graphics",
+      "browserCounts": {
+        "danger": 1,
+        "warning": 18,
+        "caution": 414,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 1,
+        "warning": 18,
+        "caution": 414,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 433,
+      "cliTotal": 433,
+      "totalDelta": 0,
+      "exactPages": 20,
+      "driftPages": 0,
+      "errorPages": 0
+    },
+    "l": {
+      "moduleKey": "l",
+      "module": "links",
+      "browserCounts": {
+        "danger": 1,
+        "warning": 203,
+        "caution": 55,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 1,
+        "warning": 203,
+        "caution": 55,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 259,
+      "cliTotal": 259,
+      "totalDelta": 0,
+      "exactPages": 20,
+      "driftPages": 0,
+      "errorPages": 0
+    },
+    "t": {
+      "moduleKey": "t",
+      "module": "tables",
+      "browserCounts": {
+        "danger": 1,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 1,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 1,
+      "cliTotal": 1,
+      "totalDelta": 0,
+      "exactPages": 20,
+      "driftPages": 0,
+      "errorPages": 0
+    },
+    "s": {
+      "moduleKey": "s",
+      "module": "structures",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 2,
+        "caution": 28,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 2,
+        "caution": 28,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 30,
+      "cliTotal": 30,
+      "totalDelta": 0,
+      "exactPages": 20,
+      "driftPages": 0,
+      "errorPages": 0
+    },
+    "c": {
+      "moduleKey": "c",
+      "module": "contrast",
+      "browserCounts": {
+        "danger": 26,
+        "warning": 128,
+        "caution": 5,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 26,
+        "warning": 128,
+        "caution": 5,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 159,
+      "cliTotal": 159,
+      "totalDelta": 0,
+      "exactPages": 20,
+      "driftPages": 0,
+      "errorPages": 0
+    },
+    "h": {
+      "moduleKey": "h",
+      "module": "hidden",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 16,
+        "caution": 0,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 16,
+        "caution": 0,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 16,
+      "cliTotal": 16,
+      "totalDelta": 0,
+      "exactPages": 20,
+      "driftPages": 0,
+      "errorPages": 0
+    },
+    "i": {
+      "moduleKey": "i",
+      "module": "iframes",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 0,
+      "cliTotal": 0,
+      "totalDelta": 0,
+      "exactPages": 20,
+      "driftPages": 0,
+      "errorPages": 0
+    }
+  },
+  "pages": [
+    {
+      "index": 1,
+      "url": "https://www.usa.gov/benefit-finder",
+      "title": "Find government benefits and financial help | USAGov",
+      "label": "www.usa.gov/benefit-finder",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 20,
+        "caution": 1,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 20,
+        "caution": 1,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 21,
+      "cliTotal": 21,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 13,
+      "sampleMatchCount": 13,
+      "elapsedMs": 4685,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 13,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 13,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 13,
+          "cliTotal": 13,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 2,
+          "cliTotal": 2,
+          "totalDelta": 0,
+          "browserSampleCount": 2,
+          "browserSampleMatchCount": 2,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "url": "https://www.usa.gov/agencies",
+      "title": "The U.S. and its government | USAGov",
+      "label": "www.usa.gov/agencies",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 5,
+        "caution": 1,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 5,
+        "caution": 1,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 6,
+      "cliTotal": 6,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 6,
+      "sampleMatchCount": 6,
+      "elapsedMs": 4501,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 2,
+          "cliTotal": 2,
+          "totalDelta": 0,
+          "browserSampleCount": 2,
+          "browserSampleMatchCount": 2,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "url": "https://www.grants.gov/",
+      "title": "Home | Grants.gov",
+      "label": "www.grants.gov",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 8,
+        "caution": 2,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 8,
+        "caution": 2,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 10,
+      "cliTotal": 10,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 8,
+      "sampleMatchCount": 8,
+      "elapsedMs": 4334,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 7,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 7,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 7,
+          "cliTotal": 7,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "url": "https://www.va.gov/disability/",
+      "title": "VA Disability Compensation | Veterans Affairs",
+      "label": "www.va.gov/disability",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 5,
+        "caution": 9,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 5,
+        "caution": 9,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 14,
+      "cliTotal": 14,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 14,
+      "sampleMatchCount": 14,
+      "elapsedMs": 15382,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 4,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 4,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 4,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 4,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "url": "https://www.va.gov/health-care/how-to-apply/",
+      "title": "How To Apply For VA Health Care | Veterans Affairs",
+      "label": "www.va.gov/health-care/how-to-apply",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 10,
+        "caution": 1,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 10,
+        "caution": 1,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 11,
+      "cliTotal": 11,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 9,
+      "sampleMatchCount": 9,
+      "elapsedMs": 15317,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 2,
+          "cliTotal": 2,
+          "totalDelta": 0,
+          "browserSampleCount": 2,
+          "browserSampleMatchCount": 2,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 7,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 7,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 7,
+          "cliTotal": 7,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "url": "https://www.section508.gov/",
+      "title": "Home | Section508.gov",
+      "label": "www.section508.gov",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 2,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 2,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 2,
+      "cliTotal": 2,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 2,
+      "sampleMatchCount": 2,
+      "elapsedMs": 4381,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "url": "https://www.section508.gov/test/",
+      "title": "Test for Accessibility | Section508.gov",
+      "label": "www.section508.gov/test",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 9,
+        "caution": 1,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 9,
+        "caution": 1,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 10,
+      "cliTotal": 10,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 7,
+      "sampleMatchCount": 7,
+      "elapsedMs": 3350,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 8,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 8,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 8,
+          "cliTotal": 8,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "url": "https://www.cdc.gov/wcms/4.0/cdc-wp/data-presentation/table.html",
+      "title": "Data Table | WCMS Template Feature Gallery | CDC",
+      "label": "www.cdc.gov/wcms/4.0/cdc-wp/data-presentation/table.html",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 21,
+        "caution": 3,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 21,
+        "caution": 3,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 24,
+      "cliTotal": 24,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 12,
+      "sampleMatchCount": 12,
+      "elapsedMs": 4385,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 17,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 17,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 17,
+          "cliTotal": 17,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 3,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 3,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "url": "https://www.cdc.gov/nndss/infectious-disease/index.html",
+      "title": "Notifiable Infectious Disease Data Tables | National Notifiable Diseases Surveillance System (NNDSS) | CDC",
+      "label": "www.cdc.gov/nndss/infectious-disease/index.html",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 38,
+        "caution": 1,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 38,
+        "caution": 1,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 39,
+      "cliTotal": 39,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 12,
+      "sampleMatchCount": 12,
+      "elapsedMs": 4466,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 12,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 12,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 12,
+          "cliTotal": 12,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 25,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 25,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 25,
+          "cliTotal": 25,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "url": "https://www.cdc.gov/places/tools/explore-places-data-portal.html",
+      "title": "How To Use the PLACES Data Portal | PLACES | CDC",
+      "label": "www.cdc.gov/places/tools/explore-places-data-portal.html",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 51,
+        "caution": 15,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 51,
+        "caution": 15,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 66,
+      "cliTotal": 66,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 16,
+      "sampleMatchCount": 16,
+      "elapsedMs": 5854,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 7,
+            "caution": 15,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 7,
+            "caution": 15,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 22,
+          "cliTotal": 22,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 17,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 17,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 17,
+          "cliTotal": 17,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 26,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 26,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 26,
+          "cliTotal": 26,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "url": "https://www.w3.org/WAI/tutorials/forms/",
+      "title": "Forms Tutorial | Web Accessibility Initiative (WAI) | W3C",
+      "label": "www.w3.org/WAI/tutorials/forms",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 3,
+        "caution": 0,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 3,
+        "caution": 0,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 3,
+      "cliTotal": 3,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 3,
+      "sampleMatchCount": 3,
+      "elapsedMs": 2396,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 2,
+          "cliTotal": 2,
+          "totalDelta": 0,
+          "browserSampleCount": 2,
+          "browserSampleMatchCount": 2,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 12,
+      "url": "https://www.w3.org/WAI/tutorials/tables/",
+      "title": "Tables Tutorial | Web Accessibility Initiative (WAI) | W3C",
+      "label": "www.w3.org/WAI/tutorials/tables",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 3,
+        "caution": 0,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 3,
+        "caution": 0,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 3,
+      "cliTotal": 3,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 3,
+      "sampleMatchCount": 3,
+      "elapsedMs": 2433,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 2,
+          "cliTotal": 2,
+          "totalDelta": 0,
+          "browserSampleCount": 2,
+          "browserSampleMatchCount": 2,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "url": "https://www.w3.org/WAI/test-evaluate/preliminary/",
+      "title": "Easy Checks – A First Review of Web Accessibility | Web Accessibility Initiative (WAI) | W3C",
+      "label": "www.w3.org/WAI/test-evaluate/preliminary",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 11,
+        "caution": 5,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 11,
+        "caution": 5,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 16,
+      "cliTotal": 16,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 10,
+      "sampleMatchCount": 10,
+      "elapsedMs": 5386,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 7,
+            "caution": 4,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 7,
+            "caution": 4,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 11,
+          "cliTotal": 11,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 3,
+          "cliTotal": 3,
+          "totalDelta": 0,
+          "browserSampleCount": 3,
+          "browserSampleMatchCount": 3,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "url": "https://www.nasa.gov/",
+      "title": "NASA",
+      "label": "www.nasa.gov",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 16,
+        "warning": 16,
+        "caution": 0,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 16,
+        "warning": 16,
+        "caution": 0,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 32,
+      "cliTotal": 32,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 8,
+      "sampleMatchCount": 8,
+      "elapsedMs": 7295,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 2,
+          "cliTotal": 2,
+          "totalDelta": 0,
+          "browserSampleCount": 2,
+          "browserSampleMatchCount": 2,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 16,
+            "warning": 13,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 16,
+            "warning": 13,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 29,
+          "cliTotal": 29,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 15,
+      "url": "https://science.nasa.gov/solar-system/",
+      "title": "Solar System Exploration",
+      "label": "science.nasa.gov/solar-system",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 8,
+        "warning": 131,
+        "caution": 121,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 8,
+        "warning": 131,
+        "caution": 121,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 260,
+      "cliTotal": 260,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 26,
+      "sampleMatchCount": 26,
+      "elapsedMs": 7803,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 3,
+            "warning": 60,
+            "caution": 61,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 3,
+            "warning": 60,
+            "caution": 61,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 124,
+          "cliTotal": 124,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 5,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 5,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 5,
+          "cliTotal": 5,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 1,
+            "warning": 54,
+            "caution": 40,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 1,
+            "warning": 54,
+            "caution": 40,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 95,
+          "cliTotal": 95,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 20,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 20,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 20,
+          "cliTotal": 20,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 4,
+            "warning": 11,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 4,
+            "warning": 11,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 15,
+          "cliTotal": 15,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 16,
+      "url": "https://data.nasa.gov/",
+      "title": "Welcome - NASA Open Data Portal",
+      "label": "data.nasa.gov",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 18,
+        "caution": 1,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 18,
+        "caution": 1,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 19,
+      "cliTotal": 19,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 19,
+      "sampleMatchCount": 19,
+      "elapsedMs": 14113,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 5,
+          "cliTotal": 5,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 4,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 5,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 5,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 5,
+          "cliTotal": 5,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 17,
+      "url": "https://www.nist.gov/",
+      "title": "National Institute of Standards and Technology",
+      "label": "www.nist.gov",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 7,
+        "warning": 18,
+        "caution": 5,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 7,
+        "warning": 18,
+        "caution": 5,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 30,
+      "cliTotal": 30,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 13,
+      "sampleMatchCount": 13,
+      "elapsedMs": 5869,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 1,
+            "warning": 0,
+            "caution": 3,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 1,
+            "warning": 0,
+            "caution": 3,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 2,
+          "cliTotal": 2,
+          "totalDelta": 0,
+          "browserSampleCount": 2,
+          "browserSampleMatchCount": 2,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 6,
+            "warning": 16,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 6,
+            "warning": 16,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 22,
+          "cliTotal": 22,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 18,
+      "url": "https://www.epa.gov/",
+      "title": "U.S. Environmental Protection Agency | US EPA",
+      "label": "www.epa.gov",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 6,
+        "caution": 17,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 6,
+        "caution": 17,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 23,
+      "cliTotal": 23,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 14,
+      "sampleMatchCount": 14,
+      "elapsedMs": 8900,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 5,
+            "caution": 9,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 5,
+            "caution": 9,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 14,
+          "cliTotal": 14,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 2,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 2,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 3,
+          "cliTotal": 3,
+          "totalDelta": 0,
+          "browserSampleCount": 3,
+          "browserSampleMatchCount": 3,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 4,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 4,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 4,
+          "cliTotal": 4,
+          "totalDelta": 0,
+          "browserSampleCount": 4,
+          "browserSampleMatchCount": 4,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 19,
+      "url": "https://www.access-board.gov/ict/",
+      "title": "Revised 508 Standards and 255 Guidelines",
+      "label": "www.access-board.gov/ict",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 0,
+        "warning": 75,
+        "caution": 388,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 0,
+        "warning": 75,
+        "caution": 388,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 463,
+      "cliTotal": 463,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 11,
+      "sampleMatchCount": 11,
+      "elapsedMs": 6616,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 384,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 384,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 386,
+          "cliTotal": 386,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 72,
+            "caution": 4,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 72,
+            "caution": 4,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 76,
+          "cliTotal": 76,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 1,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    },
+    {
+      "index": 20,
+      "url": "https://www.access-board.gov/ta/",
+      "title": "Technical Assistance",
+      "label": "www.access-board.gov/ta",
+      "browserStatus": "ok",
+      "cliStatus": "ok",
+      "verdict": "exact-counts",
+      "browserCounts": {
+        "danger": 1,
+        "warning": 2,
+        "caution": 5,
+        "info": 0
+      },
+      "cliCounts": {
+        "danger": 1,
+        "warning": 2,
+        "caution": 5,
+        "info": 0
+      },
+      "delta": {
+        "danger": 0,
+        "warning": 0,
+        "caution": 0,
+        "info": 0
+      },
+      "browserTotal": 8,
+      "cliTotal": 8,
+      "totalDelta": 0,
+      "errorCount": 0,
+      "driftCount": 0,
+      "sampleCount": 7,
+      "sampleMatchCount": 7,
+      "elapsedMs": 4000,
+      "modules": [
+        {
+          "moduleKey": "f",
+          "module": "focusable",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "g",
+          "module": "graphics",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 1,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "l",
+          "module": "links",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 4,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 2,
+            "caution": 4,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 6,
+          "cliTotal": 6,
+          "totalDelta": 0,
+          "browserSampleCount": 5,
+          "browserSampleMatchCount": 5,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "t",
+          "module": "tables",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 1,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 1,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 1,
+          "cliTotal": 1,
+          "totalDelta": 0,
+          "browserSampleCount": 1,
+          "browserSampleMatchCount": 1,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "s",
+          "module": "structures",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "c",
+          "module": "contrast",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "h",
+          "module": "hidden",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        },
+        {
+          "moduleKey": "i",
+          "module": "iframes",
+          "verdict": "exact-counts",
+          "countMatch": true,
+          "versionMatch": true,
+          "moduleVersionMatch": true,
+          "browserCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "cliCounts": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "delta": {
+            "danger": 0,
+            "warning": 0,
+            "caution": 0,
+            "info": 0
+          },
+          "browserTotal": 0,
+          "cliTotal": 0,
+          "totalDelta": 0,
+          "browserSampleCount": 0,
+          "browserSampleMatchCount": 0,
+          "browserSampleUnmatched": [],
+          "error": null
+        }
+      ]
+    }
+  ]
+}

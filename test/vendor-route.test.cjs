@@ -2,6 +2,7 @@
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('path');
+const http = require('http');
 const { chromium } = require('playwright');
 const { installVendorRoutes } = require('../src/vendor-route.cjs');
 
@@ -15,6 +16,22 @@ const READY = () =>
   !!document.getElementById('ANDI508') &&
   !!window.testPageData &&
   typeof window.testPageData.numberOfAccessibilityAlertsFound === 'number';
+
+function startServer() {
+  return new Promise((resolve, reject) => {
+    const server = http.createServer((req, res) => {
+      if (req.url === '/jquery-target.js') {
+        res.writeHead(200, { 'Content-Type': 'application/javascript' });
+        res.end('window.__targetJqueryLoaded = "target";');
+        return;
+      }
+      res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+      res.end('<!doctype html><script src="/jquery-target.js"></script><p>target</p>');
+    });
+    server.on('error', reject);
+    server.listen(0, '127.0.0.1', () => resolve(server));
+  });
+}
 
 test('installVendorRoutes: no external requests and 2 danger elements on fixture', async () => {
   const browser = await chromium.launch({ headless: true });
@@ -52,5 +69,26 @@ test('installVendorRoutes: no external requests and 2 danger elements on fixture
     await ctx.close();
   } finally {
     await browser.close();
+  }
+});
+
+test('installVendorRoutes: does not replace target-page jQuery-like scripts', async () => {
+  const server = await startServer();
+  const browser = await chromium.launch({ headless: true });
+  try {
+    const ctx = await browser.newContext({ bypassCSP: true });
+    const page = await ctx.newPage();
+    await installVendorRoutes(page);
+
+    await page.goto(`http://127.0.0.1:${server.address().port}/`, {
+      waitUntil: 'domcontentloaded',
+    });
+    const loaded = await page.evaluate(() => window.__targetJqueryLoaded || null);
+
+    assert.equal(loaded, 'target');
+    await ctx.close();
+  } finally {
+    await browser.close();
+    server.close();
   }
 });

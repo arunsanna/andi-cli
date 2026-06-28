@@ -12,7 +12,7 @@
  * A RED test here means SSA changed a load-bearing selector.
  * Fix: update extract.cjs / docs / ARCHITECTURE.md before releasing.
  */
-const { test } = require('node:test');
+const { test, after } = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('path');
 const { chromium } = require('playwright');
@@ -57,8 +57,12 @@ async function getBrowser() {
   return browser;
 }
 
-// node:test doesn't have afterAll; clean up via process exit hook.
-process.on('exit', () => { if (browser) browser.close().catch(() => {}); });
+after(async () => {
+  if (browser) {
+    await browser.close();
+    browser = null;
+  }
+});
 
 // ---------------------------------------------------------------------------
 // V15-A: #ANDI508 root element exists after injection
