@@ -1,0 +1,551 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="866" height="635" viewBox="0 0 866 635" role="img" aria-labelledby="title desc">
+  <title id="title">Module delta heatmap</title>
+  <desc id="desc">Cells show CLI total minus browser total for each page and ANDI module.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="8" y="24" font-size="18" font-weight="700">Module delta heatmap</text>
+  <text x="8" y="42" font-size="11">Blue means CLI found fewer than browser. Orange means CLI found more.</text>
+
+    <text x="286" y="55" font-size="11" text-anchor="middle">f</text>
+
+
+    <text x="358" y="55" font-size="11" text-anchor="middle">g</text>
+
+
+    <text x="430" y="55" font-size="11" text-anchor="middle">l</text>
+
+
+    <text x="502" y="55" font-size="11" text-anchor="middle">t</text>
+
+
+    <text x="574" y="55" font-size="11" text-anchor="middle">s</text>
+
+
+    <text x="646" y="55" font-size="11" text-anchor="middle">c</text>
+
+
+    <text x="718" y="55" font-size="11" text-anchor="middle">h</text>
+
+
+    <text x="790" y="55" font-size="11" text-anchor="middle">i</text>
+
+
+      <text x="8" y="86" font-size="11">1. www.usa.gov/benefit-finder</text>
+
+        <rect x="250" y="70" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="86" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="70" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="86" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="70" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="86" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="70" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="86" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="70" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="86" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="70" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="86" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="70" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="86" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="70" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="86" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="112" font-size="11">2. www.usa.gov/agencies</text>
+
+        <rect x="250" y="96" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="112" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="96" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="112" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="96" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="112" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="96" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="112" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="96" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="112" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="96" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="112" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="96" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="112" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="96" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="112" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="138" font-size="11">3. www.grants.gov</text>
+
+        <rect x="250" y="122" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="138" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="122" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="138" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="122" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="138" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="122" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="138" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="122" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="138" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="122" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="138" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="122" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="138" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="122" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="138" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="164" font-size="11">4. www.va.gov/disability</text>
+
+        <rect x="250" y="148" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="164" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="148" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="164" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="148" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="164" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="148" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="164" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="148" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="164" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="148" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="164" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="148" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="164" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="148" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="164" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="190" font-size="11">5. www.va.gov/health-care/how-to-apply</text>
+
+        <rect x="250" y="174" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="190" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="174" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="190" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="174" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="190" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="174" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="190" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="174" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="190" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="174" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="190" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="174" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="190" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="174" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="190" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="216" font-size="11">6. www.section508.gov</text>
+
+        <rect x="250" y="200" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="216" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="200" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="216" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="200" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="216" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="200" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="216" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="200" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="216" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="200" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="216" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="200" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="216" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="200" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="216" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="242" font-size="11">7. www.section508.gov/test</text>
+
+        <rect x="250" y="226" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="242" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="226" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="242" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="226" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="242" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="226" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="242" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="226" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="242" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="226" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="242" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="226" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="242" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="226" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="242" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="268" font-size="11">8. www.cdc.gov/wcms/4.0/cdc-wp/data-presentation/table.html</text>
+
+        <rect x="250" y="252" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="268" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="252" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="268" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="252" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="268" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="252" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="268" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="252" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="268" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="252" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="268" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="252" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="268" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="252" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="268" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="294" font-size="11">9. www.cdc.gov/nndss/infectious-disease/index.html</text>
+
+        <rect x="250" y="278" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="294" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="278" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="294" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="278" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="294" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="278" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="294" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="278" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="294" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="278" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="294" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="278" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="294" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="278" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="294" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="320" font-size="11">10. www.cdc.gov/places/tools/explore-places-data-portal.html</text>
+
+        <rect x="250" y="304" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="320" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="304" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="320" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="304" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="320" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="304" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="320" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="304" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="320" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="304" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="320" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="304" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="320" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="304" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="320" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="346" font-size="11">11. www.w3.org/WAI/tutorials/forms</text>
+
+        <rect x="250" y="330" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="346" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="330" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="346" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="330" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="346" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="330" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="346" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="330" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="346" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="330" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="346" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="330" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="346" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="330" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="346" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="372" font-size="11">12. www.w3.org/WAI/tutorials/tables</text>
+
+        <rect x="250" y="356" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="372" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="356" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="372" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="356" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="372" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="356" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="372" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="356" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="372" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="356" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="372" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="356" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="372" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="356" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="372" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="398" font-size="11">13. www.w3.org/WAI/test-evaluate/preliminary</text>
+
+        <rect x="250" y="382" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="398" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="382" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="398" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="382" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="398" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="382" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="398" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="382" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="398" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="382" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="398" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="382" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="398" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="382" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="398" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="424" font-size="11">14. www.nasa.gov</text>
+
+        <rect x="250" y="408" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="424" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="408" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="424" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="408" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="424" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="408" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="424" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="408" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="424" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="408" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="424" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="408" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="424" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="408" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="424" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="450" font-size="11">15. science.nasa.gov/solar-system</text>
+
+        <rect x="250" y="434" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="450" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="434" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="450" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="434" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="450" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="434" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="450" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="434" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="450" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="434" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="450" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="434" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="450" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="434" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="450" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="476" font-size="11">16. data.nasa.gov</text>
+
+        <rect x="250" y="460" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="476" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="460" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="476" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="460" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="476" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="460" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="476" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="460" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="476" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="460" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="476" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="460" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="476" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="460" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="476" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="502" font-size="11">17. www.nist.gov</text>
+
+        <rect x="250" y="486" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="502" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="486" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="502" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="486" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="502" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="486" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="502" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="486" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="502" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="486" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="502" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="486" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="502" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="486" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="502" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="528" font-size="11">18. www.epa.gov</text>
+
+        <rect x="250" y="512" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="528" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="512" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="528" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="512" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="528" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="512" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="528" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="512" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="528" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="512" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="528" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="512" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="528" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="512" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="528" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="554" font-size="11">19. www.access-board.gov/ict</text>
+
+        <rect x="250" y="538" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="554" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="538" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="554" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="538" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="554" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="538" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="554" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="538" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="554" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="538" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="554" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="538" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="554" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="538" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="554" font-size="10" text-anchor="middle">0</text>
+
+      <text x="8" y="580" font-size="11">20. www.access-board.gov/ta</text>
+
+        <rect x="250" y="564" width="70" height="24" fill="#e2e8f0"/>
+        <text x="286" y="580" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="322" y="564" width="70" height="24" fill="#e2e8f0"/>
+        <text x="358" y="580" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="394" y="564" width="70" height="24" fill="#e2e8f0"/>
+        <text x="430" y="580" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="466" y="564" width="70" height="24" fill="#e2e8f0"/>
+        <text x="502" y="580" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="538" y="564" width="70" height="24" fill="#e2e8f0"/>
+        <text x="574" y="580" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="610" y="564" width="70" height="24" fill="#e2e8f0"/>
+        <text x="646" y="580" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="682" y="564" width="70" height="24" fill="#e2e8f0"/>
+        <text x="718" y="580" font-size="10" text-anchor="middle">0</text>
+
+        <rect x="754" y="564" width="70" height="24" fill="#e2e8f0"/>
+        <text x="790" y="580" font-size="10" text-anchor="middle">0</text>
+</svg>

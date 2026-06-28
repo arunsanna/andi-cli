@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Browser vs CLI ANDI Benchmark</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, sans-serif; margin: 0; color: #111827; background: #f8fafc; }
+    main { max-width: 1180px; margin: 0 auto; padding: 28px 20px 48px; }
+    h1 { font-size: 28px; margin: 0 0 8px; }
+    h2 { font-size: 18px; margin: 28px 0 12px; }
+    .meta { color: #475569; margin: 0 0 18px; }
+    .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 18px 0; }
+    .metric { background: #fff; border: 1px solid #dbe3ef; border-radius: 8px; padding: 12px; }
+    .metric strong { display: block; font-size: 24px; }
+    .chart { background: #fff; border: 1px solid #dbe3ef; border-radius: 8px; padding: 12px; margin: 12px 0; overflow-x: auto; }
+    .chart img { display: block; max-width: none; }
+    table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #dbe3ef; }
+    th, td { padding: 8px 9px; border-bottom: 1px solid #e5e7eb; text-align: right; font-size: 13px; }
+    th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+    th { background: #eef2f7; }
+    .delta { font-weight: 700; color: #b91c1c; }
+    a { color: #1d4ed8; text-decoration: none; }
+    @media (max-width: 720px) {
+      .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      main { padding: 20px 12px 36px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Browser vs CLI ANDI Benchmark</h1>
+    <p class="meta">Generated 2026-06-28T15:13:23.972Z from browser proof 2026-06-28T14:52:41.633Z.</p>
+    <section class="summary" aria-label="Benchmark summary">
+      <div class="metric"><span>Browser total</span><strong>1060</strong></div>
+      <div class="metric"><span>CLI total</span><strong>1060</strong></div>
+      <div class="metric"><span>Total delta</span><strong>0</strong></div>
+      <div class="metric"><span>Exact pages</span><strong>20/20</strong></div>
+    </section>
+    <h2>Finding Totals</h2>
+    <div class="chart"><img src="page-totals.svg" alt="Browser and CLI finding totals by benchmark page"></div>
+    <h2>Parity Scatter</h2>
+    <div class="chart"><img src="parity-scatter.svg" alt="Scatter plot of browser total against CLI total"></div>
+    <h2>Module Delta Heatmap</h2>
+    <div class="chart"><img src="module-delta-heatmap.svg" alt="Heatmap of CLI minus browser total by page and module"></div>
+    <h2>Module Totals</h2>
+    <table>
+      <thead><tr><th>Module</th><th>Browser</th><th>CLI</th><th>Delta</th><th>Exact pages</th><th>Drift pages</th><th>Error pages</th></tr></thead>
+      <tbody>
+      <tr>
+        <td>f focusable</td>
+        <td>162</td>
+        <td>162</td>
+        <td class="">0</td>
+        <td>20</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>g graphics</td>
+        <td>433</td>
+        <td>433</td>
+        <td class="">0</td>
+        <td>20</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>l links</td>
+        <td>259</td>
+        <td>259</td>
+        <td class="">0</td>
+        <td>20</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>t tables</td>
+        <td>1</td>
+        <td>1</td>
+        <td class="">0</td>
+        <td>20</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>s structures</td>
+        <td>30</td>
+        <td>30</td>
+        <td class="">0</td>
+        <td>20</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>c contrast</td>
+        <td>159</td>
+        <td>159</td>
+        <td class="">0</td>
+        <td>20</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>h hidden</td>
+        <td>16</td>
+        <td>16</td>
+        <td class="">0</td>
+        <td>20</td>
+        <td>0</td>
+        <td>0</td>
+      </tr>
+
+      <tr>
+        <td>i iframes</td>
+        <td>0</td>
+        <td>0</td>
+        <td class="">0</td>
+        <td>20</td>
+        <td>0</td>
+        <td>0</td>
+      </tr></tbody>
+    </table>
+    <h2>Per-Page Totals</h2>
+    <table>
+      <thead><tr><th>#</th><th>Page</th><th>Browser</th><th>CLI</th><th>Delta</th><th>Verdict</th></tr></thead>
+      <tbody>
+    <tr>
+      <td>1</td>
+      <td><a href="https://www.usa.gov/benefit-finder">www.usa.gov/benefit-finder</a></td>
+      <td>21</td>
+      <td>21</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>2</td>
+      <td><a href="https://www.usa.gov/agencies">www.usa.gov/agencies</a></td>
+      <td>6</td>
+      <td>6</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>3</td>
+      <td><a href="https://www.grants.gov/">www.grants.gov</a></td>
+      <td>10</td>
+      <td>10</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>4</td>
+      <td><a href="https://www.va.gov/disability/">www.va.gov/disability</a></td>
+      <td>14</td>
+      <td>14</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>5</td>
+      <td><a href="https://www.va.gov/health-care/how-to-apply/">www.va.gov/health-care/how-to-apply</a></td>
+      <td>11</td>
+      <td>11</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>6</td>
+      <td><a href="https://www.section508.gov/">www.section508.gov</a></td>
+      <td>2</td>
+      <td>2</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>7</td>
+      <td><a href="https://www.section508.gov/test/">www.section508.gov/test</a></td>
+      <td>10</td>
+      <td>10</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>8</td>
+      <td><a href="https://www.cdc.gov/wcms/4.0/cdc-wp/data-presentation/table.html">www.cdc.gov/wcms/4.0/cdc-wp/data-presentation/table.html</a></td>
+      <td>24</td>
+      <td>24</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>9</td>
+      <td><a href="https://www.cdc.gov/nndss/infectious-disease/index.html">www.cdc.gov/nndss/infectious-disease/index.html</a></td>
+      <td>39</td>
+      <td>39</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>10</td>
+      <td><a href="https://www.cdc.gov/places/tools/explore-places-data-portal.html">www.cdc.gov/places/tools/explore-places-data-portal.html</a></td>
+      <td>66</td>
+      <td>66</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>11</td>
+      <td><a href="https://www.w3.org/WAI/tutorials/forms/">www.w3.org/WAI/tutorials/forms</a></td>
+      <td>3</td>
+      <td>3</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>12</td>
+      <td><a href="https://www.w3.org/WAI/tutorials/tables/">www.w3.org/WAI/tutorials/tables</a></td>
+      <td>3</td>
+      <td>3</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>13</td>
+      <td><a href="https://www.w3.org/WAI/test-evaluate/preliminary/">www.w3.org/WAI/test-evaluate/preliminary</a></td>
+      <td>16</td>
+      <td>16</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>14</td>
+      <td><a href="https://www.nasa.gov/">www.nasa.gov</a></td>
+      <td>32</td>
+      <td>32</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>15</td>
+      <td><a href="https://science.nasa.gov/solar-system/">science.nasa.gov/solar-system</a></td>
+      <td>260</td>
+      <td>260</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>16</td>
+      <td><a href="https://data.nasa.gov/">data.nasa.gov</a></td>
+      <td>19</td>
+      <td>19</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>17</td>
+      <td><a href="https://www.nist.gov/">www.nist.gov</a></td>
+      <td>30</td>
+      <td>30</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>18</td>
+      <td><a href="https://www.epa.gov/">www.epa.gov</a></td>
+      <td>23</td>
+      <td>23</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>19</td>
+      <td><a href="https://www.access-board.gov/ict/">www.access-board.gov/ict</a></td>
+      <td>463</td>
+      <td>463</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr>
+
+    <tr>
+      <td>20</td>
+      <td><a href="https://www.access-board.gov/ta/">www.access-board.gov/ta</a></td>
+      <td>8</td>
+      <td>8</td>
+      <td class="">0</td>
+      <td>exact-counts</td>
+    </tr></tbody>
+    </table>
+  </main>
+</body>
+</html>

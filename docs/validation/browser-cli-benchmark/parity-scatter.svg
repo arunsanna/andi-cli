@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520" role="img" aria-labelledby="title desc">
+  <title id="title">Browser vs CLI parity scatter</title>
+  <desc id="desc">Each point is one benchmark page. Points on the diagonal have equal browser and CLI totals.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="58" y="28" font-size="18" font-weight="700">Parity scatter</text>
+  <line x1="58" y1="462" x2="662" y2="58" stroke="#94a3b8" stroke-dasharray="5 5"/>
+  <line x1="58" y1="462" x2="662" y2="462" stroke="#0f172a"/>
+  <line x1="58" y1="462" x2="58" y2="58" stroke="#0f172a"/>
+  <text x="300" y="508" font-size="12">Browser total</text>
+  <text x="12" y="260" font-size="12" transform="rotate(-90 12 260)">CLI total</text>
+  <text x="50" y="480" text-anchor="end" font-size="10">0</text>
+  <text x="662" y="480" text-anchor="middle" font-size="10">463</text>
+  <text x="48" y="62" text-anchor="end" font-size="10">463</text>
+
+    <circle cx="85.39524838012959" cy="443.67602591792655" r="5" fill="#16a34a">
+      <title>1. www.usa.gov/benefit-finder: browser 21, CLI 21, delta 0</title>
+    </circle>
+    <text x="92.39524838012959" y="447.67602591792655" font-size="10">1</text>
+
+
+    <circle cx="65.82721382289417" cy="456.7645788336933" r="5" fill="#16a34a">
+      <title>2. www.usa.gov/agencies: browser 6, CLI 6, delta 0</title>
+    </circle>
+    <text x="72.82721382289417" y="460.7645788336933" font-size="10">2</text>
+
+
+    <circle cx="71.04535637149029" cy="453.2742980561555" r="5" fill="#16a34a">
+      <title>3. www.grants.gov: browser 10, CLI 10, delta 0</title>
+    </circle>
+    <text x="78.04535637149029" y="457.2742980561555" font-size="10">3</text>
+
+
+    <circle cx="76.26349892008639" cy="449.78401727861774" r="5" fill="#16a34a">
+      <title>4. www.va.gov/disability: browser 14, CLI 14, delta 0</title>
+    </circle>
+    <text x="83.26349892008639" y="453.78401727861774" font-size="10">4</text>
+
+
+    <circle cx="72.34989200863932" cy="452.40172786177106" r="5" fill="#16a34a">
+      <title>5. www.va.gov/health-care/how-to-apply: browser 11, CLI 11, delta 0</title>
+    </circle>
+    <text x="79.34989200863932" y="456.40172786177106" font-size="10">5</text>
+
+
+    <circle cx="60.60907127429806" cy="460.2548596112311" r="5" fill="#16a34a">
+      <title>6. www.section508.gov: browser 2, CLI 2, delta 0</title>
+    </circle>
+    <text x="67.60907127429806" y="464.2548596112311" font-size="10">6</text>
+
+
+    <circle cx="71.04535637149029" cy="453.2742980561555" r="5" fill="#16a34a">
+      <title>7. www.section508.gov/test: browser 10, CLI 10, delta 0</title>
+    </circle>
+    <text x="78.04535637149029" y="457.2742980561555" font-size="10">7</text>
+
+
+    <circle cx="89.30885529157668" cy="441.0583153347732" r="5" fill="#16a34a">
+      <title>8. www.cdc.gov/wcms/4.0/cdc-wp/data-presentation/table.html: browser 24, CLI 24, delta 0</title>
+    </circle>
+    <text x="96.30885529157668" y="445.0583153347732" font-size="10">8</text>
+
+
+    <circle cx="108.87688984881208" cy="427.9697624190065" r="5" fill="#16a34a">
+      <title>9. www.cdc.gov/nndss/infectious-disease/index.html: browser 39, CLI 39, delta 0</title>
+    </circle>
+    <text x="115.87688984881208" y="431.9697624190065" font-size="10">9</text>
+
+
+    <circle cx="144.09935205183587" cy="404.41036717062633" r="5" fill="#16a34a">
+      <title>10. www.cdc.gov/places/tools/explore-places-data-portal.html: browser 66, CLI 66, delta 0</title>
+    </circle>
+    <text x="151.09935205183587" y="408.41036717062633" font-size="10">10</text>
+
+
+    <circle cx="61.91360691144708" cy="459.3822894168467" r="5" fill="#16a34a">
+      <title>11. www.w3.org/WAI/tutorials/forms: browser 3, CLI 3, delta 0</title>
+    </circle>
+    <text x="68.91360691144709" y="463.3822894168467" font-size="10">11</text>
+
+
+    <circle cx="61.91360691144708" cy="459.3822894168467" r="5" fill="#16a34a">
+      <title>12. www.w3.org/WAI/tutorials/tables: browser 3, CLI 3, delta 0</title>
+    </circle>
+    <text x="68.91360691144709" y="463.3822894168467" font-size="10">12</text>
+
+
+    <circle cx="78.87257019438445" cy="448.03887688984884" r="5" fill="#16a34a">
+      <title>13. www.w3.org/WAI/test-evaluate/preliminary: browser 16, CLI 16, delta 0</title>
+    </circle>
+    <text x="85.87257019438445" y="452.03887688984884" font-size="10">13</text>
+
+
+    <circle cx="99.7451403887689" cy="434.0777537796976" r="5" fill="#16a34a">
+      <title>14. www.nasa.gov: browser 32, CLI 32, delta 0</title>
+    </circle>
+    <text x="106.7451403887689" y="438.0777537796976" font-size="10">14</text>
+
+
+    <circle cx="397.1792656587473" cy="235.1317494600432" r="5" fill="#16a34a">
+      <title>15. science.nasa.gov/solar-system: browser 260, CLI 260, delta 0</title>
+    </circle>
+    <text x="404.1792656587473" y="239.1317494600432" font-size="10">15</text>
+
+
+    <circle cx="82.78617710583154" cy="445.42116630669545" r="5" fill="#16a34a">
+      <title>16. data.nasa.gov: browser 19, CLI 19, delta 0</title>
+    </circle>
+    <text x="89.78617710583154" y="449.42116630669545" font-size="10">16</text>
+
+
+    <circle cx="97.13606911447084" cy="435.8228941684665" r="5" fill="#16a34a">
+      <title>17. www.nist.gov: browser 30, CLI 30, delta 0</title>
+    </circle>
+    <text x="104.13606911447084" y="439.8228941684665" font-size="10">17</text>
+
+
+    <circle cx="88.00431965442765" cy="441.93088552915765" r="5" fill="#16a34a">
+      <title>18. www.epa.gov: browser 23, CLI 23, delta 0</title>
+    </circle>
+    <text x="95.00431965442765" y="445.93088552915765" font-size="10">18</text>
+
+
+    <circle cx="662" cy="58" r="5" fill="#16a34a">
+      <title>19. www.access-board.gov/ict: browser 463, CLI 463, delta 0</title>
+    </circle>
+    <text x="669" y="62" font-size="10">19</text>
+
+
+    <circle cx="68.43628509719223" cy="455.0194384449244" r="5" fill="#16a34a">
+      <title>20. www.access-board.gov/ta: browser 8, CLI 8, delta 0</title>
+    </circle>
+    <text x="75.43628509719223" y="459.0194384449244" font-size="10">20</text>
+
+</svg>

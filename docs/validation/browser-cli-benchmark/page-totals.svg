@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="850" height="710" viewBox="0 0 850 710" role="img" aria-labelledby="title desc">
+  <title id="title">Browser vs CLI finding totals by page</title>
+  <desc id="desc">Grouped horizontal bars compare browser ANDI totals and CLI totals for each benchmark page.</desc>
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <text x="8" y="22" font-size="18" font-weight="700">Finding totals by page</text>
+  <rect x="250" y="30" width="12" height="12" fill="#2563eb"/><text x="268" y="40" font-size="12">Browser</text>
+  <rect x="338" y="30" width="12" height="12" fill="#f97316"/><text x="356" y="40" font-size="12">CLI</text>
+
+      <text x="8" y="64" font-size="11">1. www.usa.gov/benefit-finder</text>
+      <rect x="250" y="50" width="23.585313174946002" height="10" fill="#2563eb"/>
+      <rect x="250" y="63" width="23.585313174946002" height="10" fill="#f97316"/>
+      <text x="778" y="59" font-size="10">21</text>
+      <text x="778" y="72" font-size="10">21</text>
+
+      <text x="8" y="96" font-size="11">2. www.usa.gov/agencies</text>
+      <rect x="250" y="82" width="6.7386609071274295" height="10" fill="#2563eb"/>
+      <rect x="250" y="95" width="6.7386609071274295" height="10" fill="#f97316"/>
+      <text x="778" y="91" font-size="10">6</text>
+      <text x="778" y="104" font-size="10">6</text>
+
+      <text x="8" y="128" font-size="11">3. www.grants.gov</text>
+      <rect x="250" y="114" width="11.23110151187905" height="10" fill="#2563eb"/>
+      <rect x="250" y="127" width="11.23110151187905" height="10" fill="#f97316"/>
+      <text x="778" y="123" font-size="10">10</text>
+      <text x="778" y="136" font-size="10">10</text>
+
+      <text x="8" y="160" font-size="11">4. www.va.gov/disability</text>
+      <rect x="250" y="146" width="15.723542116630668" height="10" fill="#2563eb"/>
+      <rect x="250" y="159" width="15.723542116630668" height="10" fill="#f97316"/>
+      <text x="778" y="155" font-size="10">14</text>
+      <text x="778" y="168" font-size="10">14</text>
+
+      <text x="8" y="192" font-size="11">5. www.va.gov/health-care/how-to-apply</text>
+      <rect x="250" y="178" width="12.354211663066954" height="10" fill="#2563eb"/>
+      <rect x="250" y="191" width="12.354211663066954" height="10" fill="#f97316"/>
+      <text x="778" y="187" font-size="10">11</text>
+      <text x="778" y="200" font-size="10">11</text>
+
+      <text x="8" y="224" font-size="11">6. www.section508.gov</text>
+      <rect x="250" y="210" width="2.24622030237581" height="10" fill="#2563eb"/>
+      <rect x="250" y="223" width="2.24622030237581" height="10" fill="#f97316"/>
+      <text x="778" y="219" font-size="10">2</text>
+      <text x="778" y="232" font-size="10">2</text>
+
+      <text x="8" y="256" font-size="11">7. www.section508.gov/test</text>
+      <rect x="250" y="242" width="11.23110151187905" height="10" fill="#2563eb"/>
+      <rect x="250" y="255" width="11.23110151187905" height="10" fill="#f97316"/>
+      <text x="778" y="251" font-size="10">10</text>
+      <text x="778" y="264" font-size="10">10</text>
+
+      <text x="8" y="288" font-size="11">8. www.cdc.gov/wcms/4.0/cdc-wp/data-presentation/table.html</text>
+      <rect x="250" y="274" width="26.954643628509718" height="10" fill="#2563eb"/>
+      <rect x="250" y="287" width="26.954643628509718" height="10" fill="#f97316"/>
+      <text x="778" y="283" font-size="10">24</text>
+      <text x="778" y="296" font-size="10">24</text>
+
+      <text x="8" y="320" font-size="11">9. www.cdc.gov/nndss/infectious-disease/index.html</text>
+      <rect x="250" y="306" width="43.80129589632829" height="10" fill="#2563eb"/>
+      <rect x="250" y="319" width="43.80129589632829" height="10" fill="#f97316"/>
+      <text x="778" y="315" font-size="10">39</text>
+      <text x="778" y="328" font-size="10">39</text>
+
+      <text x="8" y="352" font-size="11">10. www.cdc.gov/places/tools/explore-places-data-portal.html</text>
+      <rect x="250" y="338" width="74.12526997840172" height="10" fill="#2563eb"/>
+      <rect x="250" y="351" width="74.12526997840172" height="10" fill="#f97316"/>
+      <text x="778" y="347" font-size="10">66</text>
+      <text x="778" y="360" font-size="10">66</text>
+
+      <text x="8" y="384" font-size="11">11. www.w3.org/WAI/tutorials/forms</text>
+      <rect x="250" y="370" width="3.3693304535637147" height="10" fill="#2563eb"/>
+      <rect x="250" y="383" width="3.3693304535637147" height="10" fill="#f97316"/>
+      <text x="778" y="379" font-size="10">3</text>
+      <text x="778" y="392" font-size="10">3</text>
+
+      <text x="8" y="416" font-size="11">12. www.w3.org/WAI/tutorials/tables</text>
+      <rect x="250" y="402" width="3.3693304535637147" height="10" fill="#2563eb"/>
+      <rect x="250" y="415" width="3.3693304535637147" height="10" fill="#f97316"/>
+      <text x="778" y="411" font-size="10">3</text>
+      <text x="778" y="424" font-size="10">3</text>
+
+      <text x="8" y="448" font-size="11">13. www.w3.org/WAI/test-evaluate/preliminary</text>
+      <rect x="250" y="434" width="17.96976241900648" height="10" fill="#2563eb"/>
+      <rect x="250" y="447" width="17.96976241900648" height="10" fill="#f97316"/>
+      <text x="778" y="443" font-size="10">16</text>
+      <text x="778" y="456" font-size="10">16</text>
+
+      <text x="8" y="480" font-size="11">14. www.nasa.gov</text>
+      <rect x="250" y="466" width="35.93952483801296" height="10" fill="#2563eb"/>
+      <rect x="250" y="479" width="35.93952483801296" height="10" fill="#f97316"/>
+      <text x="778" y="475" font-size="10">32</text>
+      <text x="778" y="488" font-size="10">32</text>
+
+      <text x="8" y="512" font-size="11">15. science.nasa.gov/solar-system</text>
+      <rect x="250" y="498" width="292.00863930885527" height="10" fill="#2563eb"/>
+      <rect x="250" y="511" width="292.00863930885527" height="10" fill="#f97316"/>
+      <text x="778" y="507" font-size="10">260</text>
+      <text x="778" y="520" font-size="10">260</text>
+
+      <text x="8" y="544" font-size="11">16. data.nasa.gov</text>
+      <rect x="250" y="530" width="21.339092872570195" height="10" fill="#2563eb"/>
+      <rect x="250" y="543" width="21.339092872570195" height="10" fill="#f97316"/>
+      <text x="778" y="539" font-size="10">19</text>
+      <text x="778" y="552" font-size="10">19</text>
+
+      <text x="8" y="576" font-size="11">17. www.nist.gov</text>
+      <rect x="250" y="562" width="33.69330453563715" height="10" fill="#2563eb"/>
+      <rect x="250" y="575" width="33.69330453563715" height="10" fill="#f97316"/>
+      <text x="778" y="571" font-size="10">30</text>
+      <text x="778" y="584" font-size="10">30</text>
+
+      <text x="8" y="608" font-size="11">18. www.epa.gov</text>
+      <rect x="250" y="594" width="25.831533477321813" height="10" fill="#2563eb"/>
+      <rect x="250" y="607" width="25.831533477321813" height="10" fill="#f97316"/>
+      <text x="778" y="603" font-size="10">23</text>
+      <text x="778" y="616" font-size="10">23</text>
+
+      <text x="8" y="640" font-size="11">19. www.access-board.gov/ict</text>
+      <rect x="250" y="626" width="520" height="10" fill="#2563eb"/>
+      <rect x="250" y="639" width="520" height="10" fill="#f97316"/>
+      <text x="778" y="635" font-size="10">463</text>
+      <text x="778" y="648" font-size="10">463</text>
+
+      <text x="8" y="672" font-size="11">20. www.access-board.gov/ta</text>
+      <rect x="250" y="658" width="8.98488120950324" height="10" fill="#2563eb"/>
+      <rect x="250" y="671" width="8.98488120950324" height="10" fill="#f97316"/>
+      <text x="778" y="667" font-size="10">8</text>
+      <text x="778" y="680" font-size="10">8</text>
+</svg>
