@@ -16,6 +16,7 @@ const assert = require('node:assert/strict');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const http = require('http');
 const { execFile } = require('child_process');
 
 const REPO = path.resolve(__dirname, '..');
@@ -34,6 +35,30 @@ function runCli(args, opts = {}) {
   return new Promise((resolve) => {
     execFile(process.execPath, [CLI, ...args], { timeout: opts.timeout ?? 120000 }, (err, stdout, stderr) => {
       resolve({ code: err ? err.code : 0, stdout, stderr });
+    });
+  });
+}
+
+function startCountingServer() {
+  return new Promise((resolve, reject) => {
+    let hits = 0;
+    const server = http.createServer((_req, res) => {
+      hits += 1;
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(`<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Strict offline URL list target</title></head>
+<body><main><h1>Strict offline URL list target</h1><button></button></main></body>
+</html>`);
+    });
+    server.on('error', reject);
+    server.listen(0, '127.0.0.1', () => {
+      const port = server.address().port;
+      resolve({
+        url: `http://127.0.0.1:${port}/`,
+        hits: () => hits,
+        close: () => new Promise((done) => server.close(done)),
+      });
     });
   });
 }
@@ -259,4 +284,25 @@ test('CLI --urls: --strict-offline exits 2 when a page references external asset
     /example\.com|external|strict.offline/i.test(stderr + ''),
     `--strict-offline should print offending URL info to stderr; got: ${stderr}`
   );
+});
+
+test('CLI --urls: --strict-offline blocks live target before request leaves', async (t) => {
+  t.timeout = 120000;
+
+  const target = await startCountingServer();
+  const urlsFile = path.join(os.tmpdir(), 'andi-sitemap-strict-offline-live-target.txt');
+  fs.writeFileSync(urlsFile, target.url);
+
+  try {
+    const { code, stderr } = await runCli(['--urls', urlsFile, '--fail-on', 'none', '--strict-offline']);
+
+    assert.equal(code, 2, '--urls --strict-offline should fail when a listed URL would require network');
+    assert.equal(target.hits(), 0, '--urls --strict-offline must abort the target request before it reaches the server');
+    assert.ok(
+      /blocked|ERR_BLOCKED_BY_CLIENT|scan error|strict.offline/i.test(stderr + ''),
+      `stderr should describe the blocked scan; got: ${stderr}`
+    );
+  } finally {
+    await target.close();
+  }
 });

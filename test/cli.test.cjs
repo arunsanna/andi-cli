@@ -23,6 +23,7 @@ const { execFile } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const os = require('os');
+const http = require('http');
 
 const CLI = path.resolve(__dirname, '..', 'src', 'cli.cjs');
 const REPO = path.resolve(__dirname, '..');
@@ -36,6 +37,30 @@ function runCli(args, opts = {}) {
   return new Promise((resolve) => {
     execFile(process.execPath, [CLI, ...args], { timeout: opts.timeout ?? 90000 }, (err, stdout, stderr) => {
       resolve({ code: err ? err.code : 0, stdout, stderr });
+    });
+  });
+}
+
+function startCountingServer() {
+  return new Promise((resolve, reject) => {
+    let hits = 0;
+    const server = http.createServer((_req, res) => {
+      hits += 1;
+      res.writeHead(200, { 'Content-Type': 'text/html' });
+      res.end(`<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Strict offline target</title></head>
+<body><main><h1>Strict offline target</h1><button></button></main></body>
+</html>`);
+    });
+    server.on('error', reject);
+    server.listen(0, '127.0.0.1', () => {
+      const port = server.address().port;
+      resolve({
+        url: `http://127.0.0.1:${port}/`,
+        hits: () => hits,
+        close: () => new Promise((done) => server.close(done)),
+      });
     });
   });
 }
@@ -219,6 +244,22 @@ test('exit 2: --strict-offline when fixture references external asset', async ()
     /example\.com|external|strict.offline/i.test(stderr + ''),
     '--strict-offline should print the offending external URL'
   );
+});
+
+test('exit 2: --strict-offline blocks live target before request leaves', async () => {
+  const target = await startCountingServer();
+  try {
+    const { code, stderr } = await runCli(['--url', target.url, '--fail-on', 'none', '--strict-offline']);
+
+    assert.equal(code, 2, '--strict-offline should fail when the target URL itself would require network');
+    assert.equal(target.hits(), 0, '--strict-offline must abort the target request before it reaches the server');
+    assert.ok(
+      /blocked|ERR_BLOCKED_BY_CLIENT|scan failed|strict.offline/i.test(stderr + ''),
+      `stderr should describe the blocked scan; got: ${stderr}`
+    );
+  } finally {
+    await target.close();
+  }
 });
 
 // ---------------------------------------------------------------------------

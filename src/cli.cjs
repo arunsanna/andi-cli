@@ -212,6 +212,7 @@ if (require.main === module) (async () => {
         timeoutMs: opts.timeout,
         concurrency: opts.concurrency,
         withAxe: opts.withAxe,
+        strictOffline: opts.strictOffline,
       });
     } catch (e) {
       process.stderr.write(`andi-scan: multi-URL scan failed — ${e.message}\n`);
@@ -270,6 +271,7 @@ if (require.main === module) (async () => {
       modules: opts.module,
       timeoutMs: opts.timeout,
       withAxe: opts.withAxe,
+      strictOffline: opts.strictOffline,
     });
   } catch (e) {
     process.stderr.write(`andi-scan: scan failed — ${e.message}\n`);

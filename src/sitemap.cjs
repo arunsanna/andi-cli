@@ -104,6 +104,7 @@ function readUrlsFile(text) {
  *   module?: string,
  *   timeoutMs?: number,
  *   headless?: boolean,
+ *   strictOffline?: boolean,
  * }} [opts]
  * @returns {Promise<{
  *   urls: string[],
@@ -122,6 +123,7 @@ async function scanUrls(urls, opts = {}) {
     timeoutMs: opts.timeoutMs,
     headless: opts.headless,
     withAxe: opts.withAxe,
+    strictOffline: opts.strictOffline,
   };
 
   const errors = [];
