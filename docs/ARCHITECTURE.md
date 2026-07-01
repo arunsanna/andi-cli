@@ -6,8 +6,10 @@
 > findings (`spikes/04`, `spikes/05`). `AndiModule.launchModule(letter)` drives modules
 > programmatically. **Extraction is DOM-primary** (internal objects proved unreliable —
 > Decision 4).
-> **Designed, pending build:** CSP bypass for protected targets, multi-module aggregation,
-> ANDI→WCAG mapping, SARIF/JUnit/HTML, optional axe layer, sitemap. See `docs/PLAN.md`.
+> **Current implementation:** CSP bypass for protected targets, multi-module aggregation,
+> ANDI→WCAG mapping, SARIF/JUnit/HTML, optional axe layer, sitemap scanning, parity
+> benchmarking, Docker, and CI self-tests are implemented. See `docs/PLAN.md` for the
+> historical phased build plan and `README.md` for current usage.
 
 ## The problem
 
@@ -58,20 +60,21 @@ contains every one of those files** (`andi/`), we intercept and serve them local
   request and applies these rules in order:
   1. `file:` / `data:` / `blob:` → `route.continue()` (local schemes never leave the machine).
   2. `/accessibility/andi/*` → served from local `andi/` clone (ANDI's own assets).
-  3. `/jquery[.-]/` → served from pinned `src/vendor/jquery-3.7.1.min.js`.
-  4. **Everything else (the target page and its CSS/JS/images) → `route.continue()` by default.**
+  3. **Everything else (the target page and its CSS/JS/images) → `route.continue()` by default.**
      The attempted URL is recorded in `externalAttempts` so callers can inspect it.
      With `--strict-offline` / `opts.strictOffline: true` → `route.abort("blockedbyclient")`.
 
 **Hermetic guarantee:** ANDI's own assets (ssa.gov + googleapis) are _always_ served
-locally, removing the live network dependency for the tool itself. The "0 external" guarantee
-applies to ANDI's assets in every scan. The target page loads normally over the network in
-default mode so ANDI scans the real rendered DOM of live URLs.
+locally, removing the live network dependency for the tool itself. Pinned jQuery is injected
+from `src/vendor/jquery-3.7.1.min.js`; the target page's own jQuery/framework assets are not
+rewritten. The "0 external" guarantee applies to ANDI's assets in every scan. The target
+page loads normally over the network in default mode so ANDI scans the real rendered DOM of
+live URLs.
 
 **`--strict-offline`** is the opt-in flag that _also_ blocks the target page's external
 requests, for fully-offline scans of self-contained or local targets. When this flag is
-set, the CLI exits 2 if any external requests were attempted (the `externalAttempts` list
-is non-empty after the scan).
+set, the CLI exits 2 if the target navigation is blocked or if any external requests were
+attempted (the `externalAttempts` list is non-empty after the scan).
 
 **CSP bypass (load-bearing for the target audience).** ANDI is injected with `addScriptTag`,
 which a target page's `Content-Security-Policy` — common on federal `.gov` — would block,

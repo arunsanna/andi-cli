@@ -51,7 +51,7 @@ Improvements to ANDI itself (not the wrapper) should be contributed upstream to 
 
 - **CommonJS `.cjs` modules** throughout. No ESM, no TypeScript in v1.
 - **Node >= 18.** Do not use APIs that require a newer runtime.
-- **Playwright pinned at `1.55.0`** (Chromium build 1187). Do not bump the Playwright pin without updating the Docker base image and the CI matrix.
+- **Playwright pinned at `1.55.1`** (Chromium build 1193). Do not bump the Playwright pin without updating the Docker base image and the CI matrix.
 - **Conventional commits**, present tense, subject line under 72 characters. Examples:
   - `feat: add --timeout flag`
   - `fix: handle missing ANDI alerts list gracefully`

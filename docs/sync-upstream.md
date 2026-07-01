@@ -10,8 +10,10 @@ the upstream repo.
 
 ## Prerequisites
 
-- `upstream` remote points to `https://github.com/SSAgov/ANDI`
-- `git remote -v` shows it; if not: `git remote add upstream https://github.com/SSAgov/ANDI`
+- `upstream` remote points to `https://github.com/SSAgov/ANDI` or `git@github.com:SSAgov/ANDI`
+- `git remote -v` shows it; if not, add one of:
+  - `git remote add upstream https://github.com/SSAgov/ANDI`
+  - `git remote add upstream git@github.com:SSAgov/ANDI`
 
 ## Steps
 
@@ -120,7 +122,7 @@ git push origin --tags
 ## Quick-reference cheat sheet
 
 ```bash
-git remote add upstream https://github.com/SSAgov/ANDI   # once
+git remote add upstream https://github.com/SSAgov/ANDI   # once; SSH is also OK
 git fetch upstream
 git merge upstream/master
 # resolve conflicts (never edit andi/)

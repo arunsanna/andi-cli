@@ -1,5 +1,13 @@
 # andi-cli v1.0 Implementation Plan
 
+> **Status note (2026-06-30):** This file is the historical phased build plan and task
+> contract. The current repo has implemented Phases 0-3 plus the launch-readiness gate:
+> multi-module ANDI scans, DOM-primary extraction, JSON/SARIF/JUnit/HTML reports,
+> sitemap/URL-list scanning, the optional `--with-axe` engine, Docker, GitHub Actions,
+> selector-contract tests, parity/benchmark harnesses, and launch docs. Use
+> `README.md`, `docs/ARCHITECTURE.md`, `package.json`, and the AI Memory board for
+> current execution status.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
 > (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps
 > use checkbox (`- [ ]`) syntax. Mutable status lives in AI Memory project **`andi-cli`**
@@ -11,28 +19,32 @@ SARIF/JUnit/HTML — the automation US federal/508 teams do not have today.
 
 **Architecture:** A literal fork of `SSAgov/ANDI` (Apache-2.0). Our code wraps the untouched
 `andi/` tree: Playwright loads the target page in a `bypassCSP` context, request-routing
-serves every ANDI asset from the local fork (hermetic — zero network), ANDI runs, we extract
-findings from the **DOM** (internal JS objects proved unreliable — Phase 0) using the
-**per-element count as the assertion basis**, aggregate across modules in fresh page contexts
-via `AndiModule.launchModule`, map alerts to WCAG, and render to multiple formats with a CI
-exit code. axe-core is an optional `--with-axe` layer.
+serves every ANDI asset from the local fork, ANDI runs, we extract findings from the **DOM**
+(internal JS objects proved unreliable — Phase 0) using the **alerts-list count as the
+assertion basis** with per-element enrichment, aggregate across modules in fresh page
+contexts via `AndiModule.launchModule`, map alerts to WCAG, and render to multiple formats
+with a CI exit code. axe-core is an optional `--with-axe` layer.
 
-**Tech Stack:** Node ≥18 (CommonJS `.cjs`), Playwright `1.55.0` (cached Chromium 1187),
+**Tech Stack:** Node ≥18 (CommonJS `.cjs`), Playwright `1.55.1` (Chromium build 1193),
 `@axe-core/playwright` (optional dep), `node:test`, GitHub Actions, Docker.
 
-## Current state (2026-06-21)
+## Current state (2026-06-30)
 
-**Exists:** `src/cli.cjs` + `src/scanner.cjs` (v0.1 scaffold, focusable-only DOM scrape),
-`examples/fixture.html` + `examples/multi-module-fixture.html`, `spikes/01`–`05`, `docs/`.
-Playwright `1.55.0` installed.
+**Exists:** `src/cli.cjs`, `src/scanner.cjs`, fresh-context multi-module scanning,
+DOM-primary extraction, aggregation, WCAG mapping, text/JSON/SARIF/JUnit/HTML reporters,
+sitemap/URL-list scanning, optional axe integration, parity and benchmark harnesses, Docker,
+GitHub composite action, CI self-tests, per-module fixtures, selector-contract tests, and
+launch/security/contribution docs. Playwright `1.55.1` is installed and matched to Chromium
+build 1193.
 
 **Proven (Phase 0 grounding, committed 2026-06-20):** hermetic run = 0 external requests +
 parity (`spikes/04`); `AndiModule.launchModule` drives modules; DOM-primary extraction
 (`spikes/05`); the fork carries every ANDI asset; ANDI = Apache-2.0.
 
-**Does NOT exist yet (so the first real step is Task 0.1):** the GitHub fork → `andi/`,
-Apache `LICENSE`, `NOTICE`, `.gitattributes`; `src/vendor/jquery-3.7.1.min.js`; `test/`; a
-`"test"` script in `package.json`; every `src/` module beyond cli/scanner.
+**Historical plan caveat:** the unchecked task lists below were written before the fork and
+before implementation. They remain useful as the original acceptance contract, but do not
+represent open work by checkbox state. Mutable open work lives in the AI Memory project
+`andi-cli`, currently under AC-005 launch readiness.
 
 > The grounding spikes (`04`,`05`) run against a `SSAgov/ANDI` clone via the `ANDI_DIR` env;
 > once the fork lands they resolve to `./andi`. Task 0.2 is their in-repo promotion.
@@ -43,7 +55,7 @@ _Every task implicitly includes these. Verbatim, non-negotiable._
 
 - **Never modify `andi/`** — upstream tree, kept byte-for-byte so `git merge upstream` is
   conflict-free. Our code lives in `src/`, `test/`, `.github/`, `docs/`, `examples/`.
-- **Node ≥18; Playwright pinned `1.55.0`** (cached Chromium 1187). Do not bump.
+- **Node ≥18; Playwright pinned `1.55.1`** (Chromium build 1193). Do not bump.
 - **CommonJS `.cjs`**. No ESM, no TypeScript in v1.
 - **License: Apache-2.0** for the whole fork. `NOTICE` carries SSA attribution. No `Claude`
   co-authorship in any commit or file.
@@ -130,7 +142,7 @@ License: Apache License, Version 2.0 (see LICENSE). The wrapper code (src/, etc.
 ```
 
 - [ ] **Step 3:** `package.json`: `"license":"Apache-2.0"`, `"test":"node --test test/"`, add
-      `"@axe-core/playwright"` to `optionalDependencies`. Keep `"playwright":"1.55.0"`.
+      `"@axe-core/playwright"` to `optionalDependencies`. Keep `"playwright":"1.55.1"`.
 - [ ] **Step 4:** `.gitattributes`: `andi/** linguist-vendored`.
 - [ ] **Step 5: Commit** `chore: fork SSAgov/ANDI, relicense wrapper Apache-2.0, add NOTICE`.
 
@@ -552,7 +564,7 @@ SARIF via `github/codeql-action/upload-sarif`. Commit `feat: GitHub Action + SAR
 
 ## Task 2.7 — Dockerfile + npx
 
-**Files:** `Dockerfile` (`FROM mcr.microsoft.com/playwright:v1.55.0`, copy repo, `npm ci
+**Files:** `Dockerfile` (`FROM mcr.microsoft.com/playwright:v1.55.1-noble`, copy repo, `npm ci
 --omit=dev`, entrypoint `node src/cli.cjs`). Verify `npx andi-scan --help`. Test: `docker
 build` succeeds; `--help` exit 0. Commit `feat: Docker image + npx`.
 

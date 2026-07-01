@@ -6,6 +6,8 @@ This repository is forked from [SSAgov/ANDI](https://github.com/SSAgov/ANDI). Th
 
 > **Honest coverage boundary.** Automated checks cover a **subset** of Section 508. ANDI surfaces items for human Trusted-Tester judgment; this tool does not replace that review. Do not interpret a clean scan as a compliance certification.
 
+> Tracks ANDI v29.2.2.
+
 ## Why ANDI in CI?
 
 The U.S. federal Trusted-Tester process requires alignment with ANDI's exact alert set — not generic engines like axe-core, pa11y, or Lighthouse. ANDI ships only as a manual browser bookmarklet. `andi-cli` closes the gap: it drives the **unmodified official `andi.js`** inside headless Chromium so the output matches what a human Trusted-Tester would see, and it emits that output in formats a CI system can gate on.
@@ -15,8 +17,8 @@ The U.S. federal Trusted-Tester process requires alignment with ANDI's exact ale
 ### npx (no install required)
 
 ```bash
-npx andi-scan --url https://example.com
-npx andi-scan --url https://example.com --fail-on danger --sarif andi.sarif
+npx --package andi-cli andi-scan --url https://example.com
+npx --package andi-cli andi-scan --url https://example.com --fail-on danger --sarif andi.sarif
 ```
 
 ### Docker
@@ -72,8 +74,8 @@ andi-scan --urls urls.txt --module all --fail-on danger
 # Scan a sitemap
 andi-scan --sitemap https://example.com/sitemap.xml --concurrency 4
 
-# Hermetic mode: fail if any external network request is attempted
-andi-scan --url https://example.com --strict-offline
+# Hermetic mode for local/self-contained pages: fail if network is attempted
+andi-scan --url file://$PWD/path/to/page.html --strict-offline
 
 # Optional second engine (requires @axe-core/playwright)
 andi-scan --url https://example.com --with-axe
@@ -140,7 +142,7 @@ Every human-facing report carries the honesty banner: _"Automated checks cover a
 ## How it works
 
 1. The target URL loads in headless Chromium (Playwright) with a `bypassCSP: true` context so CSP headers on federal `.gov` targets cannot block script injection.
-2. Every ANDI asset (`andi.js`, `andi.css`, module files, icons, pinned jQuery) is served from the local `andi/` vendored tree via `page.route()`. No network requests reach `ssa.gov` or any other host during a scan. `--strict-offline` fails the run loudly if anything slips through.
+2. Every ANDI asset (`andi.js`, `andi.css`, module files, icons, pinned jQuery) is served from the local vendored tree, so the tool itself does not depend on live `ssa.gov` or CDN requests. Target pages and their own resources load normally by default. `--strict-offline` blocks non-local requests and exits 2 when a network request is attempted.
 3. ANDI auto-launches on injection. For multi-module scans each module runs in a fresh page context via `AndiModule.launchModule(letter)`, which avoids the flakiness of in-place module switching.
 4. Findings are extracted from the ANDI DOM (`#ANDI508-alerts-list` for all modules; `.ANDI508-element-*` highlights as enrichment for modules `f/c/t/g/l`). ANDI's internal JS objects are not used — they proved unreliable in grounding spikes (see `docs/ARCHITECTURE.md` Decision 4).
 5. Findings are aggregated across modules, mapped to WCAG success criteria where possible, and rendered to the requested output formats with a CI exit code.
@@ -152,6 +154,13 @@ The `bypassCSP` flag is a Playwright testing-time context option. It is the corr
 - **GitHub Actions:** [`docs/ci/github.md`](docs/ci/github.md) — composite action with SARIF upload and inline PR annotations
 - **GitLab CI:** [`docs/ci/gitlab.md`](docs/ci/gitlab.md) — YAML job with JUnit artifact
 - **Jenkins:** [`docs/ci/jenkins.md`](docs/ci/jenkins.md) — pipeline stage using the Docker image
+
+## Release targets
+
+The intended release targets are the npm package `andi-cli` (exposing the
+`andi-scan`, `andi-parity`, and `andi-benchmark` binaries), the GitHub composite
+action at `.github/actions/andi-scan`, and the GHCR Docker image
+`ghcr.io/arunsanna/andi-cli`. Publishing or tagging a release is approval-gated.
 
 ## Non-goals (v1)
 

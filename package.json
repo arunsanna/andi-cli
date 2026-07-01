@@ -14,6 +14,15 @@
   "license": "Apache-2.0",
   "author": "Arun Sanna",
   "type": "commonjs",
+  "files": [
+    "NOTICE",
+    "andi/",
+    "src/",
+    "docs/ARCHITECTURE.md",
+    "docs/ci/",
+    "docs/output-schema.md",
+    "docs/sync-upstream.md"
+  ],
   "bin": {
     "andi-scan": "src/cli.cjs",
     "andi-parity": "src/parity-cli.cjs",
