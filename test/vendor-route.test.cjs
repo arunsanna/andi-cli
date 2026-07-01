@@ -5,17 +5,16 @@ const path = require('path');
 const http = require('http');
 const { chromium } = require('playwright');
 const { installVendorRoutes } = require('../src/vendor-route.cjs');
+const {
+  waitAndiReady,
+  waitActiveModule,
+  waitModuleStable,
+} = require('../src/scanner.cjs');
 
 const REPO = path.resolve(__dirname, '..');
 const FIXTURE = 'file://' + path.join(REPO, 'examples', 'fixture.html');
 const ANDI_DIR = path.join(REPO, 'andi');
 const JQUERY = path.join(REPO, 'src', 'vendor', 'jquery-3.7.1.min.js');
-
-const READY = () =>
-  !!window.andiVersionNumber &&
-  !!document.getElementById('ANDI508') &&
-  !!window.testPageData &&
-  typeof window.testPageData.numberOfAccessibilityAlertsFound === 'number';
 
 function startServer() {
   return new Promise((resolve, reject) => {
@@ -44,7 +43,9 @@ test('installVendorRoutes: no external requests and 2 danger elements on fixture
     await page.goto(FIXTURE, { waitUntil: 'domcontentloaded' });
     await page.addScriptTag({ path: JQUERY });
     await page.addScriptTag({ path: path.join(ANDI_DIR, 'andi.js') });
-    await page.waitForFunction(READY, { timeout: 30000 });
+    await waitAndiReady(page, 30000);
+    await waitActiveModule(page, 'f', 30000);
+    await waitModuleStable(page, 12000);
 
     // Exclude the fixture's intentional broken image (logo.png) from external check
     const unexpected = externalAttempts.filter((u) => !u.includes('logo.png'));
