@@ -36,7 +36,7 @@ jobs:
 | `urls`           | _(none)_             | Path to a newline-separated file of URLs (`#` = comment line).                                                                            |
 | `modules`        | `f`                  | ANDI module(s): `f`=focusable, `g`=graphics, `l`=links, `t`=tables, `s`=structures, `c`=contrast, `h`=hidden, `i`=iframes, `all`=run all. |
 | `fail-on`        | `danger`             | Exit 1 when worst finding severity ≥ this level: `danger` \| `warning` \| `caution` \| `none`.                                            |
-| `with-axe`       | `false`              | Also run axe-core alongside ANDI (Phase 3 — currently a no-op).                                                                           |
+| `with-axe`       | `false`              | Also run axe-core alongside ANDI and label findings by engine.                                                                            |
 | `sarif`          | `andi-results.sarif` | Output path for the SARIF 2.1.0 file uploaded to code scanning.                                                                           |
 | `html`           | _(none)_             | Output path for a self-contained HTML report (optional).                                                                                  |
 | `strict-offline` | `false`              | Exit 2 if any external network requests are detected during the scan.                                                                     |
@@ -118,8 +118,9 @@ SARIF severity mapping:
 
 ## Notes
 
-- Playwright pin: `1.55.0` (Chromium build 1187). The action installs Chromium
+- Playwright pin: `1.55.1` (Chromium build 1193). The action installs Chromium
   via `npx playwright install --with-deps chromium` on each run.
 - Automated checks cover a subset of Section 508; ANDI surfaces items for human
   Trusted-Tester judgment.
-- The `with-axe` flag is plumbed but a no-op until Phase 3 lands.
+- The `with-axe` flag runs axe-core as an optional second engine. ANDI remains
+  the default engine and the reason this tool exists.

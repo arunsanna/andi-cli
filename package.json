@@ -1,6 +1,6 @@
 {
   "name": "andi-cli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Headless CLI + CI wrapper for the SSA ANDI (Accessible Name & Description Inspector) Section 508 accessibility tool.",
   "keywords": [
     "accessibility",
@@ -24,6 +24,8 @@
     "scan": "node src/cli.cjs",
     "parity": "node src/parity-cli.cjs",
     "benchmark:browser-cli": "node src/benchmark-cli.cjs",
+    "package:desktop": "node scripts/package-desktop.cjs",
+    "smoke:desktop-package": "node scripts/smoke-desktop-package.cjs",
     "test": "node --test --test-concurrency=2 test/*.cjs",
     "test:fixture": "node src/cli.cjs --url file://$PWD/examples/fixture.html"
   },

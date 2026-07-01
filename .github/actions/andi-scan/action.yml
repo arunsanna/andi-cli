@@ -24,7 +24,7 @@ inputs:
     required: false
     default: 'danger'
   with-axe:
-    description: Also run axe-core engine alongside ANDI (Phase 3 — currently a no-op).
+    description: Also run axe-core engine alongside ANDI.
     required: false
     default: 'false'
   sarif:

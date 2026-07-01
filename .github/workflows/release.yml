@@ -1,0 +1,142 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: macos-arm64
+            os: macos-15
+          - target: macos-x64
+            os: macos-15-intel
+          - target: windows-x64
+            os: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate tag matches package version
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="$VERSION" node -e "const pkg=require('./package.json'); if (pkg.version !== process.env.VERSION) { throw new Error('package.json version '+pkg.version+' does not match tag v'+process.env.VERSION); }"
+
+      - name: Build portable desktop package
+        run: npm run package:desktop
+
+      - name: Smoke test portable desktop package
+        run: npm run smoke:desktop-package
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: andi-cli-${{ matrix.target }}
+          path: |
+            dist/desktop/*.tar.gz
+            dist/desktop/*.zip
+            dist/desktop/*.package.json
+            dist/desktop/*.smoke.json
+          if-no-files-found: error
+
+  publish:
+    name: Publish GitHub release
+    runs-on: ubuntu-latest
+    needs: package
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Download package artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: Validate tag matches package version
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          VERSION="$VERSION" node -e "const pkg=require('./package.json'); if (pkg.version !== process.env.VERSION) { throw new Error('package.json version '+pkg.version+' does not match tag v'+process.env.VERSION); }"
+
+      - name: Create checksums and Homebrew formula
+        shell: bash
+        run: |
+          set -euo pipefail
+          VERSION="${GITHUB_REF_NAME#v}"
+          cd release-assets
+          sha256sum *.tar.gz *.zip > SHA256SUMS.txt
+          cd ..
+          node scripts/generate-homebrew-formula.cjs \
+            --version "$VERSION" \
+            --asset-dir release-assets \
+            --out release-assets/andi-cli.rb
+          cat > release-assets/RELEASE_NOTES.md <<'EOF'
+          # andi-cli
+
+          Portable release packages are available for macOS Apple Silicon,
+          macOS Intel, and Windows x64. Each package includes the CLI, a Node
+          runtime, production dependencies, and Playwright Chromium headless
+          shell.
+
+          Every package was smoke-tested before publication. See the attached
+          `.smoke.json` files for proof.
+          EOF
+
+      - name: Publish release assets
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            release-assets/*.tar.gz \
+            release-assets/*.zip \
+            release-assets/*.package.json \
+            release-assets/*.smoke.json \
+            release-assets/SHA256SUMS.txt \
+            release-assets/andi-cli.rb \
+            --title "andi-cli $GITHUB_REF_NAME" \
+            --notes-file release-assets/RELEASE_NOTES.md \
+            --verify-tag
+
+      - name: Update Homebrew tap
+        if: ${{ vars.UPDATE_HOMEBREW_TAP == 'true' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "HOMEBREW_TAP_TOKEN is required when UPDATE_HOMEBREW_TAP=true"
+            exit 1
+          fi
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/arunsanna/homebrew-tap.git" homebrew-tap
+          mkdir -p homebrew-tap/Formula
+          cp release-assets/andi-cli.rb homebrew-tap/Formula/andi-cli.rb
+          cd homebrew-tap
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/andi-cli.rb
+          git commit -m "andi-cli ${GITHUB_REF_NAME}" || exit 0
+          git push origin HEAD:main

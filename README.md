@@ -10,13 +10,60 @@ This repository is forked from [SSAgov/ANDI](https://github.com/SSAgov/ANDI). Th
 
 The U.S. federal Trusted-Tester process requires alignment with ANDI's exact alert set — not generic engines like axe-core, pa11y, or Lighthouse. ANDI ships only as a manual browser bookmarklet. `andi-cli` closes the gap: it drives the **unmodified official `andi.js`** inside headless Chromium so the output matches what a human Trusted-Tester would see, and it emits that output in formats a CI system can gate on.
 
-## Quickstart
+## Install
 
-### npx (no install required)
+### Homebrew (macOS)
+
+After the `v1.0.0` release workflow completes and the tap is updated:
 
 ```bash
-npx andi-scan --url https://example.com
-npx andi-scan --url https://example.com --fail-on danger --sarif andi.sarif
+brew tap arunsanna/tap
+brew install andi-cli
+andi-scan --help
+```
+
+### GitHub release packages
+
+Download the package for your machine from the
+[v1.0.0 release](https://github.com/arunsanna/andi-cli/releases/tag/v1.0.0):
+
+| Platform | Package |
+| -------- | ------- |
+| macOS Apple Silicon | [`andi-cli-1.0.0-macos-arm64.tar.gz`](https://github.com/arunsanna/andi-cli/releases/download/v1.0.0/andi-cli-1.0.0-macos-arm64.tar.gz) |
+| macOS Intel | [`andi-cli-1.0.0-macos-x64.tar.gz`](https://github.com/arunsanna/andi-cli/releases/download/v1.0.0/andi-cli-1.0.0-macos-x64.tar.gz) |
+| Windows x64 | [`andi-cli-1.0.0-windows-x64.zip`](https://github.com/arunsanna/andi-cli/releases/download/v1.0.0/andi-cli-1.0.0-windows-x64.zip) |
+
+Each release also includes `SHA256SUMS.txt`, package manifests, smoke-test logs,
+and a generated `andi-cli.rb` Homebrew formula.
+
+macOS:
+
+```bash
+curl -L -o andi-cli-1.0.0-macos-arm64.tar.gz \
+  https://github.com/arunsanna/andi-cli/releases/download/v1.0.0/andi-cli-1.0.0-macos-arm64.tar.gz
+tar -xzf andi-cli-1.0.0-macos-arm64.tar.gz
+cd andi-cli-1.0.0-macos-arm64
+./bin/andi-scan --help
+./bin/andi-scan --url https://example.com --module all --fail-on danger
+```
+
+Windows PowerShell:
+
+```powershell
+Invoke-WebRequest `
+  -Uri https://github.com/arunsanna/andi-cli/releases/download/v1.0.0/andi-cli-1.0.0-windows-x64.zip `
+  -OutFile .\andi-cli-1.0.0-windows-x64.zip
+Expand-Archive .\andi-cli-1.0.0-windows-x64.zip -DestinationPath .\andi-cli
+cd .\andi-cli\andi-cli-1.0.0-windows-x64
+.\bin\andi-scan.ps1 --help
+.\bin\andi-scan.ps1 --url http://localhost:3000 --module all --fail-on danger --html andi-report.html
+```
+
+If PowerShell script execution is blocked, use Command Prompt:
+
+```bat
+bin\andi-scan.cmd --help
+bin\andi-scan.cmd --url http://localhost:3000 --module all --fail-on danger
 ```
 
 ### Docker
@@ -30,7 +77,7 @@ docker run --rm -v "$PWD:/work" ghcr.io/arunsanna/andi-cli \
   --url file:///work/path/to/page.html --fail-on danger
 ```
 
-### GitHub Actions
+### GitHub Actions integration
 
 ```yaml
 - uses: arunsanna/andi-cli/.github/actions/andi-scan@main
@@ -42,6 +89,15 @@ docker run --rm -v "$PWD:/work" ghcr.io/arunsanna/andi-cli \
 
 Full configuration options: [`docs/ci/github.md`](docs/ci/github.md)
 
+### npm package
+
+After the npm package is published:
+
+```bash
+npm exec --package andi-cli -- andi-scan --url https://example.com
+npm exec --package andi-cli -- andi-scan --url https://example.com --fail-on danger --sarif andi.sarif
+```
+
 ## Install (local development)
 
 ```bash
@@ -50,6 +106,32 @@ cd andi-cli
 npm install
 npx playwright install chromium
 ```
+
+## Build desktop packages
+
+```bash
+npm run package:desktop
+npm run smoke:desktop-package
+```
+
+The package command builds the current platform artifact under `dist/desktop/`.
+The GitHub Actions workflow at `.github/workflows/desktop-packages.yml` builds
+and smoke-tests `macos-arm64`, `macos-x64`, and `windows-x64` artifacts on
+native hosted runners.
+
+## Release
+
+The `v1.0.0` release is created by pushing a matching tag after tests pass:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
+
+The release workflow builds and smoke-tests all desktop packages, uploads them
+to the GitHub Release, writes `SHA256SUMS.txt`, and generates the Homebrew
+formula. Do not create the tag until the branch is merged and the normal CI
+checks are green.
 
 ## Usage
 
@@ -152,6 +234,13 @@ The `bypassCSP` flag is a Playwright testing-time context option. It is the corr
 - **GitHub Actions:** [`docs/ci/github.md`](docs/ci/github.md) — composite action with SARIF upload and inline PR annotations
 - **GitLab CI:** [`docs/ci/gitlab.md`](docs/ci/gitlab.md) — YAML job with JUnit artifact
 - **Jenkins:** [`docs/ci/jenkins.md`](docs/ci/jenkins.md) — pipeline stage using the Docker image
+
+## Roadmap
+
+- **Desktop packages:** portable macOS and Windows bundles for developer teams.
+- **Native engine:** future CLI-first scanner that can move beyond ANDI while
+  keeping the current command, report formats, and exit-code contract. See
+  [`docs/roadmap/native-engine.md`](docs/roadmap/native-engine.md).
 
 ## Non-goals (v1)
 

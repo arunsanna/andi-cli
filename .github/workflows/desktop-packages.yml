@@ -1,0 +1,53 @@
+name: Desktop packages
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: ${{ matrix.target }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: macos-arm64
+            os: macos-15
+          - target: macos-x64
+            os: macos-15-intel
+          - target: windows-x64
+            os: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Build portable desktop package
+        run: npm run package:desktop
+
+      - name: Smoke test portable desktop package
+        run: npm run smoke:desktop-package
+
+      - name: Upload desktop package and smoke proof
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: andi-cli-${{ matrix.target }}
+          path: |
+            dist/desktop/*.tar.gz
+            dist/desktop/*.zip
+            dist/desktop/*.package.json
+            dist/desktop/*.smoke.json
+          if-no-files-found: error
