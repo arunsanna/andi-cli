@@ -1,12 +1,16 @@
 name: ANDI 508 Scan
 description: >
-  Run the SSA ANDI headless Section 508 scanner against one or more URLs,
-  write SARIF and/or HTML reports, and upload SARIF to GitHub code scanning
-  for inline PR annotations.
+  Run the SSA ANDI headless Section 508 scanner against a local directory or
+  one or more URLs, write SARIF and/or HTML reports, and upload SARIF to
+  GitHub code scanning for inline PR annotations.
 
 inputs:
   url:
-    description: Single URL to scan (http/https/file). Required unless urls is given.
+    description: Single URL to scan (http/https/file). Required unless dir or urls is given.
+    required: false
+    default: ''
+  dir:
+    description: Local directory to serve, render, and scan recursively for .html/.htm pages.
     required: false
     default: ''
   urls:
@@ -84,6 +88,7 @@ runs:
       shell: bash
       env:
         INPUT_URL: ${{ inputs.url }}
+        INPUT_DIR: ${{ inputs.dir }}
         INPUT_URLS: ${{ inputs.urls }}
         INPUT_MODULES: ${{ inputs.modules }}
         INPUT_FAIL_ON: ${{ inputs.fail-on }}
@@ -97,6 +102,10 @@ runs:
 
         if [ -n "$INPUT_URL" ]; then
           ARGS+=(--url "$INPUT_URL")
+        fi
+
+        if [ -n "$INPUT_DIR" ]; then
+          ARGS+=(--dir "$INPUT_DIR")
         fi
 
         if [ -n "$INPUT_URLS" ]; then

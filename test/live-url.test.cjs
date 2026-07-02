@@ -134,7 +134,7 @@ test('live-url: strictOffline=true — http://127.0.0.1 navigation is blocked', 
 
 test('live-url: regression — file:// fixture still finds 2 dangers with default vendor routes', async () => {
   const browser = await chromium.launch({ headless: true });
-  const { injectAndi, waitAndiReady, waitModuleStable } = require('../src/andi-helpers.cjs');
+  const { waitAndiReady, waitActiveModule, waitModuleStable } = require('../src/andi-helpers.cjs');
   try {
     const ctx = await browser.newContext({ bypassCSP: true });
     const page = await ctx.newPage();
@@ -145,13 +145,9 @@ test('live-url: regression — file:// fixture still finds 2 dangers with defaul
     await page.goto(FIXTURE, { waitUntil: 'domcontentloaded' });
     await page.addScriptTag({ path: JQUERY });
     await page.addScriptTag({ path: path.join(ANDI_DIR, 'andi.js') });
-
-    const READY = () =>
-      !!window.andiVersionNumber &&
-      !!document.getElementById('ANDI508') &&
-      !!window.testPageData &&
-      typeof window.testPageData.numberOfAccessibilityAlertsFound === 'number';
-    await page.waitForFunction(READY, { timeout: 30000 });
+    await waitAndiReady(page, 30000);
+    await waitActiveModule(page, 'f', 30000);
+    await waitModuleStable(page, 12000);
 
     // Count danger elements outside ANDI UI panel
     const dangerCount = await page.evaluate(() =>

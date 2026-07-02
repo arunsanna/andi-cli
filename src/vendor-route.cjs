@@ -14,6 +14,7 @@ const CT = {
 };
 async function installVendorRoutes(page, opts = {}) {
   const strictOffline = opts.strictOffline === true;
+  const allowedOrigins = new Set(opts.allowedOrigins || []);
   const externalAttempts = [];
   await page.route("**/*", async (route) => {
     const u = route.request().url();
@@ -38,6 +39,13 @@ async function installVendorRoutes(page, opts = {}) {
     // does not need a broad network route for jQuery. A broad /jquery/ route
     // can mutate real pages and change lANDI results.
     // Everything else is the TARGET PAGE and its resources.
+    if (strictOffline && allowedOrigins.size > 0) {
+      try {
+        if (allowedOrigins.has(new URL(u).origin)) return route.continue();
+      } catch (_) {
+        // Fall through to record/block malformed non-local requests.
+      }
+    }
     // Always record the attempt so callers can inspect it.
     externalAttempts.push(u);
     // Default: let the target load normally (live-URL scanning).

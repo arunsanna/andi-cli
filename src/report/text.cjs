@@ -26,7 +26,12 @@ function toText(result) {
 
   lines.push('');
   lines.push('ANDI 508 scan');
-  lines.push(`  URL:      ${result.url}`);
+  if (result.directory) {
+    lines.push(`  Directory: ${result.directory}`);
+    lines.push(`  Pages:     ${(result.urls || []).length}`);
+  } else {
+    lines.push(`  URL:      ${result.url}`);
+  }
   if (result.version) lines.push(`  ANDI:     v${result.version}`);
   if (result.scannedAt) lines.push(`  Scanned:  ${result.scannedAt}`);
   if (typeof result.andiAlertTotal === 'number') {
@@ -66,6 +71,9 @@ function toText(result) {
           }
           if (f.element) {
             lines.push(`        element: <${f.element.tag}>`);
+          }
+          if (result.directory && f.url) {
+            lines.push(`        page: ${f.url}`);
           }
         }
       }

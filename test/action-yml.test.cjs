@@ -20,7 +20,7 @@ const yaml = require('js-yaml');
 
 const ACTION_YML = path.resolve(__dirname, '..', '.github', 'actions', 'andi-scan', 'action.yml');
 
-const REQUIRED_INPUTS = ['url', 'urls', 'modules', 'fail-on', 'with-axe', 'sarif', 'html', 'strict-offline'];
+const REQUIRED_INPUTS = ['url', 'dir', 'urls', 'modules', 'fail-on', 'with-axe', 'sarif', 'html', 'strict-offline'];
 
 // js-yaml v4: yaml.load() uses DEFAULT_SCHEMA — safe by default.
 // yaml.safeLoad was removed in v4; yaml.load IS the safe function.

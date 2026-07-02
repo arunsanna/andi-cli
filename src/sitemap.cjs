@@ -105,6 +105,7 @@ function readUrlsFile(text) {
  *   timeoutMs?: number,
  *   headless?: boolean,
  *   strictOffline?: boolean,
+ *   allowedOrigins?: string[],
  * }} [opts]
  * @returns {Promise<{
  *   urls: string[],
@@ -113,6 +114,7 @@ function readUrlsFile(text) {
  *   worst: string|null,
  *   errors: Array<{url: string, error: string}>,
  *   hasErrors: boolean,
+ *   andiVersion: string|null,
  *   externalAttempts: Array<{page: string, attempt: string}>,
  * }>}
  */
@@ -124,6 +126,7 @@ async function scanUrls(urls, opts = {}) {
     headless: opts.headless,
     withAxe: opts.withAxe,
     strictOffline: opts.strictOffline,
+    allowedOrigins: opts.allowedOrigins,
   };
 
   const errors = [];
@@ -131,6 +134,7 @@ async function scanUrls(urls, opts = {}) {
   const allFindingArrays = [];
   // allExternalAttempts aggregates {page, attempt} across all pages.
   const allExternalAttempts = [];
+  let andiVersion = null;
 
   if (concurrency === 1) {
     // Sequential — deterministic ordering, simplest implementation.
@@ -148,6 +152,7 @@ async function scanUrls(urls, opts = {}) {
           allExternalAttempts.push({ page: url, attempt });
         }
       }
+      if (!andiVersion && pageResult.andiVersion) andiVersion = pageResult.andiVersion;
       // Tag every finding with the page URL.
       const tagged = pageResult.findings.map((f) => Object.assign({}, f, { url }));
       allFindingArrays.push(tagged);
@@ -171,6 +176,7 @@ async function scanUrls(urls, opts = {}) {
                 externalAttempts: Array.isArray(pageResult.externalAttempts)
                   ? pageResult.externalAttempts.map((a) => ({ page: url, attempt: a }))
                   : [],
+                andiVersion: pageResult.andiVersion || null,
               };
             })
             .catch((e) => {
@@ -194,6 +200,7 @@ async function scanUrls(urls, opts = {}) {
       if (r.ok) {
         allFindingArrays.push(r.tagged);
         if (r.externalAttempts) allExternalAttempts.push(...r.externalAttempts);
+        if (!andiVersion && r.andiVersion) andiVersion = r.andiVersion;
       } else {
         errors.push({ url: r.url, error: r.error });
       }
@@ -210,6 +217,7 @@ async function scanUrls(urls, opts = {}) {
     worst,
     errors,
     hasErrors: errors.length > 0,
+    andiVersion,
     externalAttempts: allExternalAttempts,
   };
 }

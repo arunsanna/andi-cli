@@ -241,3 +241,17 @@ test('toJson: urls is always an array', () => {
   assert.ok(report.urls.length > 0, 'urls must have at least one entry');
   assert.equal(report.urls[0], 'https://example.com/', 'urls[0] must match result.url');
 });
+
+test('toJson: multi-page result preserves all urls and directory metadata', () => {
+  const report = toJson({
+    ...SYNTHETIC_RESULT,
+    url: 'directory:/tmp/site',
+    directory: '/tmp/site',
+    files: ['index.html', 'about.html'],
+    urls: ['http://127.0.0.1:1234/index.html', 'http://127.0.0.1:1234/about.html'],
+  });
+
+  assert.equal(report.directory, '/tmp/site');
+  assert.deepEqual(report.files, ['index.html', 'about.html']);
+  assert.deepEqual(report.urls, ['http://127.0.0.1:1234/index.html', 'http://127.0.0.1:1234/about.html']);
+});

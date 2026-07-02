@@ -17,13 +17,20 @@ The U.S. federal Trusted-Tester process requires alignment with ANDI's exact ale
 ### npx (no install required)
 
 ```bash
+# Scan a local build/output directory before deployment
+npx --package andi-cli andi-scan ./dist --module all --fail-on danger
+
+# Or scan a deployed/staging URL
 npx --package andi-cli andi-scan --url https://example.com
-npx --package andi-cli andi-scan --url https://example.com --fail-on danger --sarif andi.sarif
 ```
 
 ### Docker
 
 ```bash
+# Scan a local build/output directory before deployment
+docker run --rm -v "$PWD:/work" ghcr.io/arunsanna/andi-cli \
+  --dir /work/dist --module all --fail-on danger
+
 # Pull and scan a URL
 docker run --rm ghcr.io/arunsanna/andi-cli --url https://example.com
 
@@ -56,6 +63,12 @@ npx playwright install chromium
 ## Usage
 
 ```bash
+# Shift-left directory scan: serve ./dist locally, render every .html/.htm page,
+# and scan the rendered DOM in Chromium.
+andi-scan ./dist --module all --fail-on danger
+andi-scan --dir ./dist --json --out andi.andi.json
+andi-scan --dir ./dist --sarif andi.sarif --html andi.andi.html
+
 # Human-readable report (default: focusable module)
 andi-scan --url https://example.com
 
@@ -86,11 +99,16 @@ npm run test:fixture
 
 Run `andi-scan --help` for the full flag reference.
 
+`--dir` expects rendered static HTML. For React/Vite/Astro/SvelteKit/static-exported
+Next.js and similar projects, run the normal build command first, then scan the
+generated output directory such as `dist/`, `build/`, `public/`, or `out/`.
+
 ## Flags
 
 | Flag                    | Default  | Description                                                                                                                               |
 | ----------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `--url <url>`           | _(none)_ | Page to scan (`http://`, `https://`, or `file://`). Required unless `--urls` or `--sitemap` is given.                                     |
+| `--url <url>`           | _(none)_ | Page to scan (`http://`, `https://`, or `file://`). Required unless `--dir`, `--urls`, or `--sitemap` is given.                          |
+| `--dir <directory>`     | _(none)_ | Serve a local directory on `127.0.0.1`, discover `.html`/`.htm` files recursively, render them in Chromium, and scan them.                |
 | `--urls <file>`         | _(none)_ | Newline-separated file of URLs (`#` = comment line).                                                                                      |
 | `--sitemap <url\|file>` | _(none)_ | Sitemap XML to fetch or read; scans all `<loc>` entries.                                                                                  |
 | `--concurrency <n>`     | `1`      | Number of pages to scan in parallel.                                                                                                      |
@@ -141,7 +159,7 @@ Every human-facing report carries the honesty banner: _"Automated checks cover a
 
 ## How it works
 
-1. The target URL loads in headless Chromium (Playwright) with a `bypassCSP: true` context so CSP headers on federal `.gov` targets cannot block script injection.
+1. For `--dir`, the directory is served on `127.0.0.1`, every `.html`/`.htm` file is discovered recursively, and each local page is rendered in headless Chromium before scanning. For `--url`, the target URL loads directly in headless Chromium (Playwright) with a `bypassCSP: true` context so CSP headers on federal `.gov` targets cannot block script injection.
 2. Every ANDI asset (`andi.js`, `andi.css`, module files, icons, pinned jQuery) is served from the local vendored tree, so the tool itself does not depend on live `ssa.gov` or CDN requests. Target pages and their own resources load normally by default. `--strict-offline` blocks non-local requests and exits 2 when a network request is attempted.
 3. ANDI auto-launches on injection. For multi-module scans each module runs in a fresh page context via `AndiModule.launchModule(letter)`, which avoids the flakiness of in-place module switching.
 4. Findings are extracted from the ANDI DOM (`#ANDI508-alerts-list` for all modules; `.ANDI508-element-*` highlights as enrichment for modules `f/c/t/g/l`). ANDI's internal JS objects are not used — they proved unreliable in grounding spikes (see `docs/ARCHITECTURE.md` Decision 4).

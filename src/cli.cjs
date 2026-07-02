@@ -9,6 +9,7 @@
  *   andi-scan --url https://staging.app --fail-on danger   # CI gate
  *   andi-scan --url https://staging.app --module all       # all modules
  *   andi-scan --url https://staging.app --strict-offline   # fail if external calls detected
+ *   andi-scan --dir ./dist --module all                    # scan local rendered HTML
  *   andi-scan --urls urls.txt                              # scan a list of URLs
  *   andi-scan --sitemap sitemap.xml                        # scan URLs from a sitemap
  *   andi-scan --sitemap https://example.com/sitemap.xml --concurrency 3
@@ -20,6 +21,7 @@ const https = require('https');
 const http = require('http');
 const { scan } = require('./scanner.cjs');
 const { parseSitemap, readUrlsFile, scanUrls } = require('./sitemap.cjs');
+const { scanDirectory } = require('./directory.cjs');
 const { toText } = require('./report/text.cjs');
 const { toJson } = require('./report/json.cjs');
 const { toSarif } = require('./report/sarif.cjs');
@@ -30,12 +32,15 @@ const HELP = `andi-scan — headless SSA ANDI Section 508 scanner
 
 USAGE:
   andi-scan --url <url> [options]
+  andi-scan --dir <directory> [options]
   andi-scan --urls <file> [options]
   andi-scan --sitemap <url|file> [options]
 
 OPTIONS:
   --url <url>          Page to scan (http(s):// or file://). Required unless
-                       --urls or --sitemap is given.
+                       --dir, --urls, or --sitemap is given.
+  --dir <directory>    Serve a local directory on 127.0.0.1, discover .html/.htm
+                       files recursively, render them in Chromium, and scan them.
   --urls <file>        Newline-separated file of URLs to scan (# = comment).
   --sitemap <url|file> Sitemap XML to fetch/read; scan all <loc> entries.
   --concurrency <n>    Number of pages to scan in parallel (default 1).
@@ -73,6 +78,7 @@ function parseArgs(argv) {
     const next = () => argv[++i];
     switch (a) {
       case '--url': o.url = next(); break;
+      case '--dir': o.dir = next(); break;
       case '--urls': o.urlsFile = next(); break;
       case '--sitemap': o.sitemap = next(); break;
       case '--concurrency': o.concurrency = parseInt(next(), 10) || 1; break;
@@ -89,7 +95,10 @@ function parseArgs(argv) {
       case '--with-axe': o.withAxe = true; break;
       case '-h': case '--help': o.help = true; break;
       default:
-        if (!a.startsWith('-') && !o.url) o.url = a;
+        if (!a.startsWith('-') && !o.url && !o.dir) {
+          if (fs.existsSync(a) && fs.statSync(a).isDirectory()) o.dir = a;
+          else o.url = a;
+        }
         else { process.stderr.write(`Unknown option: ${a}\n`); o.help = true; }
     }
   }
@@ -159,15 +168,19 @@ function fetchOrRead(urlOrPath) {
 if (require.main === module) (async () => {
   const opts = parseArgs(process.argv.slice(2));
 
-  // Determine mode: multi-URL (--urls or --sitemap) vs single (--url).
-  const isMulti = !!(opts.urlsFile || opts.sitemap);
+  // Determine mode: directory/multi-URL (--dir, --urls, --sitemap) vs single (--url).
+  const sourceCount = [opts.url, opts.dir, opts.urlsFile, opts.sitemap].filter(Boolean).length;
+  const isMulti = !!(opts.dir || opts.urlsFile || opts.sitemap);
 
   if (opts.help) {
     process.stdout.write(HELP);
     process.exit(0);
   }
 
-  if (!opts.url && !isMulti) {
+  if (sourceCount !== 1) {
+    if (sourceCount > 1) {
+      process.stderr.write('andi-scan: choose exactly one of --url, --dir, --urls, or --sitemap\n');
+    }
     process.stdout.write(HELP);
     process.exit(2);
   }
@@ -175,12 +188,15 @@ if (require.main === module) (async () => {
   const scannedAt = new Date().toISOString();
 
   // -------------------------------------------------------------------------
-  // Multi-URL mode: --urls or --sitemap
+  // Multi-URL mode: --dir, --urls, or --sitemap
   // -------------------------------------------------------------------------
   if (isMulti) {
     let urls = [];
 
-    if (opts.urlsFile) {
+    if (opts.dir) {
+      // Directory mode serves local files over localhost so CSS/JS/assets resolve
+      // in Chromium the same way they would before deployment.
+    } else if (opts.urlsFile) {
       let text;
       try {
         text = fs.readFileSync(opts.urlsFile, 'utf8');
@@ -200,20 +216,23 @@ if (require.main === module) (async () => {
       urls = parseSitemap(xml);
     }
 
-    if (urls.length === 0) {
+    if (!opts.dir && urls.length === 0) {
       process.stderr.write('andi-scan: no URLs found in input\n');
       process.exit(2);
     }
 
     let multiResult;
     try {
-      multiResult = await scanUrls(urls, {
+      const scanOpts = {
         modules: opts.module,
         timeoutMs: opts.timeout,
         concurrency: opts.concurrency,
         withAxe: opts.withAxe,
         strictOffline: opts.strictOffline,
-      });
+      };
+      multiResult = opts.dir
+        ? await scanDirectory(opts.dir, scanOpts)
+        : await scanUrls(urls, scanOpts);
     } catch (e) {
       process.stderr.write(`andi-scan: multi-URL scan failed — ${e.message}\n`);
       process.exit(2);

@@ -12,7 +12,9 @@ The caller is responsible for serialising it (e.g. `JSON.stringify(report, null,
 | `tool`           | `string`         | Always `"andi-cli"`.                                                                                    |
 | `version`        | `string`         | Semver string from `package.json`.                                                                      |
 | `scannedAt`      | `string \| null` | ISO-8601 UTC timestamp injected by the caller, or `result.scannedAt`, or `null` if neither is provided. |
-| `urls`           | `string[]`       | Always an array. Single-URL scans have exactly one entry.                                               |
+| `directory`      | `string \| null` | Absolute directory scanned by `--dir`, or `null` for URL/list/sitemap scans.                            |
+| `files`          | `string[] \| null` | Relative `.html`/`.htm` file paths discovered by `--dir`, or `null` for URL/list/sitemap scans.       |
+| `urls`           | `string[]`       | Always an array. Single-URL scans have exactly one entry; directory scans list every rendered page URL. |
 | `findings`       | `Finding[]`      | Always an array (empty for a clean scan).                                                               |
 | `counts`         | `Counts`         | Per-severity finding totals.                                                                            |
 | `worst`          | `string \| null` | Highest severity present across all findings, or `null` for a clean scan (no findings).                 |

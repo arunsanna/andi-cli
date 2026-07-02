@@ -58,6 +58,8 @@ function resolveModuleKeys(modulesOpt) {
  * opts.strictOffline — when true, block ALL external requests including the target
  *                      page's own resources (hermetic / fully-offline mode).
  *                      Default false: the target page loads normally over the network.
+ * opts.allowedOrigins — origins allowed even when strictOffline is true. Used by
+ *                       --dir mode for the local static server.
  * opts.withAxe   — when true, also run axe-core on the URL (reuses same browser;
  *                  axe opens its own clean bypassCSP context). Requires the
  *                  optional dep @axe-core/playwright to be installed.
@@ -74,6 +76,7 @@ function resolveModuleKeys(modulesOpt) {
  *   timeoutMs?: number,
  *   headless?: boolean,
  *   strictOffline?: boolean,
+ *   allowedOrigins?: string[],
  *   withAxe?: boolean,
  * }} [opts]
  * @returns {Promise<object>}
@@ -94,7 +97,11 @@ async function scan(url, opts = {}) {
     let andiVersion = null;
 
     for (const key of moduleKeys) {
-      const { findings, externalAttempts, andiVersion: ver } = await scanModule(browser, url, key, { timeoutMs, strictOffline: opts.strictOffline });
+      const { findings, externalAttempts, andiVersion: ver } = await scanModule(browser, url, key, {
+        timeoutMs,
+        strictOffline: opts.strictOffline,
+        allowedOrigins: opts.allowedOrigins,
+      });
       allFindingArrays.push(findings);
       if (externalAttempts.length) allExternalAttempts.push(...externalAttempts);
       // Capture version from first module that returns it; all modules see the
