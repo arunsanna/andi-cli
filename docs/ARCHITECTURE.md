@@ -1,5 +1,10 @@
 # Architecture & Decision Record
 
+> **How to read this file.** The “At a glance” section is the product picture.
+> The numbered decisions below are the load-bearing engineering record.
+> Usage examples live in `docs/USAGE.md`. The original phased task list is
+> historical (`docs/PLAN.md`) — do not treat its unchecked boxes as open work.
+
 > **Proven (2026-06-20 spikes):** ANDI v29.2.2 runs fully headless; the CLI returns 2 danger
 > alerts / exit 1 on the fixture. **Hermetic execution is proven** — routing every ANDI asset
 > from a local `andi/` clone yields a scan with **zero external requests** and identical
@@ -8,8 +13,42 @@
 > Decision 4).
 > **Current implementation:** CSP bypass for protected targets, multi-module aggregation,
 > ANDI→WCAG mapping, SARIF/JUnit/HTML, optional axe layer, sitemap scanning, parity
-> benchmarking, Docker, and CI self-tests are implemented. See `docs/PLAN.md` for the
-> historical phased build plan and `README.md` for current usage.
+> benchmarking, Docker, and CI self-tests are implemented.
+
+## At a glance
+
+ANDI is a government bookmarklet. A person clicks it in a browser and reads
+alerts one module at a time. This project opens the same page in a hidden
+Chromium window, runs that **same official ANDI**, reads the alerts ANDI
+shows on screen, and writes a report a build can fail on.
+
+```mermaid
+flowchart LR
+  page[Rendered page] --> chrome[Headless Chromium]
+  chrome --> andi[Official andi.js]
+  andi --> alerts[ANDI alert list]
+  alerts --> report[Text / JSON / SARIF / JUnit / HTML]
+  report --> gate[CI exit code]
+```
+
+What that means in practice:
+
+- We **wrap** ANDI. We do not rewrite its checks. `andi/` stays byte-for-byte
+  the SSA tree so a Trusted Tester and the CLI see the same alert set.
+- The page must already be **rendered HTML**. `--dir` serves a local folder
+  and scans every `.html` / `.htm` file. A React or Vite source tree is not
+  a scan target until you build it.
+- ANDI's own files are served from this repo. The target page still loads
+  normally unless you pass `--strict-offline`.
+- Findings come from ANDI's **on-screen alert list**, not from ANDI's
+  internal JavaScript objects (those empty themselves after analysis).
+- Each ANDI module (`f/g/l/t/s/c/h/i`) runs in a **fresh page** so counts
+  stay stable.
+- A mapped alert may carry a WCAG tag. Unmapped alerts stay unmapped. The
+  tool does not invent coverage.
+- Human reports always say: automated checks cover a **subset** of Section 508. This is not a certification and not a Trusted-Tester replacement.
+
+Default scan for a gate: `--module all --fail-on danger`.
 
 ## The problem
 

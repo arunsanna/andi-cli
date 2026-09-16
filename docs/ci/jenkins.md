@@ -1,39 +1,44 @@
 # Jenkins — ANDI 508 Scan
 
-Add an `Accessibility` stage to a Jenkins declarative pipeline to gate builds on Section
-508 findings. Two integration patterns are shown: running the scan inside a Docker agent,
-and running it as a `docker run` shell step from a host agent.
+Add an `Accessibility` stage to a Jenkins declarative pipeline to gate builds
+on ANDI findings. A clean scan is **not** a Section 508 certification.
 
-## Pattern 1 — Docker agent (recommended)
+> **Not published yet.** There is no `ghcr.io/arunsanna/andi-cli` image.
+> Build the `Dockerfile` in this repo. The image entrypoint **is** the CLI —
+> pass flags only (`docker run IMAGE --url ...`). Do **not** pass `andi-scan`
+> as a Docker argument.
 
-The pipeline agent pulls the `andi-cli` image and runs the scan directly. Jenkins marks
-the build failed when `andi-scan` exits non-zero.
+## Pattern 1 — `docker run` (recommended until the image is published)
+
+Build the image from this repo, then pass flags only. Reports land in the
+workspace via the bind mount.
 
 ```groovy
 pipeline {
-  agent none
+  agent any
 
   environment {
     TARGET_URL = 'https://staging.example.com'
   }
 
   stages {
-    stage('Accessibility') {
-      agent {
-        docker {
-          image 'ghcr.io/arunsanna/andi-cli:latest'
-          alwaysPull true
-        }
+    stage('Build ANDI image') {
+      steps {
+        sh 'docker build -t andi-cli-local:${BUILD_NUMBER} .'
       }
+    }
+    stage('Accessibility') {
       steps {
         sh '''
-          andi-scan \
+          docker run --rm \
+            -v "$WORKSPACE:/workspace" \
+            andi-cli-local:${BUILD_NUMBER} \
             --url "$TARGET_URL" \
             --module all \
             --fail-on danger \
-            --sarif andi.sarif \
-            --html andi-report.html \
-            --junit report.xml
+            --sarif /workspace/andi.sarif \
+            --html /workspace/andi-report.html \
+            --junit /workspace/report.xml
         '''
       }
       post {
@@ -48,14 +53,14 @@ pipeline {
 }
 ```
 
-## Pattern 2 — `docker run` shell step
+## Pattern 2 — Docker agent
 
-Use this when your Jenkins nodes have Docker on PATH but you do not want to configure a
-Docker agent. The workspace is bind-mounted so output files land in the build workspace.
+Clear the image entrypoint, then call Node (`WORKDIR` is `/app`). Jenkins
+marks the build failed when the CLI exits non-zero.
 
 ```groovy
 pipeline {
-  agent any
+  agent none
 
   environment {
     TARGET_URL = 'https://staging.example.com'
@@ -63,20 +68,21 @@ pipeline {
 
   stages {
     stage('Accessibility') {
+      agent {
+        docker {
+          image 'andi-cli-local'
+          args '--entrypoint='
+        }
+      }
       steps {
         sh '''
-          docker run --rm \
-            -e TARGET_URL \
-            -v "$WORKSPACE:/workspace" \
-            --workdir /workspace \
-            ghcr.io/arunsanna/andi-cli:latest \
-            andi-scan \
-              --url "$TARGET_URL" \
-              --module all \
-              --fail-on danger \
-              --sarif /workspace/andi.sarif \
-              --html /workspace/andi-report.html \
-              --junit /workspace/report.xml
+          node /app/src/cli.cjs \
+            --url "$TARGET_URL" \
+            --module all \
+            --fail-on danger \
+            --sarif andi.sarif \
+            --html andi-report.html \
+            --junit report.xml
         '''
       }
       post {
@@ -102,9 +108,9 @@ pipeline {
   }
 
   stages {
-    stage('Build') {
+    stage('Build ANDI image') {
       steps {
-        echo 'Build steps here...'
+        sh 'docker build -t andi-cli-local:${BUILD_NUMBER} .'
       }
     }
 
@@ -119,8 +125,7 @@ https://staging.example.com/dashboard
           docker run --rm \
             -v "$WORKSPACE:/workspace" \
             --workdir /workspace \
-            ghcr.io/arunsanna/andi-cli:latest \
-            andi-scan \
+            andi-cli-local:${BUILD_NUMBER} \
               --urls /workspace/urls.txt \
               --module all \
               --fail-on danger \
@@ -159,7 +164,6 @@ stage('Accessibility') {
         -v "$WORKSPACE:/workspace" \
         --workdir /workspace \
         andi-cli-local:${BUILD_NUMBER} \
-        andi-scan \
           --url "$TARGET_URL" \
           --module all \
           --fail-on danger \

@@ -3,7 +3,8 @@
 > Working copy of the launch plan. Original Cursor plan file (not in this repo):
 > `/Users/jarvis_arunlab/.cursor/plans/ANDI CI Launch Plan-745c4acd.plan.md`
 >
-> No implementation has started. No commits from this plan yet.
+> Status **2026-09-16:** Step 1 (Mac CLI) and step 2 (claim language + docs)
+> are done. Next is step 3 (foolproof `--dir` on a source tree).
 
 ## Review: goal vs what is already built
 
@@ -11,7 +12,7 @@ The goal is a **shift-left ANDI gate**: install a CLI on a Mac, scan the site ab
 
 That product is **mostly already in this repo**. Remaining work is not “build ANDI automation.” It is: make the existing tool **installable**, **comparable to manual ANDI**, **usable from someone else’s CI**, and **honest enough to donate**.
 
-Already on `main` (`03d3093`, CI green):
+Already on `main` (CI green; docs refresh `2026-09-16`):
 
 - Headless official ANDI via Playwright (`src/scanner.cjs`, `src/modules.cjs`, `src/extract.cjs`)
 - Local repo scan after a build: `andi-scan --dir ./dist` (`src/directory.cjs`)
@@ -22,11 +23,11 @@ Already on `main` (`03d3093`, CI green):
 
 What is **not** done (this is the v1 work):
 
-- **Not installable as a stranger.** Unpublished on npm. This Mac is missing Playwright Chromium 1193, so `npm run test:fixture` currently exits 2.
+- **Not installable as a stranger.** Unpublished on npm. This Mac can run the CLI from a clone (Chromium 1193 installed; fixture and local parity proven 2026-09-16).
 - **`--dir` does not scan source.** Only rendered `.html`/`.htm`. A React/Vite repo must be built first.
 - **Third-party GitHub Action is likely wrong.** `.github/actions/andi-scan/action.yml` runs in the **andi-cli action checkout**. `dir: dist` looks at andi-cli’s `dist`, not `$GITHUB_WORKSPACE/dist`.
 - **Jenkins/GitLab copy-paste is broken.** `Dockerfile` ENTRYPOINT is `node src/cli.cjs` and `andi-scan` is not on PATH. Docs pass `andi-scan` as a Docker arg (becomes a bogus URL).
-- **GHCR / npm / tag do not exist.** README advertises them. No `release.yml`.
+- **GHCR / npm / tag do not exist.** README now says so. No `release.yml`.
 - **“100% compliance” is the wrong promise.** Automated ANDI can match the bookmarklet alert list. It cannot certify Section 508.
 
 ## The v1 promise (scope freeze)
@@ -83,11 +84,13 @@ Install Playwright Chromium 1193 including headless shell. Prove:
 
 Add a Mac first-hour section to `README.md`: Node 18+, Playwright install required, scan **build output** not source.
 
-### 2. Freeze the claim language (quarter day)
+### 2. Freeze the claim language (quarter day) — DONE 2026-09-16
 
-- Replace stale `CLAUDE.md` (“focusable-only / do Phase 2”)
-- Replace stale `docs/RESUME.md`
-- One README sentence: CLI matches ANDI alerts; it does not replace Trusted Tester
+- Replaced stale `CLAUDE.md` (“focusable-only / do Phase 2”)
+- Replaced stale `docs/RESUME.md`
+- README / USAGE: CLI matches ANDI alerts; it does not replace Trusted Tester
+- Added `docs/USAGE.md`, `docs/README.md`, architecture “at a glance”
+- Marked `PLAN.md` and `research-thread.md` as historical
 
 ### 3. Make “scan my repository” foolproof (half day)
 
@@ -99,9 +102,10 @@ Use existing `andi-parity`. Local oracle must stay exact. Live oracle on `http:/
 
 ### 5. Fix the CI consumer path (1 day)
 
-- Resolve Action `dir`/`urls` against `$GITHUB_WORKSPACE`
-- Put `andi-scan` on PATH in Docker, or fix Jenkins/GitLab snippets to use ENTRYPOINT (`docker run image --url ...`)
-- Until GHCR exists, document `docker build` from source
+- Resolve Action `dir`/`urls` against `$GITHUB_WORKSPACE` (code still open)
+- GitLab / Jenkins **docs** now use `docker run IMAGE --url ...` or
+  `node /app/src/cli.cjs` (2026-09-16). Docker PATH / GHCR still open.
+- Until GHCR exists, document `docker build` from source (done in README / CI docs)
 
 ### 6. Package and donate (your approval only)
 

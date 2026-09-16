@@ -1,17 +1,14 @@
 # andi-cli v1.0 Implementation Plan
 
-> **Status note (2026-06-30):** This file is the historical phased build plan and task
-> contract. The current repo has implemented Phases 0-3 plus the launch-readiness gate:
-> multi-module ANDI scans, DOM-primary extraction, JSON/SARIF/JUnit/HTML reports,
-> sitemap/URL-list scanning, the optional `--with-axe` engine, Docker, GitHub Actions,
-> selector-contract tests, parity/benchmark harnesses, and launch docs. Use
-> `README.md`, `docs/ARCHITECTURE.md`, `package.json`, and the AI Memory board for
-> current execution status.
+> **Historical file (do not execute).** Phases 0–3 plus the launch-readiness
+> gate are already implemented. Unchecked boxes below are the original
+> acceptance contract, not open work. Current usage: `README.md` and
+> `docs/USAGE.md`. Current architecture: `docs/ARCHITECTURE.md`. Current
+> launch leftovers: `docs/ANDI-CI-LAUNCH-PLAN.md`. Doc map: `docs/README.md`.
 
-> **For agentic workers:** REQUIRED SUB-SKILL: use `superpowers:subagent-driven-development`
-> (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps
-> use checkbox (`- [ ]`) syntax. Mutable status lives in AI Memory project **`andi-cli`**
-> (epics AC-001…AC-005).
+> **For agentic workers:** Do not implement the unchecked task lists in this
+> file. Current work is `docs/ANDI-CI-LAUNCH-PLAN.md`. Mutable status also
+> lives in AI Memory project **`andi-cli`**.
 
 **Goal:** Ship a reproducible, CI-native, Trusted-Tester-aligned Section 508 scanner that
 drives the unmodified official ANDI headlessly, gates builds on findings, and emits

@@ -4,6 +4,12 @@ The composite action at `.github/actions/andi-scan` runs ANDI headless, writes
 SARIF 2.1.0, and uploads the results to GitHub code scanning so findings appear
 as inline annotations on pull requests.
 
+> **Current limits.** Prefer `url` against a staging page. The `dir` input may
+> resolve against this action's checkout, not your app's `dist/` — that is a
+> known launch leftover. npm / GHCR are not published; the action checks out
+> this repo and runs `node src/cli.cjs`. A clean scan is not a Section 508
+> certification.
+
 ## Minimal workflow
 
 ```yaml

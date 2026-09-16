@@ -1,5 +1,8 @@
 # andi-cli Ship-Or-Test Report - 2026-06-30
 
+> Historical snapshot from 2026-06-30. For current status see
+> `docs/RESUME.md` and `docs/ANDI-CI-LAUNCH-PLAN.md`.
+
 ## Status
 
 Ready for commit and CI rerun. Do not publish/tag until Arun confirms the exact release target and version.
@@ -30,11 +33,11 @@ Current package version: `0.1.0`.
 
 ## Remaining Risks
 
-| Risk | Owner | Next action |
-| --- | --- | --- |
-| Local gate is green, but CI has not run on this uncommitted diff. | Codex / Arun | Commit, push, and verify GitHub Actions on the pushed SHA. |
-| Publish target/version is not yet approved. | Arun | Confirm whether to ship `0.1.0` or bump before npm/GHCR/tag release. |
-| Package publish, GHCR publish, and release tag are external/public actions. | Arun | Explicit approval required before running publish/tag commands. |
+| Risk                                                                        | Owner        | Next action                                                          |
+| --------------------------------------------------------------------------- | ------------ | -------------------------------------------------------------------- |
+| Local gate is green, but CI has not run on this uncommitted diff.           | Codex / Arun | Commit, push, and verify GitHub Actions on the pushed SHA.           |
+| Publish target/version is not yet approved.                                 | Arun         | Confirm whether to ship `0.1.0` or bump before npm/GHCR/tag release. |
+| Package publish, GHCR publish, and release tag are external/public actions. | Arun         | Explicit approval required before running publish/tag commands.      |
 
 ## Recommendation
 

@@ -4,58 +4,17 @@
 
 This repository is forked from [SSAgov/ANDI](https://github.com/SSAgov/ANDI). The `andi/` directory is the unmodified upstream vendored tree. The wrapper code (`src/`, `test/`, `.github/`, `docs/`) drives that official ANDI in headless Chromium and emits structured, CI-gateable results.
 
-> **Honest coverage boundary.** Automated checks cover a **subset** of Section 508. ANDI surfaces items for human Trusted-Tester judgment; this tool does not replace that review. Do not interpret a clean scan as a compliance certification.
+> **Honest coverage boundary.** This CLI can match **ANDI alerts** on a rendered page. Automated checks cover a **subset** of Section 508. It does **not** replace human Trusted-Tester review and is **not** a compliance certification. A clean scan only means ANDI did not report findings at the chosen severity.
 
-> Tracks ANDI v29.2.2.
+> Tracks ANDI v29.2.2. Not published on npm yet — install from this repo.
 
 ## Why ANDI in CI?
 
-The U.S. federal Trusted-Tester process requires alignment with ANDI's exact alert set — not generic engines like axe-core, pa11y, or Lighthouse. ANDI ships only as a manual browser bookmarklet. `andi-cli` closes the gap: it drives the **unmodified official `andi.js`** inside headless Chromium so the output matches what a human Trusted-Tester would see, and it emits that output in formats a CI system can gate on.
+The U.S. federal Trusted-Tester process is keyed to ANDI's exact alert set — not generic engines like axe-core, pa11y, or Lighthouse. ANDI ships only as a manual browser bookmarklet. `andi-cli` drives the **unmodified official `andi.js`** in headless Chromium and emits that output in formats a CI system can gate on.
 
-## Quickstart
+## Install (what works today)
 
-### npx (no install required)
-
-```bash
-# Scan a local build/output directory before deployment
-npx --package andi-cli andi-scan ./dist --module all --fail-on danger
-
-# Or scan a deployed/staging URL
-npx --package andi-cli andi-scan --url https://example.com
-```
-
-### Docker
-
-```bash
-# Scan a local build/output directory before deployment
-docker run --rm -v "$PWD:/work" ghcr.io/arunsanna/andi-cli \
-  --dir /work/dist --module all --fail-on danger
-
-# Pull and scan a URL
-docker run --rm ghcr.io/arunsanna/andi-cli --url https://example.com
-
-# Scan a local file (mount the working directory)
-docker run --rm -v "$PWD:/work" ghcr.io/arunsanna/andi-cli \
-  --url file:///work/path/to/page.html --fail-on danger
-```
-
-### GitHub Actions
-
-```yaml
-- uses: arunsanna/andi-cli/.github/actions/andi-scan@main
-  with:
-    url: https://your-staging-url.example.com
-    fail-on: danger
-    sarif: andi-results.sarif
-```
-
-Full configuration options: [`docs/ci/github.md`](docs/ci/github.md)
-
-## Mac first hour (local CLI)
-
-The CLI is not published on npm yet. Until it is, install from this repo on a Mac
-with **Node 18+**. Playwright must download Chromium build **1193** before any
-scan will run.
+Node 18+ and Playwright Chromium **1193** are required.
 
 ```bash
 git clone https://github.com/arunsanna/andi-cli
@@ -64,79 +23,52 @@ npm install
 npx playwright install chromium
 ```
 
-Prove the install with the bundled fixture. It has deliberate violations, so
-the command **exits 1**:
+Prove the install. The bundled fixture has deliberate violations, so the command **exits 1**:
 
 ```bash
 npm run test:fixture
 ```
 
-Then scan **rendered HTML**, not application source. For React, Vite, Astro,
-SvelteKit, or a static-exported Next.js app, run the project's normal build
-first, then point `--dir` at `dist/`, `build/`, `public/`, or `out/`:
+Then scan **rendered HTML**, not application source. For React, Vite, Astro, SvelteKit, or a static-exported Next.js app, build first, then point `--dir` at `dist/`, `build/`, `public/`, or `out/`:
 
 ```bash
-# From the andi-cli checkout:
 node src/cli.cjs --dir /path/to/your-app/dist --module all --fail-on danger \
-  --html /tmp/andi.andi.html --sarif /tmp/andi.sarif
+  --html /tmp/andi.html --sarif /tmp/andi.sarif
 ```
 
-`andi-scan .` on a source tree with no `.html` files will not test your UI.
+More copy-paste examples: [`docs/USAGE.md`](docs/USAGE.md). How it works: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). Doc map: [`docs/README.md`](docs/README.md).
 
-To compare the CLI with the official ANDI bookmarklet on the same page, use
-`andi-parity` (step 4 of the launch plan). Local-oracle smoke:
+`npx andi-cli` and `ghcr.io/arunsanna/andi-cli` are the intended release targets. They are **not published**. Until they are, clone this repo. To try Docker from source:
 
 ```bash
+docker build -t andi-cli .
+docker run --rm -v "$PWD:/work" andi-cli --url file:///work/examples/fixture.html --fail-on none
+```
+
+Do not pass `andi-scan` as a Docker argument — the image entrypoint already is the CLI.
+
+## Usage
+
+Until the package is published, use `node src/cli.cjs` from this checkout (same flags as the future `andi-scan` command).
+
+```bash
+# Built site (every .html / .htm page, rendered in Chromium)
+node src/cli.cjs --dir ./dist --module all --fail-on danger
+node src/cli.cjs --dir ./dist --json --out andi.json --html andi.html
+
+# One URL (default module is focusable; use --module all for every ANDI module)
+node src/cli.cjs --url https://staging.example.com --module all --fail-on danger
+
+# Several URLs, or a sitemap
+node src/cli.cjs --urls urls.txt --module all --fail-on danger
+node src/cli.cjs --sitemap https://example.com/sitemap.xml --concurrency 4
+
+# Compare CLI alerts to ANDI (local oracle — expect 8/8 exact on the fixture)
 node src/parity-cli.cjs --serve-file examples/fixture.html --module all \
   --browser-source local --fail-on-diff
 ```
 
-## Install (local development)
-
-Same as the Mac first-hour commands above.
-
-## Usage
-
-```bash
-# Shift-left directory scan: serve ./dist locally, render every .html/.htm page,
-# and scan the rendered DOM in Chromium.
-andi-scan ./dist --module all --fail-on danger
-andi-scan --dir ./dist --json --out andi.andi.json
-andi-scan --dir ./dist --sarif andi.sarif --html andi.andi.html
-
-# Human-readable report (default: focusable module)
-andi-scan --url https://example.com
-
-# JSON output for pipelines
-andi-scan --url https://staging.example.com --json --out report.json
-
-# CI gate: exit 1 when danger-level findings are present
-andi-scan --url https://staging.example.com --fail-on danger
-
-# Run all ANDI modules
-andi-scan --url https://staging.example.com --module all --fail-on warning
-
-# Scan multiple URLs from a file
-andi-scan --urls urls.txt --module all --fail-on danger
-
-# Scan a sitemap
-andi-scan --sitemap https://example.com/sitemap.xml --concurrency 4
-
-# Hermetic mode for local/self-contained pages: fail if network is attempted
-andi-scan --url file://$PWD/path/to/page.html --strict-offline
-
-# Optional second engine (requires @axe-core/playwright)
-andi-scan --url https://example.com --with-axe
-
-# Built-in fixture (has deliberate violations)
-npm run test:fixture
-```
-
-Run `andi-scan --help` for the full flag reference.
-
-`--dir` expects rendered static HTML. For React/Vite/Astro/SvelteKit/static-exported
-Next.js and similar projects, run the normal build command first, then scan the
-generated output directory such as `dist/`, `build/`, `public/`, or `out/`.
+`--dir` on a source tree with no `.html` files will not test your UI. Run `node src/cli.cjs --help` for the full flag reference.
 
 ## Flags
 
@@ -194,19 +126,13 @@ Every human-facing report carries the honesty banner: _"Automated checks cover a
 
 ## How it works
 
-1. For `--dir`, the directory is served on `127.0.0.1`, every `.html`/`.htm` file is discovered recursively, and each local page is rendered in headless Chromium before scanning. For `--url`, the target URL loads directly in headless Chromium (Playwright) with a `bypassCSP: true` context so CSP headers on federal `.gov` targets cannot block script injection.
-2. Every ANDI asset (`andi.js`, `andi.css`, module files, icons, pinned jQuery) is served from the local vendored tree, so the tool itself does not depend on live `ssa.gov` or CDN requests. Target pages and their own resources load normally by default. `--strict-offline` blocks non-local requests and exits 2 when a network request is attempted.
-3. ANDI auto-launches on injection. For multi-module scans each module runs in a fresh page context via `AndiModule.launchModule(letter)`, which avoids the flakiness of in-place module switching.
-4. Findings are extracted from the ANDI DOM (`#ANDI508-alerts-list` for all modules; `.ANDI508-element-*` highlights as enrichment for modules `f/c/t/g/l`). ANDI's internal JS objects are not used — they proved unreliable in grounding spikes (see `docs/ARCHITECTURE.md` Decision 4).
-5. Findings are aggregated across modules, mapped to WCAG success criteria where possible, and rendered to the requested output formats with a CI exit code.
-
-The `bypassCSP` flag is a Playwright testing-time context option. It is the correct tool for an automated scanner and does not alter what real users experience on the target page.
+ANDI is a government bookmarklet. This project opens the page in a hidden browser, runs that same official ANDI, reads the alerts ANDI shows, and writes a report a build can fail on. Details and decisions: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
 ## CI integrations
 
-- **GitHub Actions:** [`docs/ci/github.md`](docs/ci/github.md) — composite action with SARIF upload and inline PR annotations
-- **GitLab CI:** [`docs/ci/gitlab.md`](docs/ci/gitlab.md) — YAML job with JUnit artifact
-- **Jenkins:** [`docs/ci/jenkins.md`](docs/ci/jenkins.md) — pipeline stage using the Docker image
+Snippets are in [`docs/ci/github.md`](docs/ci/github.md), [`docs/ci/gitlab.md`](docs/ci/gitlab.md), and [`docs/ci/jenkins.md`](docs/ci/jenkins.md).
+
+**Known limits:** the GHCR image does not exist yet — build the `Dockerfile` yourself. The GitHub Action's `dir` input may look at this repo's checkout, not your app's `dist/` — prefer `url` against a staging page until that is fixed.
 
 ## Release targets
 
@@ -227,4 +153,4 @@ This repository is a fork of [SSAgov/ANDI](https://github.com/SSAgov/ANDI). The 
 
 **License:** Apache-2.0 for the entire repository. The `NOTICE` file carries the U.S. Social Security Administration attribution required by the Apache license.
 
-See `docs/ARCHITECTURE.md` for full decision records, `docs/PLAN.md` for the phased roadmap, and `docs/research-thread.md` for the research origin.
+See [`docs/README.md`](docs/README.md) for the full doc map. Architecture: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md). Usage: [`docs/USAGE.md`](docs/USAGE.md). Launch leftovers: [`docs/ANDI-CI-LAUNCH-PLAN.md`](docs/ANDI-CI-LAUNCH-PLAN.md). `docs/PLAN.md` is the historical build contract — Phases 0–3 already shipped.

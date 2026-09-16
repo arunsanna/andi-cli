@@ -19,6 +19,8 @@
     "andi/",
     "src/",
     "docs/ARCHITECTURE.md",
+    "docs/README.md",
+    "docs/USAGE.md",
     "docs/ci/",
     "docs/output-schema.md",
     "docs/sync-upstream.md"

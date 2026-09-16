@@ -1,5 +1,8 @@
 # Contributing to andi-cli
 
+Current docs: [`docs/README.md`](docs/README.md). Usage: [`docs/USAGE.md`](docs/USAGE.md).
+Do not treat unchecked boxes in [`docs/PLAN.md`](docs/PLAN.md) as open work.
+
 ## Dev setup
 
 ```bash

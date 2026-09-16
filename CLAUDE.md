@@ -9,33 +9,55 @@ github: https://github.com/arunsanna/andi-cli
 
 # ANDI-CLI — Agent Context
 
-Headless CLI + CI wrapper for the U.S. SSA **ANDI** (Accessible Name & Description Inspector) Section 508 accessibility tool. ANDI ships only as a manual browser bookmarklet; this project drives the official `andi.js` in headless Chromium and emits structured, CI-gateable results.
+Headless CLI + CI wrapper for the U.S. SSA **ANDI** (Accessible Name & Description Inspector). ANDI ships as a manual browser bookmarklet. This project drives the official unmodified `andi.js` in headless Chromium and emits structured, CI-gateable results.
+
+The CLI can match ANDI's alert list on a rendered page. It does **not** replace human Trusted-Tester review and is not a Section 508 certification.
 
 ## Source of truth
 
-- **Mutable status / tasks:** AI Memory project `andi-cli` (`task_list(project='andi-cli')`).
+- **Current usage:** `README.md` and `docs/USAGE.md`.
+- **Architecture / decisions:** `docs/ARCHITECTURE.md`.
+- **Doc map (what is current vs historical):** `docs/README.md`.
+- **Open launch work:** `docs/ANDI-CI-LAUNCH-PLAN.md`.
+- **Historical build contract:** `docs/PLAN.md` (Phases 0–3 are already implemented; do not treat unchecked boxes as open work).
+- **Mutable task board:** AI Memory project `andi-cli`.
 - **Front-desk registry:** `/Users/jarvis_arunlab/code/research-lab/50_PROJECTS/PROJECTS.md`.
-- **Research thread:** `docs/research-thread.md` (origin) and the research-lab note above.
-- **Architecture / decisions:** `docs/ARCHITECTURE.md`. **Build plan:** `docs/PLAN.md`.
 
 ## Orient first
 
-1. Read `docs/ARCHITECTURE.md` (feasibility is proven; ANDI runs headless) and `docs/PLAN.md` (phased roadmap).
-2. Check the `andi-cli` AI Memory board for the task in progress.
-3. Run `npm run test:fixture` to see the tool working before changing it.
+1. Read `docs/README.md`, then `docs/ARCHITECTURE.md` and `docs/USAGE.md`.
+2. Check `docs/ANDI-CI-LAUNCH-PLAN.md` for the next launch slice.
+3. Run `npm run test:fixture` (expect exit 1 — the fixture has planted violations).
 
-## What works today (v0.1)
+## What works today
 
-`node src/cli.cjs --url <url>` scans the **focusable module** and emits a report or JSON with grouped alerts (severity), the flagged DOM elements, and a CI exit code (`--fail-on`). Validated headless against `examples/fixture.html` and live URLs.
+Package version is still `0.1.0` and is **not published** on npm. From a local clone:
+
+- Scan a URL, a URL list, a sitemap, or a local HTML tree (`--dir`).
+- Run all 8 ANDI modules (`--module all`), default is focusable (`f`).
+- Emit text, JSON, SARIF 2.1.0, JUnit, and HTML.
+- Gate CI with `--fail-on` (exit 0 / 1 / 2).
+- Optional `--with-axe` second engine.
+- Compare CLI output to ANDI with `andi-parity`.
+- Self-test and Docker-build GitHub workflows are green on `main`.
+
+`--dir` scans **rendered** `.html` / `.htm` only. Build the app first, then scan `dist/`, `build/`, `public/`, or `out/`.
 
 ## Build rules
 
-- Host-based Node project (not Docker); host `npm` is fine here.
-- Keep the official `andi.js` **unmodified** — wrap, don't fork. Trusted-Tester alignment is the whole point.
-- DOM/JS selectors for ANDI v29 are documented in `docs/ARCHITECTURE.md`; update that table if SSA changes ANDI.
-- Verify every change with `npm run test:fixture` and confirm exit codes.
-- Playwright is pinned to `1.55.1` (patched: GHSA-7mvr-c777-76hp SSL cert advisory). Both 1.55.0 and 1.55.1 use Chromium build 1193 — the revision is identical.
+- Keep official `andi.js` **unmodified**. Wrap, do not edit `andi/`.
+- CommonJS `.cjs`. Node ≥ 18. Playwright pinned to `1.55.1` (Chromium 1193).
+- Extraction is DOM-primary (`#ANDI508-alerts-list`). Do not use `andiAlerter` internals.
+- Verify changes with `npm test` and `npm run test:fixture`.
+- Honesty banner on every human-facing report.
 
 ## Next actionable work
 
-See `docs/PLAN.md` Phase 2: reliable multi-module aggregation, unit tests, and internal-object fallback. Don't start broad refactors; ship the smallest phase slice.
+Launch leftovers in `docs/ANDI-CI-LAUNCH-PLAN.md`, in this order:
+
+1. Make `--dir` fail clearly when someone points it at source instead of a build.
+2. Close CLI vs bookmarklet gaps on one real site.
+3. Fix the GitHub Action / Docker / Jenkins consumer path.
+4. **Stop for publish approval.** Do not publish npm, GHCR, or a tag without it.
+
+Do not start new engines, auth/SPA crawling, or a refactor of `andi/`.

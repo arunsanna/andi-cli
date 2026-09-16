@@ -1,9 +1,16 @@
 # Automated 508 Compliance: ANDI-CLI Wrapper
 
 **Tags**: #508-compliance #accessibility #automation #playwright #andi #engineering
-**STATUS**: active
+**STATUS**: historical origin
 **created**: 2026-06-17
 **updated**: 2026-06-20
+
+> **Historical origin note.** This is the 2026-06 research thread that started
+> the project. Later grounding (spikes 05–06) superseded some early
+> conclusions: extraction is **DOM-primary**, not `andiAlerter` /
+> `testPageData`. The product is implemented. Unchecked Phase 2–4 boxes
+> below are **not** open work. See `README.md`, `docs/ARCHITECTURE.md`, and
+> `docs/ANDI-CI-LAUNCH-PLAN.md`.
 
 ## Spike Verdict (2026-06-20): GO — feasibility proven headless
 

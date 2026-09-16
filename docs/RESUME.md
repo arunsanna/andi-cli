@@ -1,47 +1,41 @@
-# Resume — andi-cli (checkpoint 2026-06-21)
+# Resume — andi-cli
 
-> **Read this first to continue.** Then `docs/ARCHITECTURE.md` (decisions), `docs/PLAN.md`
-> (phased plan — each phase has a Phase Contract), and the AI Memory board `andi-cli`
-> (AC-001…005). Run `npm run test:fixture` to see the v0.1 scanner working.
+> Checkpoint **2026-09-16**. Read `docs/README.md` first, then `README.md` and
+> `docs/ANDI-CI-LAUNCH-PLAN.md`. Run `npm run test:fixture` (expect exit 1).
 
 ## Where we are
 
-Planning + Phase-0 grounding are **done and committed**. **No product code (`src/` features)
-built yet** — held until the GitHub fork. The plan was independently graded **5.8 → 8.2 → ~9**
-after closing review gaps.
+The scanner is built. Remaining work is launch: honest docs, a foolproof
+“scan my built site” path, bookmarklet comparison on one real site, then
+fixing GitHub / Jenkins so another team can use it. **Do not publish**
+until Arun approves.
 
-## Proven by spikes (committed)
+Proven on this Mac (2026-09-16):
 
-- Hermetic offline run: **0 external requests + output parity** (`spikes/04-hermetic-vendor.cjs`).
-- `AndiModule.launchModule()` drives modules; **DOM-primary** extraction is correct, internal
-  `andiAlerter` is an unreliable transient buffer (`spikes/05-extraction-source.cjs`).
-- ANDI = **Apache-2.0** (`github.com/SSAgov/ANDI`); the fork carries every asset.
+- `npm run test:fixture` exits 1 with two planted danger findings
+- `--dir examples --module f --fail-on danger` finds both example pages
+- local `andi-parity` on the fixture is **8/8 exact**
 
-## Methodology now in force
+Not available yet: npm package, GHCR image, git tags, `release.yml`.
 
-Every phase is a **Phase Contract**: grounded entry (assumptions→facts via spikes) → build →
-measured exit (run the entry-defined evals + **BASSPC self-review** + Definition of Done +
-failure path). **Uniform gates** — no size-based passes. Encoded globally in the
-`skill-writing-plans` skill (research-lab `c8e2b15`).
+## What the product does
 
-## Git state
+Runs official unmodified ANDI (v29.2.2) in headless Chromium and fails CI
+when ANDI reports findings at a chosen severity. On the same rendered
+page, CLI alerts can match the SSA bookmarklet. That is **not** a Section
+508 certification and does **not** replace a Trusted Tester.
 
-- `andi-cli` `main` is **7 commits ahead of `origin` — NOT pushed** (local only). HEAD: `56829f5`.
-- Working tree **clean**.
-- Skill change committed in `research-lab` `c8e2b15` (propagates to all runtimes via symlinks).
+## Next (launch sequence)
 
-## Next actions (in order)
+1. ~~Restore the local Mac CLI~~ — done
+2. ~~Freeze claim language + clean docs~~ — this checkpoint
+3. Make “scan my repository” foolproof (`--dir` on a source tree)
+4. Compare one real site to the official bookmarklet
+5. Fix Action / Docker / Jenkins consumer path
+6. **Stop for publish approval**
 
-1. **[USER] GitHub fork** of `SSAgov/ANDI` → rename to `andi-cli` → `git remote add upstream …`
-   → merge so `andi/` exists. (Phase 0 entry; irreversible → user action.)
-2. **[AGENT] Phase 1 entry-grounding spikes** — the Phase 1 contract blocks the build until these
-   pass; both runnable against a `SSAgov/ANDI` clone before the fork:
-   - **CSP:** prove `bypassCSP: true` lets ANDI inject on a page with a restrictive CSP.
-   - **Modules `s/h/i`:** prove structures/hidden/iframes launch + produce findings
-     (only `f/c/t/g/l` proven so far).
-3. **[AGENT] Build Phase 1** subagent-driven per `docs/PLAN.md`, task-by-task, contract-gated.
+## Do not treat as current
 
-## Open decisions when resuming
-
-- Execution mode: subagent-driven (recommended) vs inline.
-- Push `main` to `origin`? (Not done yet — was local-only at checkpoint.)
+- `docs/PLAN.md` unchecked boxes — historical build contract; Phases 0–3 shipped
+- `docs/research-thread.md` — origin research; some early extraction notes were later corrected
+- `docs/ship-report-2026-06-30.md` — June 30 snapshot
