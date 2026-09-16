@@ -51,7 +51,11 @@ docker run --rm -v "$PWD:/work" ghcr.io/arunsanna/andi-cli \
 
 Full configuration options: [`docs/ci/github.md`](docs/ci/github.md)
 
-## Install (local development)
+## Mac first hour (local CLI)
+
+The CLI is not published on npm yet. Until it is, install from this repo on a Mac
+with **Node 18+**. Playwright must download Chromium build **1193** before any
+scan will run.
 
 ```bash
 git clone https://github.com/arunsanna/andi-cli
@@ -59,6 +63,37 @@ cd andi-cli
 npm install
 npx playwright install chromium
 ```
+
+Prove the install with the bundled fixture. It has deliberate violations, so
+the command **exits 1**:
+
+```bash
+npm run test:fixture
+```
+
+Then scan **rendered HTML**, not application source. For React, Vite, Astro,
+SvelteKit, or a static-exported Next.js app, run the project's normal build
+first, then point `--dir` at `dist/`, `build/`, `public/`, or `out/`:
+
+```bash
+# From the andi-cli checkout:
+node src/cli.cjs --dir /path/to/your-app/dist --module all --fail-on danger \
+  --html /tmp/andi.andi.html --sarif /tmp/andi.sarif
+```
+
+`andi-scan .` on a source tree with no `.html` files will not test your UI.
+
+To compare the CLI with the official ANDI bookmarklet on the same page, use
+`andi-parity` (step 4 of the launch plan). Local-oracle smoke:
+
+```bash
+node src/parity-cli.cjs --serve-file examples/fixture.html --module all \
+  --browser-source local --fail-on-diff
+```
+
+## Install (local development)
+
+Same as the Mac first-hour commands above.
 
 ## Usage
 
@@ -107,7 +142,7 @@ generated output directory such as `dist/`, `build/`, `public/`, or `out/`.
 
 | Flag                    | Default  | Description                                                                                                                               |
 | ----------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `--url <url>`           | _(none)_ | Page to scan (`http://`, `https://`, or `file://`). Required unless `--dir`, `--urls`, or `--sitemap` is given.                          |
+| `--url <url>`           | _(none)_ | Page to scan (`http://`, `https://`, or `file://`). Required unless `--dir`, `--urls`, or `--sitemap` is given.                           |
 | `--dir <directory>`     | _(none)_ | Serve a local directory on `127.0.0.1`, discover `.html`/`.htm` files recursively, render them in Chromium, and scan them.                |
 | `--urls <file>`         | _(none)_ | Newline-separated file of URLs (`#` = comment line).                                                                                      |
 | `--sitemap <url\|file>` | _(none)_ | Sitemap XML to fetch or read; scans all `<loc>` entries.                                                                                  |
