@@ -3,8 +3,9 @@
 > Working copy of the launch plan. Original Cursor plan file (not in this repo):
 > `/Users/jarvis_arunlab/.cursor/plans/ANDI CI Launch Plan-745c4acd.plan.md`
 >
-> Status **2026-09-16:** Steps 1–3 are done (Mac CLI, claim language, foolproof
-> `--dir`). Next is step 4 (compare one real site to the official bookmarklet).
+> Status **2026-09-16:** Steps 1–5 are done. Step 6 (npm / GHCR / tag) waits
+> for Arun’s publish approval. Parity numbers:
+> [`validation/launch-parity-2026-09-16.md`](validation/launch-parity-2026-09-16.md).
 
 ## Review: goal vs what is already built
 
@@ -21,14 +22,12 @@ Already on `main` (CI green; docs refresh `2026-09-16`):
 - Saved evidence: 20 public `.gov` pages, 160/160 modules, zero count delta vs live SSA bookmarklet
 - GitHub composite action, Docker recipe, GitHub/GitLab/Jenkins snippets
 
-What is **not** done (this is the v1 work):
+What is **not** done (publish only):
 
-- **Not installable as a stranger.** Unpublished on npm. This Mac can run the CLI from a clone (Chromium 1193 installed; fixture and local parity proven 2026-09-16).
-- **`--dir` does not scan source.** Only rendered `.html`/`.htm`. A React/Vite repo must be built first.
-- **Third-party GitHub Action is likely wrong.** `.github/actions/andi-scan/action.yml` runs in the **andi-cli action checkout**. `dir: dist` looks at andi-cli’s `dist`, not `$GITHUB_WORKSPACE/dist`.
-- **Jenkins/GitLab copy-paste is broken.** `Dockerfile` ENTRYPOINT is `node src/cli.cjs` and `andi-scan` is not on PATH. Docs pass `andi-scan` as a Docker arg (becomes a bogus URL).
-- **GHCR / npm / tag do not exist.** README now says so. No `release.yml`.
-- **“100% compliance” is the wrong promise.** Automated ANDI can match the bookmarklet alert list. It cannot certify Section 508.
+- **Not installable as a stranger.** Unpublished on npm. Clone + Playwright works on this Mac.
+- **`--dir` does not scan source.** Only rendered `.html`/`.htm`. Unbuilt source trees now get a build-first error.
+- **GHCR / npm / tag do not exist.** No `release.yml`. Approval-gated.
+- **“100% compliance” is the wrong promise.** The CLI can match ANDI alerts. It cannot certify Section 508.
 
 ## The v1 promise (scope freeze)
 
@@ -99,16 +98,19 @@ If `--dir` has `package.json` but zero HTML, error: “Build the app, then scan
 finds HTML under those folders. Build-then-scan is the primary Mac story
 in README.
 
-### 4. Close CLI vs manual ANDI gaps (1–2 days)
+### 4. Close CLI vs manual ANDI gaps (1–2 days) — DONE 2026-09-16
 
-Use existing `andi-parity`. Local oracle must stay exact. Live oracle on `http://127.0.0.1` (never `file://`). One human bookmarklet check on the same URL. Accept exact danger/warning on fixtures plus one dogfood site.
+`andi-parity` on the fixture: local **8/8 exact**, live SSA bookmarklet
+**8/8 exact** (`http://127.0.0.1`, not `file://`). Dogfood
+`https://www.section508.gov/test/`: live **8/8 exact**. Evidence:
+`docs/validation/launch-parity-2026-09-16.md`. A visible-browser human
+click was not repeated this session; the live side is SSA’s `andi.js`.
 
-### 5. Fix the CI consumer path (1 day)
+### 5. Fix the CI consumer path (1 day) — DONE 2026-09-16
 
-- Resolve Action `dir`/`urls` against `$GITHUB_WORKSPACE` (code still open)
-- GitLab / Jenkins **docs** now use `docker run IMAGE --url ...` or
-  `node /app/src/cli.cjs` (2026-09-16). Docker PATH / GHCR still open.
-- Until GHCR exists, document `docker build` from source (done in README / CI docs)
+- Action `dir` / `urls` resolve against `$GITHUB_WORKSPACE`
+- `andi-scan` is on PATH in the Docker image; ENTRYPOINT is still the CLI
+- Until GHCR exists, `docker build` from source (README / CI docs)
 
 ### 6. Package and donate (your approval only)
 

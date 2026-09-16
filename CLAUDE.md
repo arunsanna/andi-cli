@@ -56,8 +56,8 @@ Package version is still `0.1.0` and is **not published** on npm. From a local c
 Launch leftovers in `docs/ANDI-CI-LAUNCH-PLAN.md`, in this order:
 
 1. ~~Make `--dir` fail clearly when someone points it at source instead of a build.~~
-2. Close CLI vs bookmarklet gaps on one real site.
-3. Fix the GitHub Action / Docker / Jenkins consumer path.
+2. ~~Close CLI vs bookmarklet gaps (fixture + section508.gov, 8/8 exact).~~
+3. ~~Fix the GitHub Action / Docker consumer path.~~
 4. **Stop for publish approval.** Do not publish npm, GHCR, or a tag without it.
 
 Do not start new engines, auth/SPA crawling, or a refactor of `andi/`.

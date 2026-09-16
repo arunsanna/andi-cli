@@ -28,12 +28,12 @@ research trail is intact — do not treat them as the live plan.
 
 ## Historical (do not execute from these)
 
-| Doc                                                      | Why it is here                                                                                             |
-| -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| [`PLAN.md`](PLAN.md)                                     | Original phased build contract. Phases 0–3 are already implemented. Unchecked boxes are **not** open work. |
-| [`research-thread.md`](research-thread.md)               | 2026-06 origin note. Later spikes corrected the extraction approach.                                       |
-| [`ship-report-2026-06-30.md`](ship-report-2026-06-30.md) | June 30 launch-readiness snapshot.                                                                         |
-| [`validation/`](validation/)                             | Browser-vs-CLI parity and benchmark evidence.                                                              |
+| Doc                                                      | Why it is here                                                                                                       |
+| -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- |
+| [`PLAN.md`](PLAN.md)                                     | Original phased build contract. Phases 0–3 are already implemented. Unchecked boxes are **not** open work.           |
+| [`research-thread.md`](research-thread.md)               | 2026-06 origin note. Later spikes corrected the extraction approach.                                                 |
+| [`ship-report-2026-06-30.md`](ship-report-2026-06-30.md) | June 30 launch-readiness snapshot.                                                                                   |
+| [`validation/`](validation/)                             | Browser-vs-CLI evidence. Latest: [`validation/launch-parity-2026-09-16.md`](validation/launch-parity-2026-09-16.md). |
 
 ## Honest claims
 
