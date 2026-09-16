@@ -16,4 +16,9 @@ RUN npm ci --omit=dev
 COPY andi/ ./andi/
 COPY src/ ./src/
 
+# Keep ENTRYPOINT as the CLI so `docker run IMAGE --url ...` works.
+# Also put andi-scan on PATH for GitLab/Jenkins jobs that clear the entrypoint.
+RUN printf '#!/bin/sh\nexec node /app/src/cli.cjs "$@"\n' > /usr/local/bin/andi-scan \
+  && chmod +x /usr/local/bin/andi-scan
+
 ENTRYPOINT ["node", "src/cli.cjs"]

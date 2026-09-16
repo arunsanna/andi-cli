@@ -132,7 +132,7 @@ ANDI is a government bookmarklet. This project opens the page in a hidden browse
 
 Snippets are in [`docs/ci/github.md`](docs/ci/github.md), [`docs/ci/gitlab.md`](docs/ci/gitlab.md), and [`docs/ci/jenkins.md`](docs/ci/jenkins.md).
 
-**Known limits:** the GHCR image does not exist yet — build the `Dockerfile` yourself. The GitHub Action's `dir` input may look at this repo's checkout, not your app's `dist/` — prefer `url` against a staging page until that is fixed.
+**Known limits:** the GHCR image does not exist yet — build the `Dockerfile` yourself. The GitHub Action’s `dir` / `urls` inputs now resolve against the caller’s repo.
 
 ## Release targets
 

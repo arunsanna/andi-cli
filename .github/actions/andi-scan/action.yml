@@ -87,6 +87,7 @@ runs:
       id: andi-scan
       shell: bash
       env:
+        CONSUMER_WORKSPACE: ${{ github.workspace }}
         INPUT_URL: ${{ inputs.url }}
         INPUT_DIR: ${{ inputs.dir }}
         INPUT_URLS: ${{ inputs.urls }}
@@ -100,16 +101,25 @@ runs:
         set +e
         ARGS=()
 
+        # dir/urls are the caller's paths. Resolve relative ones against
+        # $GITHUB_WORKSPACE (the consumer repo), not this action's checkout.
+        resolve_consumer_path() {
+          case "$1" in
+            /*) printf '%s' "$1" ;;
+            *) printf '%s/%s' "$CONSUMER_WORKSPACE" "$1" ;;
+          esac
+        }
+
         if [ -n "$INPUT_URL" ]; then
           ARGS+=(--url "$INPUT_URL")
         fi
 
         if [ -n "$INPUT_DIR" ]; then
-          ARGS+=(--dir "$INPUT_DIR")
+          ARGS+=(--dir "$(resolve_consumer_path "$INPUT_DIR")")
         fi
 
         if [ -n "$INPUT_URLS" ]; then
-          ARGS+=(--urls "$INPUT_URLS")
+          ARGS+=(--urls "$(resolve_consumer_path "$INPUT_URLS")")
         fi
 
         ARGS+=(--module "$INPUT_MODULES")
@@ -139,7 +149,7 @@ runs:
       if: always()
       uses: github/codeql-action/upload-sarif@v3
       with:
-        sarif_file: ${{ inputs.sarif }}
+        sarif_file: ${{ github.workspace }}/${{ inputs.sarif }}
 
     # ------------------------------------------------------------------
     # 6. Propagate the scan exit code (fail the job if gate triggered)

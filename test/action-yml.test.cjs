@@ -94,6 +94,15 @@ test('action.yml: has a setup-node step (actions/setup-node)', () => {
 // ---------------------------------------------------------------------------
 // 6. upload-sarif step has if: always() guard
 // ---------------------------------------------------------------------------
+test('action.yml: dir and urls resolve against the consumer workspace', () => {
+  const src = fs.readFileSync(ACTION_YML, 'utf8');
+  assert.match(src, /CONSUMER_WORKSPACE:/);
+  assert.match(src, /github\.workspace/);
+  assert.match(src, /resolve_consumer_path\(\)/);
+  assert.match(src, /--dir "\$\(resolve_consumer_path "\$INPUT_DIR"\)"/);
+  assert.match(src, /--urls "\$\(resolve_consumer_path "\$INPUT_URLS"\)"/);
+});
+
 test('action.yml: upload-sarif step has if: always() guard', () => {
   if (!action) action = safeLoad(fs.readFileSync(ACTION_YML, 'utf8'));
   const steps = (action.runs && action.runs.steps) || [];

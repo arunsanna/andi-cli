@@ -21,6 +21,9 @@ jobs:
       - name: Smoke test — --help exits 0
         run: docker run --rm andi-cli --help
 
+      - name: Smoke test — andi-scan is on PATH
+        run: docker run --rm --entrypoint andi-scan andi-cli --help
+
       - name: Smoke test — scan fixture exits 0
         run: |
           docker run --rm \
