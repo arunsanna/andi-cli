@@ -5,12 +5,13 @@ research trail is intact — do not treat them as the live plan.
 
 ## Start here
 
-| Doc                                                | What it is                                       |
-| -------------------------------------------------- | ------------------------------------------------ |
-| [`../README.md`](../README.md)                     | What the tool is, honest coverage, local install |
-| [`USAGE.md`](USAGE.md)                             | Copy-paste usage examples                        |
-| [`ARCHITECTURE.md`](ARCHITECTURE.md)               | How it works and why those choices               |
-| [`ANDI-CI-LAUNCH-PLAN.md`](ANDI-CI-LAUNCH-PLAN.md) | What is left before a public v1                  |
+| Doc                                                      | What it is                                       |
+| -------------------------------------------------------- | ------------------------------------------------ |
+| [`../README.md`](../README.md)                           | What the tool is, honest coverage, local install |
+| [`USAGE.md`](USAGE.md)                                   | Copy-paste usage examples                        |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md)                     | How it works and why those choices               |
+| [`ANDI-CI-LAUNCH-PLAN.md`](ANDI-CI-LAUNCH-PLAN.md)       | What is left before a public v1                  |
+| [`docket/PHASED-APPROACH.md`](docket/PHASED-APPROACH.md) | Docket vision — phases 0–6 (next product)        |
 
 ## Current product
 

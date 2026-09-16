@@ -25,7 +25,12 @@ when ANDI reports findings at a chosen severity. On the same rendered
 page, CLI alerts can match the SSA bookmarklet. That is **not** a Section
 508 certification and does **not** replace a Trusted Tester.
 
-## Next (launch sequence)
+## Next (Docket)
+
+Phased approach: `docs/docket/PHASED-APPROACH.md`. **Phase 0** is current:
+`docs/docket/PHASE-0.md`. Real site details come from Arun later.
+
+## Next (andi-cli launch sequence)
 
 1. ~~Restore the local Mac CLI~~ — done
 2. ~~Freeze claim language + clean docs~~ — done

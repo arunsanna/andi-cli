@@ -6,6 +6,8 @@
 > Status **2026-09-16:** Steps 1–5 are done. Step 6 (npm / GHCR / tag) waits
 > for Arun’s publish approval. Parity numbers:
 > [`validation/launch-parity-2026-09-16.md`](validation/launch-parity-2026-09-16.md).
+> Next **product** (Docket, not this launch list):
+> [`docket/PHASED-APPROACH.md`](docket/PHASED-APPROACH.md).
 
 ## Review: goal vs what is already built
 

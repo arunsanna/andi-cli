@@ -58,6 +58,7 @@ Launch leftovers in `docs/ANDI-CI-LAUNCH-PLAN.md`, in this order:
 1. ~~Make `--dir` fail clearly when someone points it at source instead of a build.~~
 2. ~~Close CLI vs bookmarklet gaps (fixture + section508.gov, 8/8 exact).~~
 3. ~~Fix the GitHub Action / Docker consumer path.~~
-4. **Stop for publish approval.** Do not publish npm, GHCR, or a tag without it.
+4. **Stop for publish approval** (andi-cli). Docket is a separate program:
+   `docs/docket/PHASED-APPROACH.md`. Current work: Phase 0 (`docs/docket/PHASE-0.md`).
 
 Do not start new engines, auth/SPA crawling, or a refactor of `andi/`.
