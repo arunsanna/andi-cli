@@ -5,10 +5,9 @@
 
 ## Where we are
 
-The scanner is built. Remaining work is launch: honest docs, a foolproof
-“scan my built site” path, bookmarklet comparison on one real site, then
-fixing GitHub / Jenkins so another team can use it. **Do not publish**
-until Arun approves.
+The scanner is built. Remaining launch work is bookmarklet comparison on
+one real site, then fixing GitHub / Jenkins so another team can use it.
+**Do not publish** until Arun approves.
 
 Proven on this Mac (2026-09-16):
 
@@ -28,8 +27,8 @@ page, CLI alerts can match the SSA bookmarklet. That is **not** a Section
 ## Next (launch sequence)
 
 1. ~~Restore the local Mac CLI~~ — done
-2. ~~Freeze claim language + clean docs~~ — this checkpoint
-3. Make “scan my repository” foolproof (`--dir` on a source tree)
+2. ~~Freeze claim language + clean docs~~ — done
+3. ~~Make “scan my repository” foolproof (`--dir` on a source tree)~~ — done
 4. Compare one real site to the official bookmarklet
 5. Fix Action / Docker / Jenkins consumer path
 6. **Stop for publish approval**

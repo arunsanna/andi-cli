@@ -3,8 +3,8 @@
 > Working copy of the launch plan. Original Cursor plan file (not in this repo):
 > `/Users/jarvis_arunlab/.cursor/plans/ANDI CI Launch Plan-745c4acd.plan.md`
 >
-> Status **2026-09-16:** Step 1 (Mac CLI) and step 2 (claim language + docs)
-> are done. Next is step 3 (foolproof `--dir` on a source tree).
+> Status **2026-09-16:** Steps 1–3 are done (Mac CLI, claim language, foolproof
+> `--dir`). Next is step 4 (compare one real site to the official bookmarklet).
 
 ## Review: goal vs what is already built
 
@@ -92,9 +92,12 @@ Add a Mac first-hour section to `README.md`: Node 18+, Playwright install requir
 - Added `docs/USAGE.md`, `docs/README.md`, architecture “at a glance”
 - Marked `PLAN.md` and `research-thread.md` as historical
 
-### 3. Make “scan my repository” foolproof (half day)
+### 3. Make “scan my repository” foolproof (half day) — DONE 2026-09-16
 
-If `--dir` has `package.json` but zero HTML, error: “Build the app, then scan `dist/`, `build/`, or `out/`.” Make build-then-scan the primary Mac story in README.
+If `--dir` has `package.json` but zero HTML, error: “Build the app, then scan
+`dist/`, `build/`, or `out/`.” After a build, `--dir` on the project root
+finds HTML under those folders. Build-then-scan is the primary Mac story
+in README.
 
 ### 4. Close CLI vs manual ANDI gaps (1–2 days)
 

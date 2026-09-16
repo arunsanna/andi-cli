@@ -23,9 +23,9 @@ Expected: two danger findings (empty button, empty link) and exit `1`.
 
 ## 2. Scan a site you are about to ship
 
-Build the app first. Point the scanner at the **rendered HTML** folder
-(`dist/`, `build/`, `public/`, or `out/`). Source such as `.tsx` / `.vue`
-is not scanned.
+**Build first, then scan the built pages.** Point the scanner at the
+**rendered HTML** folder (`dist/`, `build/`, `public/`, or `out/`).
+Source such as `.tsx` / `.vue` is not scanned.
 
 ```bash
 # From the andi-cli checkout:
@@ -37,8 +37,10 @@ node src/cli.cjs --dir /path/to/your-app/dist --module all --fail-on danger \
 Use `--fail-on warning` for a stricter gate, or `--fail-on none` to always
 write reports.
 
-If the folder has no `.html` / `.htm` files, the command exits `2` and
-tells you to build first.
+If the folder has no `.html` / `.htm` files, the command exits `2`. If
+that folder also has a `package.json` (a typical app source tree), the
+error says to build first, then scan `dist/`, `build/`, or `out/`. After
+a build, `--dir` on the project root will find HTML under those folders.
 
 ## 3. Scan a live or staging URL
 

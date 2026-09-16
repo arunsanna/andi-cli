@@ -8,6 +8,7 @@ const os = require('os');
 const path = require('path');
 const {
   discoverHtmlFiles,
+  noHtmlErrorMessage,
   scanDirectory,
   startStaticServer,
 } = require('../src/directory.cjs');
@@ -138,4 +139,51 @@ test('CLI --dir: exits 2 when no html files are found', async () => {
 
   assert.equal(code, 2);
   assert.match(stderr, /No \.html or \.htm files found/);
+  assert.match(stderr, /dist\/, build\/, public\/, or out\//);
+});
+
+test('noHtmlErrorMessage: source tree with package.json tells you to build first', () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'andi-dir-src-'));
+  fs.writeFileSync(path.join(root, 'package.json'), '{"name":"app"}\n');
+  fs.writeFileSync(path.join(root, 'index.tsx'), 'export const App = () => null;\n');
+
+  const message = noHtmlErrorMessage(root);
+  assert.match(message, /package\.json/);
+  assert.match(message, /Build the app, then scan dist\/, build\/, or out\//);
+  assert.doesNotMatch(message, /Found rendered HTML/);
+});
+
+test('CLI --dir: source tree with package.json and no HTML exits 2 with build hint', async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'andi-dir-pkg-'));
+  fs.writeFileSync(path.join(root, 'package.json'), '{"name":"app"}\n');
+
+  const { code, stderr } = await runCli(['--dir', root]);
+
+  assert.equal(code, 2);
+  assert.match(stderr, /andi-scan: multi-URL scan failed/);
+  assert.match(stderr, /This looks like an app source tree \(package\.json\)/);
+  assert.match(stderr, /Build the app, then scan dist\/, build\/, or out\//);
+});
+
+test('CLI --dir: source tree that already has dist/ HTML scans those pages', async (t) => {
+  t.timeout = 120000;
+
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'andi-dir-built-'));
+  fs.writeFileSync(path.join(root, 'package.json'), '{"name":"app"}\n');
+  fs.mkdirSync(path.join(root, 'dist'));
+  fs.writeFileSync(
+    path.join(root, 'dist', 'index.html'),
+    '<!doctype html><html lang="en"><head><title>built</title></head><body><p>ok</p></body></html>'
+  );
+
+  const { code, stdout, stderr } = await runCli([
+    '--dir', root,
+    '--json',
+    '--fail-on', 'none',
+    '--strict-offline',
+  ]);
+
+  assert.equal(code, 0, stderr);
+  const report = JSON.parse(stdout);
+  assert.deepEqual(report.files, [path.join('dist', 'index.html')]);
 });

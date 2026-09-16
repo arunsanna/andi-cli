@@ -29,7 +29,7 @@ Prove the install. The bundled fixture has deliberate violations, so the command
 npm run test:fixture
 ```
 
-Then scan **rendered HTML**, not application source. For React, Vite, Astro, SvelteKit, or a static-exported Next.js app, build first, then point `--dir` at `dist/`, `build/`, `public/`, or `out/`:
+**Build the app, then scan the built pages.** React, Vite, Astro, SvelteKit, and static-exported Next.js do not produce HTML until you run the project's normal build. Point `--dir` at `dist/`, `build/`, `public/`, or `out/` — not at the source tree. If you point `--dir` at a folder with `package.json` and no HTML, the CLI exits 2 and tells you to build first.
 
 ```bash
 node src/cli.cjs --dir /path/to/your-app/dist --module all --fail-on danger \

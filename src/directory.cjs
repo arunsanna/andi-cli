@@ -18,7 +18,6 @@ const SKIP_DIRS = new Set([
   '.svn',
   'node_modules',
 ]);
-
 const CONTENT_TYPES = {
   '.css': 'text/css; charset=utf-8',
   '.gif': 'image/gif',
@@ -143,13 +142,30 @@ function startStaticServer(root) {
   });
 }
 
+function looksLikeAppSource(root) {
+  return fs.existsSync(path.join(root, 'package.json'));
+}
+
+/**
+ * Human error when --dir finds no HTML. A folder with package.json is treated
+ * as an app source tree: build first, then scan dist/, build/, or out/.
+ */
+function noHtmlErrorMessage(root) {
+  const resolved = path.resolve(root);
+  const prefix = `No .html or .htm files found under ${resolved}.`;
+
+  if (looksLikeAppSource(resolved)) {
+    return `${prefix} This looks like an app source tree (package.json). Build the app, then scan dist/, build/, or out/.`;
+  }
+
+  return `${prefix} Build the app first, then scan the output directory (dist/, build/, public/, or out/).`;
+}
+
 async function scanDirectory(dir, opts = {}) {
   const root = path.resolve(dir);
   const htmlFiles = discoverHtmlFiles(root);
   if (htmlFiles.length === 0) {
-    throw new Error(
-      `No .html or .htm files found under ${root}. Build the app first, then scan the output directory.`
-    );
+    throw new Error(noHtmlErrorMessage(root));
   }
 
   const staticServer = await startStaticServer(root);
@@ -179,6 +195,7 @@ async function scanDirectory(dir, opts = {}) {
 
 module.exports = {
   discoverHtmlFiles,
+  noHtmlErrorMessage,
   routeForFile,
   startStaticServer,
   scanDirectory,
